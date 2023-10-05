@@ -47,8 +47,8 @@ class MltermAT393 < Formula
   depends_on "libpng"
   depends_on "libtiff"
   depends_on "libsixel"
-  depends_on "z80oolong/mlterm/mlterm-fcitx@4.2.9.8"
-  depends_on "z80oolong/mlterm/mlterm-ibus@1.5"
+  depends_on "z80oolong/dep/fcitx@4.2.9.8"
+  depends_on "z80oolong/dep/ibus@1.5"
 
   def install
     resource("libvte").stage do

@@ -37,8 +37,8 @@ class Mlterm < Formula
   depends_on "libpng"
   depends_on "libtiff"
   depends_on "libsixel"
-  depends_on "z80oolong/mlterm/mlterm-fcitx@4.2.9.8"
-  depends_on "z80oolong/mlterm/mlterm-ibus@1.5"
+  depends_on "z80oolong/dep/fcitx@4.2.9.8"
+  depends_on "z80oolong/dep/ibus@1.5"
 
   def install
     ENV.cxx11
@@ -62,16 +62,9 @@ class Mlterm < Formula
       MLTerm is a multilingual terminal emulator. In order to use it, you may need to
       install additional fonts or font packages.
 
-      For fcitx users, make sure to set the following environment variables in your shell startup script:
+      To launch MLTerm for fcitx users, run the following command:
 
-        export XMODIFIERS=@im=fcitx
-        export GTK_IM_MODULE=fcitx
-        export QT_IM_MODULE=fcitx
-        export DefaultIMModule=fcitx
-
-      To launch MLTerm, run the following command:
-
-        mlterm
+        mlterm --im=fcitx
     EOS
   end
 
