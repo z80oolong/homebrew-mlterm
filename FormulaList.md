@@ -10,11 +10,17 @@
 
 この Formula は、多言語対応端末エミュレータ [MLTerm][MTRM] のうち、最新の安定版及び HEAD 版を導入するための Formula です。
 
-なお、この Formula で導入される [MLTerm][MTRM] は、 XIM の他に fcitx 及び ibus のインプットメソッドによる日本語入力に対応しています。
+なお、 ```z80oolong/mlterm/mlterm``` では、 ```mlterm``` 本体の他に、この Formula で導入される [MLTerm][MTRM] においては、 fcitx 及び ibus のインプットメソッドによる日本語入力に対応するプラグインも同時に導入されます。ここで、 [MLTerm][MTRM] から fcitx を用いて日本語入力を行う場合は、以下のようにして [MLTerm][MTRM] を起動します。
+
+```
+  ...
+  $ mlterm --im=fcitx
+  ...
+```
 
 ### z80oolong/mlterm/mlterm@{version}
 
-(注：上記 ```{version}``` には、 [nano][NANO] の各バージョン番号が入ります。以下同様。)
+(注：上記 ```{version}``` には、 [MLTerm][MTRM] の各バージョン番号が入ります。以下同様。)
 
 この Formula は、多言語対応端末エミュレータ [MLTerm][MTRM] の安定版 [mlterm {version}][MTRM] を導入します。
 
@@ -33,7 +39,7 @@
   end
 ```
 
-[mlterm 3.9.3][MTRM] による [libvte][LVTE] 互換ライブラリの詳細については、 Tap リポジトリ ```z80oolong/vte``` に含まれる FormulaList.md の ```z80oolong/vte/sakura-mlterm, z80oolong/vte/roxterm-mlterm``` 等に関する記述を参照してください。 
+[mlterm 3.9.3][MTRM] による [libvte][LVTE] 互換ライブラリの詳細については、 Tap リポジトリ ```z80oolong/vte``` に含まれる FormulaList.md の ```z80oolong/vte/sakura-mlterm```, ```z80oolong/vte/roxterm-mlterm```, ```z80oolong/vte/lxterminal-mlterm```, ```z80oolong/vte/mate-terminal-mlterm``` 等に関する記述を参照してください。 
 
 **この Formula は、 versioned formula であるため、この Formula によって導入される [MLTerm][MTRM] は、 keg only で導入されることに留意して下さい。**
 
