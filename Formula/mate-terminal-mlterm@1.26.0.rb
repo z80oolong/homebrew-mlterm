@@ -4,7 +4,7 @@ class MateTerminalMltermAT1260 < Formula
   url "https://github.com/mate-desktop/mate-terminal/releases/download/v1.26.0/mate-terminal-1.26.0.tar.xz"
   sha256 "7727e714c191c3c55e535e30931974e229ca5128e052b62ce74dcc18f7eaaf22"
 
-  patch :p1, :DATA
+  patch :p1, Formula["z80oolong/vte/mate-terminal@1.26.0"].diff_data
 
   depends_on "pkg-config" => :build
   depends_on "automake" => :build
@@ -20,7 +20,7 @@ class MateTerminalMltermAT1260 < Formula
   depends_on "glib"
   depends_on "gtk+3"
   depends_on "gdk-pixbuf"
-  depends_on "z80oolong/mlterm/mlterm@3.9.3"
+  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.3"
   depends_on "z80oolong/dep/dconf@0"
   depends_on "z80oolong/dep/mate-desktop"
 
@@ -51,55 +51,7 @@ class MateTerminalMltermAT1260 < Formula
     EOS
   end
 
-  def diff_data
-    lines = self.path.each_line.inject([]) do |result, line|
-      result.push(line) if ((/^__END__/ === line) || result.first)
-      result
-    end
-    lines.shift
-    return lines.join("")
-  end
-
   test do
     system "false"
   end
 end
-
-__END__
-diff --git a/src/terminal-window.c b/src/terminal-window.c
-index 3fabc6b..5aa5a02 100644
---- a/src/terminal-window.c
-+++ b/src/terminal-window.c
-@@ -916,6 +916,24 @@ terminal_set_encoding_callback (GtkToggleAction *action,
- {
-     TerminalWindowPrivate *priv = window->priv;
-     TerminalEncoding *encoding;
-+#ifndef NO_UTF8_CJK
-+    gchar *vte_cjk_width = NULL;
-+
-+    if (priv->active_screen == NULL)
-+        return;
-+
-+    vte_cjk_width = g_getenv("VTE_CJK_WIDTH");
-+    if ((vte_cjk_width != NULL) && (strncmp((const char *)vte_cjk_width, "1", (size_t)1) == 0)) {
-+        if (vte_terminal_get_cjk_ambiguous_width(VTE_TERMINAL(priv->active_screen)) != 2) {
-+            vte_terminal_set_cjk_ambiguous_width(VTE_TERMINAL(priv->active_screen), 2);
-+        }
-+    }
-+
-+    G_GNUC_BEGIN_IGNORE_DEPRECATIONS;
-+    if (!gtk_toggle_action_get_active (action))
-+        return;
-+    G_GNUC_END_IGNORE_DEPRECATIONS;
-+#else
- 
-     G_GNUC_BEGIN_IGNORE_DEPRECATIONS;
-     if (!gtk_toggle_action_get_active (action))
-@@ -925,6 +943,7 @@ terminal_set_encoding_callback (GtkToggleAction *action,
-     if (priv->active_screen == NULL)
-         return;
- 
-+#endif
-     encoding = g_object_get_data (G_OBJECT (action), ENCODING_DATA_KEY);
-     g_assert (encoding);
- 

@@ -1,10 +1,17 @@
-class MltermAT393 < Formula
+class MltermLibvteAT393 < Formula
   desc "Multilingual terminal emulator"
   homepage "https://mlterm.sourceforge.io/"
-  url "https://github.com/arakiken/mlterm/archive/refs/tags/3.9.3.tar.gz"
-  sha256 "b5b76721391de134bd64afb7de6b4256805cf2fc883a2bf2e5d29602ac1b50d9"
+  url "https://github.com/arakiken/mlterm.git",
+      :revision => "de4b0f7216aaf53756d0b94b6fb0c448c9c10a83"
   license "GPL-2.0-or-later"
-  version "3.9.3"
+  version "3.9.3-git20241019"
+
+  patch :p1, :DATA
+
+  resource("libvte") do
+    url "https://github.com/GNOME/vte/archive/refs/tags/0.71.92.tar.gz"
+    sha256 "ea0f9ef37726aa6e6b0b0cfa6006cfb0b694aeae103f677977bc4d10f256c225"
+  end
 
   keg_only :versioned_formula
 
@@ -42,6 +49,11 @@ class MltermAT393 < Formula
   depends_on "libsixel"
   depends_on "z80oolong/dep/fcitx@4.2.9.8"
 
+
+  def libvte_lib
+    return (opt_libexec/"libvte/lib")
+  end
+
   def install
     resource("libvte").stage do
       args = []
@@ -57,9 +69,6 @@ class MltermAT393 < Formula
     end
 
     ENV.cxx11
-    ENV.append "CFLAGS", "-Wno-incompatible-pointer-types"
-    ENV.append "CFLAGS", "-Wno-int-conversion"
-    ENV.append "CFLAGS", "-Wno-implicit-function-declaration"
     ENV["PKG_CONFIG_PATH"] = "#{libexec}/libvte/lib/pkgconfig:#{ENV["PKG_CONFIG_PATH"]}"
     system "./configure", "--disable-dependency-tracking",
                           "--disable-silent-rules",
@@ -80,16 +89,22 @@ class MltermAT393 < Formula
   end
 
   def post_install
-    (libexec/"libvte/lib").glob("libvte-2.91*{.a,.so}*") do |libfile|
+    libvte_lib.glob("libvte-2.91*{.a,.so}*") do |libfile|
       system "rm", "-v", "#{libfile}"
     end
 
     lib.glob("libvte-2.91*{.a,.so}*") do |libfile|
-      (libexec/"libvte/lib").install_symlink "#{libfile}"
+      ohai "Symlink #{libfile} => #{libvte_lib}/#{libfile.basename}"
+      libvte_lib.install_symlink "#{libfile}"
     end
 
-    lib.install_symlink "#{libexec}/libvte/lib/pkgconfig"
-    lib.install_symlink "#{libexec}/libvte/lib/girepository-1.0"
+    system "rm", "-v", "#{lib}/pkgconfig"
+    ohai "Symlink #{libvte_lib}/pkgconfig => #{lib}/pkgconfig"
+    lib.install_symlink "#{libvte_lib}/pkgconfig"
+
+    system "rm", "-v", "#{lib}/girepository-1.0"
+    ohai "Symlink #{libvte_lib}/gitrepository-1.0 => #{lib}/girepository-1.0"
+    lib.install_symlink "#{libvte_lib}/girepository-1.0"
   end
 
   def caveats
@@ -107,3 +122,19 @@ class MltermAT393 < Formula
     system "#{bin}/mlterm", "--version"
   end
 end
+
+__END__
+diff --git a/gtk/Makefile.in b/gtk/Makefile.in
+index 7911e5e..ce71b20 100644
+--- a/gtk/Makefile.in
++++ b/gtk/Makefile.in
+@@ -58,9 +58,7 @@ $(TARGET).la: $(OBJ) $(UI_DISPLAY_OBJ_@GUI@)
+ 	`echo ../uitoolkit/*.lo| \
+ 	sed 's/..\/uitoolkit\/ui_layout.lo//g' | \
+ 	sed 's/..\/uitoolkit\/ui_scrollbar.lo//g' | \
+-	sed 's/..\/uitoolkit\/ui_sb_view_factory.lo//g' | \
+ 	sed 's/..\/uitoolkit\/ui_connect_dialog.lo//g' | \
+-	sed 's/..\/uitoolkit\/ui_simple_sb_view.lo//g' | \
+ 	sed 's/..\/uitoolkit\/ui_screen_manager.lo//g' | \
+ 	sed 's/..\/uitoolkit\/ui_event_source.lo//g' | \
+ 	sed 's/..\/uitoolkit\/xdg-decoration-unstable-v1-client-protocol.lo//g' | \

@@ -1,10 +1,10 @@
-class MateTerminalMltermAT1270 < Formula
+class MateTerminalMltermAT1280 < Formula
   desc "Terminal emulator for the MATE desktop environment"
   homepage "https://github.com/mate-desktop/mate-terminal"
-  url "https://github.com/mate-desktop/mate-terminal/releases/download/v1.27.0/mate-terminal-1.27.0.tar.xz"
-  sha256 "42889c98045f011b7e633c2c1706dfc379d52c9c26aef386c8d6890c09d3681b"
+  url "https://github.com/mate-desktop/mate-terminal/releases/download/v1.28.0/mate-terminal-1.28.0.tar.xz"
+  sha256 "dea52c6fe8d61005ba5f85a7cbf0d096c27b90bcec3f915421ce81e5f7dd1692"
 
-  patch :p1, Formula["z80oolong/vte/mate-terminal@1.27.0"].diff_data
+  patch :p1, Formula["z80oolong/vte/mate-terminal@1.28.0"].diff_data
 
   depends_on "pkg-config" => :build
   depends_on "automake" => :build

@@ -38,7 +38,6 @@ class Mlterm < Formula
   depends_on "libtiff"
   depends_on "libsixel"
   depends_on "z80oolong/dep/fcitx@4.2.9.8"
-  depends_on "z80oolong/dep/ibus@1.5"
 
   def install
     ENV.cxx11
@@ -52,8 +51,7 @@ class Mlterm < Formula
                           "--datarootdir=#{share}",
                           "--sysconfdir=#{prefix}/etc",
                           "--enable-image",
-                          "--enable-fcitx",
-                          "--enable-ibus"
+                          "--enable-fcitx"
     system "make", "install"
   end
 

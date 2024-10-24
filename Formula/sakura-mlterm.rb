@@ -4,20 +4,20 @@ class SakuraMlterm < Formula
   license "GPL-2.0"
 
   stable do
-    url "https://github.com/dabisu/sakura/archive/refs/tags/SAKURA_3_8_7.tar.gz"
-    sha256 "c50e1a383a1f0e803817642d017b77545c8e496daeea39ab5152b9bb6d4d171e"
-    patch :p1, Formula["z80oolong/mlterm/sakura-mlterm@3.8.7"].diff_data
+    url "https://github.com/dabisu/sakura/archive/refs/tags/SAKURA_3_8_8.tar.gz"
+    sha256 "b2b05e9e389dafe7bf41fd2fd4ca38a23afdd2e207bf0734d7f3aa3bb6346d50"
+    patch :p1, Formula["z80oolong/vte/sakura@3.8.8"].diff_data
   end
 
   head do
     url "https://github.com/dabisu/sakura.git"
-    patch :p1, :DATA
+    patch :p1, Formula["z80oolong/vte/sakura"].diff_data
   end
 
   keg_only "it conflicts with 'z80oolong/vte/sakura'"
 
   depends_on "gtk+3"
-  depends_on "z80oolong/mlterm/mlterm@3.9.3"
+  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.3"
   depends_on "systemd"
   depends_on "gettext"
   depends_on "pod2man" => :build
@@ -29,46 +29,7 @@ class SakuraMlterm < Formula
     system "cmake", "--install", "build"
   end
 
-  def diff_data
-    lines = self.path.each_line.inject([]) do |result, line|
-      result.push(line) if ((/^__END__/ === line) || result.first)
-      result
-    end
-    lines.shift
-    return lines.join("")
-  end
-
   test do
     system "#{bin}/sakura", "--version"
   end
 end
-
-__END__
-diff --git a/src/sakura.c b/src/sakura.c
-index c34f223..bc1d5a2 100644
---- a/src/sakura.c
-+++ b/src/sakura.c
-@@ -2968,6 +2968,9 @@ sakura_add_tab()
- 	GtkWidget *event_box;
- 	int index; int npages;
- 	gchar *cwd = NULL; gchar *default_label_text = NULL;
-+#ifndef NO_UTF8_CJK
-+	gchar *vte_cjk_width = NULL;
-+#endif
- 
- 	sk_tab = g_new0(struct sakura_tab, 1);
- 
-@@ -3194,6 +3197,14 @@ sakura_add_tab()
- 	vte_terminal_set_audible_bell (VTE_TERMINAL(sk_tab->vte), sakura.audible_bell ? TRUE : FALSE);
- 	vte_terminal_set_cursor_blink_mode (VTE_TERMINAL(sk_tab->vte), sakura.blinking_cursor ? VTE_CURSOR_BLINK_ON : VTE_CURSOR_BLINK_OFF);
- 	vte_terminal_set_cursor_shape (VTE_TERMINAL(sk_tab->vte), sakura.cursor_type);
-+#ifndef NO_UTF8_CJK
-+	vte_cjk_width = g_getenv("VTE_CJK_WIDTH");
-+	if ((vte_cjk_width != NULL) && (strncmp((const char *)vte_cjk_width, "1", (size_t)1) == 0)) {
-+		if (vte_terminal_get_cjk_ambiguous_width(VTE_TERMINAL(sk_tab->vte)) != 2) {
-+			vte_terminal_set_cjk_ambiguous_width(VTE_TERMINAL(sk_tab->vte), 2);
-+		}
-+	}
-+#endif
- 
- }
