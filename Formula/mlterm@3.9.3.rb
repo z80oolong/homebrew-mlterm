@@ -8,17 +8,9 @@ class MltermAT393 < Formula
 
   keg_only :versioned_formula
 
-  depends_on "meson" => :build
-  depends_on "ninja" => :build
-  depends_on "cmake" => :build
-  depends_on "vala"  => :build
   depends_on "pkg-config" => :build
   depends_on "libtool" => :build
   depends_on "vala"  => :build
-  depends_on "gtk+"
-  depends_on "gtk+3"
-  depends_on "systemd"
-  depends_on "gobject-introspection"
   depends_on "gettext"
   depends_on "glib"
   depends_on "fontconfig"
@@ -43,19 +35,6 @@ class MltermAT393 < Formula
   depends_on "z80oolong/dep/fcitx@4.2.9.8"
 
   def install
-    resource("libvte").stage do
-      args = []
-      args << "--prefix=#{libexec}/libvte"
-      args << "--libdir=#{libexec}/libvte/lib"
-      args << "--buildtype=release"
-      args << "--wrap-mode=nofallback"
-      args << "-Ddebug=true"
-
-      system "meson", "setup", "build", *args, "-Ddebug=true"
-      system "meson", "compile", "-C", "build", "--verbose"
-      system "meson", "install", "-C", "build"
-    end
-
     ENV.cxx11
     ENV.append "CFLAGS", "-Wno-incompatible-pointer-types"
     ENV.append "CFLAGS", "-Wno-int-conversion"
@@ -74,22 +53,7 @@ class MltermAT393 < Formula
                           "--enable-image",
                           "--enable-fcitx"
     system "make", "install"
-    system "make", "vte"
     system "make", "install"
-    system "make", "install-vte"
-  end
-
-  def post_install
-    (libexec/"libvte/lib").glob("libvte-2.91*{.a,.so}*") do |libfile|
-      system "rm", "-v", "#{libfile}"
-    end
-
-    lib.glob("libvte-2.91*{.a,.so}*") do |libfile|
-      (libexec/"libvte/lib").install_symlink "#{libfile}"
-    end
-
-    lib.install_symlink "#{libexec}/libvte/lib/pkgconfig"
-    lib.install_symlink "#{libexec}/libvte/lib/girepository-1.0"
   end
 
   def caveats

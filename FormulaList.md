@@ -10,7 +10,7 @@
 
 この Formula は、多言語対応端末エミュレータ [MLTerm][MTRM] のうち、最新の安定版及び HEAD 版を導入するための Formula です。
 
-なお、 ```z80oolong/mlterm/mlterm``` では、 ```mlterm``` 本体の他に、この Formula で導入される [MLTerm][MTRM] においては、 fcitx 及び ibus のインプットメソッドによる日本語入力に対応するプラグインも同時に導入されます。ここで、 [MLTerm][MTRM] から fcitx を用いて日本語入力を行う場合は、以下のようにして [MLTerm][MTRM] を起動します。
+なお、 ```z80oolong/mlterm/mlterm``` では、 ```mlterm``` 本体の他に、この Formula で導入される [MLTerm][MTRM] においては、 fcitx のインプットメソッドによる日本語入力に対応するプラグインも同時に導入されます。ここで、 [MLTerm][MTRM] から fcitx を用いて日本語入力を行う場合は、以下のようにして [MLTerm][MTRM] を起動します。
 
 ```
   ...
