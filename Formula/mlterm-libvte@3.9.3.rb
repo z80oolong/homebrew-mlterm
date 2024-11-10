@@ -49,7 +49,6 @@ class MltermLibvteAT393 < Formula
   depends_on "libsixel"
   depends_on "z80oolong/dep/fcitx@4.2.9.8"
 
-
   def libvte_lib
     return (opt_libexec/"libvte/lib")
   end
