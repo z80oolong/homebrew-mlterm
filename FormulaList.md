@@ -51,7 +51,7 @@
 
 [libvte][LVTE] ベースであり、場所をとらないタブ式端末エミュレータであり、[MLterm を用いて実装された libvte 互換ライブラリ][MVTE]によって動作する [roxterm][ROXT] のうち、最新の安定版及び HEAD 版を導入するための Formula です。
 
-使用法の詳細については、 **Tap リポジトリ ```z80oolong/vte``` 内のドキュメント ```FormulaList.md``` の ```z80oolong/vte/roxterm``` の項 Formula についての記述を参照して下さい。**
+使用法の詳細については、 **Tap リポジトリ ```z80oolong/vte``` 内のドキュメント ```FormulaList.md``` の ```z80oolong/vte/roxterm``` の Formula についての記述を参照して下さい。**
 
 **なお、 [roxterm][ROXT] における各種設定に関しては、 [libvte 互換ライブラリ][MVTE]によって動作する [MLTerm][MTRM] によって行った各種設定が [roxterm][ROXT] の各種設定に優先されることに留意する必要があります。**
 
