@@ -44,7 +44,7 @@
 
 また、 [Homebrew for Linux][BREW] の導入に関しては、 [Homebrew for Linux の公式ページ][BREW] の他、 [thermes 氏][THER]による "[Homebrew for Linux のススメ][THBR]" 及び [Homebrew for Linux][BREW] 関連の各種資料を参考にしました。 [Homebrew for Linux の開発コミュニティ][BREW]及び[thermes 氏][THER]を始めとする各氏に心より感謝致します。
 
-そして最後に、 [MLTerm][TMUX] に関わる全ての皆様及び、 [Homebrew for Linux][BREW] に関わる全ての皆様に心より感謝致します。
+そして最後に、 [MLTerm][MTRM] に関わる全ての皆様及び、 [Homebrew for Linux][BREW] に関わる全ての皆様に心より感謝致します。
 
 <!-- 外部リンク一覧 -->
 
