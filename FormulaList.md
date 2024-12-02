@@ -59,6 +59,18 @@
 
 この Formula によって導入される [roxterm][ROXT] を使用するには、 ```brew link --force z80oolong/mlterm/roxterm-mlterm``` コマンドを実行する必要があります。
 
+### z80oolong/vte/tilda-mlterm
+
+[libvte][LVTE] ベースであり、設定可能なドロップダウン端末エミュレータであり、[MLterm を用いて実装された libvte 互換ライブラリ][MVTE]によって動作する [tilda][TILD] のうち、最新の安定版及び HEAD 版を導入するための Formula です。
+
+使用法の詳細については、 **Tap リポジトリ ```z80oolong/vte``` 内のドキュメント ```FormulaList.md``` の ```z80oolong/vte/tilda``` の Formula についての記述を参照して下さい。**
+
+**なお、 [roxterm][ROXT] における各種設定に関しては、 [libvte 互換ライブラリ][MVTE]によって動作する [MLTerm][MTRM] によって行った各種設定が [tilda][TILD] の各種設定に優先されることに留意する必要があります。**
+
+**また、この Formula は ```z80oolong/vte/tilda``` との conflict を防ぐため、この Formula によって導入される [tilda][TILD] は、 keg only で導入されることに留意して下さい。**
+
+この Formula によって導入される [tilda][TILD] を使用するには、 ```brew link --force z80oolong/mlterm/tilda-mlterm``` コマンドを実行する必要があります。
+
 ### z80oolong/mlterm/lxterminal-mlterm
 
 [libvte][LVTE] ベースの [LXDE][LXDE] 用端末エミュレータであり、[MLterm を用いて実装された libvte 互換ライブラリ][MVTE]によって動作する [lxterminal][LXTM] のうち、最新の安定版及び HEAD 版を導入するための Formula です。
@@ -130,6 +142,18 @@
 **この Formula は、 versioned formula であるため、この Formula によって導入される [roxterm][ROXT] は、 keg only で導入されることに留意して下さい。**
 
 この Formula によって導入される [roxterm][ROXT] を使用するには、 ```brew link --force z80oolong/mlterm/roxterm-mlterm@{version}``` コマンドを実行する必要があります。
+
+### z80oolong/vte/tilda-mlterm@{version}
+
+(注：上記 ```{version}``` には、 [tilda][TILD] の各バージョン番号が入ります。以下同様。)
+
+この Formula は、 [MLterm を用いて実装された libvte 互換ライブラリ][MVTE] ベースの端末エミュレータである [tilda][TILD] の安定版 [tilda {version}][TILD] を導入します。
+
+この Formula で導入した [roxterm][ROXT] の使用法については、前述の ```z80oolong/vte/tilda``` の Formula についての記述を参照して下さい。
+
+**また、この Formula は versioned formula であるため、この Formula によって導入される [tilda][TILD] は、 keg only で導入されることに留意して下さい。**
+
+この Formula によって導入される [tilda][TILD] を使用するには、 ```brew link --force z80oolong/mlterm/tilda-mlterm@{version}``` コマンドを実行する必要があります。
 
 ### z80oolong/mlterm/lxterminal-mlterm@{version}
 

@@ -10,6 +10,10 @@
 
 なお、本 Tap リポジトリには、 [MLTerm][MTRM] によって実装された [libvte 互換ライブラリ][MVTE]及び、[純正の libvte ライブラリ][LVTE]に代えて、[MLTerm で実装された libvte 互換ライブラリ][MVTE]を用いてビルドされた [libvte][LVTE] 対応端末エミュレータを導入するための Formula も併せて同梱しています。
 
+ここで、 [MLTerm で実装された libvte 互換ライブラリ][MVTE]を [libvte][LVTE] 対応端末エミュレータに適用する手法等についての詳細については、以下の Web ページをご覧下さい。
+
+- [Araki Ken 氏][ARAK]による "[libvte互換ライブラリについて][MVTE]" の投稿
+
 なお、本リポジトリで導入される [MLTerm][MTRM] と [MLTerm で実装された libvte 互換ライブラリ][MVTE]及び [MLTerm で実装された libvte 互換ライブラリ][MVTE]を用いてビルドされた [libvte][LVTE] 対応端末エミュレータに関しては、本リポジトリに同梱する  ```FormulaList.md``` を参照してください。
 
 ## 使用法
@@ -41,6 +45,8 @@
 ## 謝辞
 
 まず最初に、多言語対応端末エミュレータ [MLTerm][MTRM] の作者である [Araki Ken 氏][ARAK]に心より感謝致します。
+
+次に、 [MLTerm で実装された libvte 互換ライブラリ][MVTE]を [libvte][LVTE] 対応端末エミュレータに適用する手法等に関しては、 [Araki Ken 氏][ARAK]による "[libvte互換ライブラリについて][MVTE]" の投稿を参考に致しました。
 
 また、 [Homebrew for Linux][BREW] の導入に関しては、 [Homebrew for Linux の公式ページ][BREW] の他、 [thermes 氏][THER]による "[Homebrew for Linux のススメ][THBR]" 及び [Homebrew for Linux][BREW] 関連の各種資料を参考にしました。 [Homebrew for Linux の開発コミュニティ][BREW]及び[thermes 氏][THER]を始めとする各氏に心より感謝致します。
 
