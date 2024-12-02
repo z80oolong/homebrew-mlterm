@@ -1,49 +1,50 @@
 class RoxtermMlterm < Formula
-  desc "ROXTerm is a terminal emulator intended to provide similar features to gnome-terminal, based on the same VTE library, but with a smaller footprint and quicker start-up time."
+  desc "Highly configurable terminal emulator based on VTE"
   homepage "https://roxterm.sourceforge.io/"
 
   stable do
-    url "https://github.com/realh/roxterm/archive/refs/tags/3.14.3.tar.gz"
-    sha256 "4f801371113ff33d6a53dfa77aef6c3d09d29620fcf27e844c755904f9776e5b"
-    patch :p1, Formula["z80oolong/vte/roxterm@3.14.3"].diff_data
+    url "https://github.com/realh/roxterm/archive/refs/tags/3.12.1.tar.gz"
+    sha256 "9a662a00fe555ae9ff38301a1707a3432d8f678326062c98740f20827280a5aa"
+
+    patch :p1, Formula["z80oolong/vte/roxterm@3.12.1"].diff_data
   end
 
   head do
     url "https://github.com/realh/roxterm.git"
+
     patch :p1, Formula["z80oolong/vte/roxterm"].diff_data
-    patch :p1, :DATA
   end
+
+  keg_only "this formula conflicts with 'z80oolong/vte/roxterm'"
+
+  depends_on "cmake" => :build
+  depends_on "docbook-xsl" => :build
+  depends_on "gettext" => :build
+  depends_on "libxslt" => :build
+  depends_on "pkg-config" => :build
+  depends_on "dbus-glib"
+  depends_on "glib"
+  depends_on "gtk+3"
+  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.3"
 
   resource("roxterm-ja-po") do
     url "https://gist.github.com/731fd4e4d0adb4178ce69885bf061523.git",
-        :branch => "main",
-        :revision => "72cd4d52211814ac3a8cecd2fc197447c3914c47"
+        branch:   "main",
+        revision: "72cd4d52211814ac3a8cecd2fc197447c3914c47"
   end
-
-  keg_only "it conflicts with 'z80oolong/vte/roxterm'"
-
-  depends_on "cmake" => :build
-  depends_on "pkg-config" => :build
-  depends_on "libxslt" => :build
-  depends_on "docbook-xsl" => :build
-  depends_on "gettext" => :build
-  depends_on "glib"
-  depends_on "dbus-glib"
-  depends_on "gtk+3"
-  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.3"
 
   def install
     ENV.append "CFLAGS", "-D_GNU_SOURCE"
     ENV.append "CFLAGS", "-DENABLE_NLS=1"
 
     inreplace "CMakeLists.txt" do |s|
-      s.gsub!(%r|http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl|, "#{Formula["docbook-xsl"].opt_prefix}/docbook-xsl-ns/manpages/docbook.xsl")
+      s.gsub! %r{http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl},
+        "#{Formula["docbook-xsl"].opt_prefix}/docbook-xsl-ns/manpages/docbook.xsl"
     end
 
     inreplace "./src/config.h.in" do |s|
-      s.gsub!(%r|^#undef ENABLE_NLS|, "#define ENABLE_NLS 1")
+      s.gsub!(/^#undef ENABLE_NLS/, "#define ENABLE_NLS 1")
     end
-
 
     mkdir "build" do
       system "cmake", "..", *std_cmake_args
@@ -54,8 +55,8 @@ class RoxtermMlterm < Formula
       (share/"locale/ja/LC_MESSAGES").mkpath
       (share/"locale/en_US/LC_MESSAGES").mkpath
 
-      system "#{Formula["gettext"].opt_bin}/msgfmt", "-o", "#{share}/locale/ja/LC_MESSAGES/roxterm.mo", "./ja.po"
-      system "#{Formula["gettext"].opt_bin}/msgfmt", "-o", "#{share}/locale/en_US/LC_MESSAGES/roxterm.mo", "./en_US.po"
+      system Formula["gettext"].opt_bin/"msgfmt", "-o", share/"locale/ja/LC_MESSAGES/roxterm.mo", "./ja.po"
+      system Formula["gettext"].opt_bin/"msgfmt", "-o", share/"locale/en_US/LC_MESSAGES/roxterm.mo", "./en_US.po"
     end
   end
 

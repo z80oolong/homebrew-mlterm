@@ -2,55 +2,53 @@ class MltermLibvteAT393 < Formula
   desc "Multilingual terminal emulator"
   homepage "https://mlterm.sourceforge.io/"
   url "https://github.com/arakiken/mlterm.git",
-      :revision => "de4b0f7216aaf53756d0b94b6fb0c448c9c10a83"
-  license "GPL-2.0-or-later"
+      revision: "de4b0f7216aaf53756d0b94b6fb0c448c9c10a83"
   version "3.9.3-git20241019"
+  license "GPL-2.0-or-later"
 
-  patch :p1, :DATA
+  keg_only :versioned_formula
+
+  depends_on "cmake" => :build
+  depends_on "gettext" => :build
+  depends_on "libtool" => :build
+  depends_on "meson" => :build
+  depends_on "ninja" => :build
+  depends_on "pkg-config" => :build
+  depends_on "vala" => :build
+  depends_on "at-spi2-core"
+  depends_on "cairo"
+  depends_on "fontconfig"
+  depends_on "fribidi"
+  depends_on "gdk-pixbuf"
+  depends_on "glib"
+  depends_on "gnutls"
+  depends_on "gobject-introspection"
+  depends_on "gtk+"
+  depends_on "gtk+3"
+  depends_on "harfbuzz"
+  depends_on "libice"
+  depends_on "libpng"
+  depends_on "librsvg"
+  depends_on "libsixel"
+  depends_on "libsm"
+  depends_on "libtiff"
+  depends_on "libx11"
+  depends_on "libxft"
+  depends_on "libxinerama"
+  depends_on "libxt"
+  depends_on "pango"
+  depends_on "systemd"
+  depends_on "z80oolong/dep/fcitx@4.2.9.8"
 
   resource("libvte") do
     url "https://github.com/GNOME/vte/archive/refs/tags/0.71.92.tar.gz"
     sha256 "ea0f9ef37726aa6e6b0b0cfa6006cfb0b694aeae103f677977bc4d10f256c225"
   end
 
-  keg_only :versioned_formula
-
-  depends_on "meson" => :build
-  depends_on "ninja" => :build
-  depends_on "cmake" => :build
-  depends_on "vala"  => :build
-  depends_on "pkg-config" => :build
-  depends_on "libtool" => :build
-  depends_on "vala"  => :build
-  depends_on "gtk+"
-  depends_on "gtk+3"
-  depends_on "systemd"
-  depends_on "gobject-introspection"
-  depends_on "gettext"
-  depends_on "glib"
-  depends_on "fontconfig"
-  depends_on "libx11"
-  depends_on "libxft"
-  depends_on "libxinerama"
-  depends_on "libxt"
-  depends_on "libice"
-  depends_on "libsm"
-  depends_on "pango"
-  depends_on "cairo"
-  depends_on "gdk-pixbuf"
-  depends_on "atk"
-  depends_on "librsvg"
-  depends_on "fribidi"
-  depends_on "gobject-introspection"
-  depends_on "harfbuzz"
-  depends_on "gnutls"
-  depends_on "libpng"
-  depends_on "libtiff"
-  depends_on "libsixel"
-  depends_on "z80oolong/dep/fcitx@4.2.9.8"
+  patch :p1, :DATA
 
   def libvte_lib
-    return (opt_libexec/"libvte/lib")
+    opt_libexec/"libvte/lib"
   end
 
   def install
@@ -61,6 +59,8 @@ class MltermLibvteAT393 < Formula
       args << "--buildtype=release"
       args << "--wrap-mode=nofallback"
       args << "-Ddebug=true"
+      args << "-Dgtk3=true"
+      args << "-Dgtk4=false"
 
       system "meson", "setup", "build", *args, "-Ddebug=true"
       system "meson", "compile", "-C", "build", "--verbose"
@@ -69,39 +69,53 @@ class MltermLibvteAT393 < Formula
 
     ENV.cxx11
     ENV["PKG_CONFIG_PATH"] = "#{libexec}/libvte/lib/pkgconfig:#{ENV["PKG_CONFIG_PATH"]}"
-    system "./configure", "--disable-dependency-tracking",
-                          "--disable-silent-rules",
-                          "--with-gui=xlib",
-                          "--with-gtk=3.0",
-                          "--with-type-engine=cairo",
-                          "--with-imagelib=gdk-pixbuf",
-                          "--with-scrollbars",
-                          "--prefix=#{prefix}",
-                          "--datarootdir=#{share}",
-                          "--sysconfdir=#{prefix}/etc",
-                          "--enable-image",
-                          "--enable-fcitx"
+
+    args  = []
+    args << "--disable-dependency-tracking"
+    args << "--disable-silent-rules"
+    args << "--with-gui=xlib"
+    args << "--with-gtk=3.0"
+    args << "--with-type-engine=cairo"
+    args << "--with-imagelib=gdk-pixbuf"
+    args << "--with-scrollbars"
+    args << "--prefix=#{prefix}"
+    args << "--datarootdir=#{share}"
+    args << "--sysconfdir=#{prefix}/etc"
+    args << "--enable-image"
+    args << "--enable-fcitx"
+
+    system "./configure", *args
+
+    system "make"
     system "make", "install"
     system "make", "vte"
-    system "make", "install"
     system "make", "install-vte"
   end
 
   def post_install
     libvte_lib.glob("libvte-2.91*{.a,.so}*") do |libfile|
-      system "rm", "-v", "#{libfile}"
+      ohai "Remove #{libfile}"
+      libfile.unlink
     end
 
     lib.glob("libvte-2.91*{.a,.so}*") do |libfile|
       ohai "Symlink #{libfile} => #{libvte_lib}/#{libfile.basename}"
-      libvte_lib.install_symlink "#{libfile}"
+      libvte_lib.install_symlink libfile
     end
 
-    system "rm", "-v", "#{lib}/pkgconfig"
+    if (lib/"pkgconfig").exist?
+      ohai "Remove #{lib}/pkgconfig"
+      (lib/"pkgconfig").rm_r
+    end
+
     ohai "Symlink #{libvte_lib}/pkgconfig => #{lib}/pkgconfig"
     lib.install_symlink "#{libvte_lib}/pkgconfig"
 
-    system "rm", "-v", "#{lib}/girepository-1.0"
+    if (lib/"girepository-1.0").exist?
+      ohai "Remove #{lib}/girepository-1.0"
+      (lib/"girepository-1.0").unlink
+    end
+
     ohai "Symlink #{libvte_lib}/gitrepository-1.0 => #{lib}/girepository-1.0"
     lib.install_symlink "#{libvte_lib}/girepository-1.0"
   end
