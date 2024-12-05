@@ -32,23 +32,20 @@ class MltermAT393 < Formula
   depends_on "libxt"
   depends_on "pango"
   depends_on "systemd"
-  depends_on "z80oolong/dep/fcitx@4.2.9.8"
+  depends_on "z80oolong/dep/fcitx@5.1.10"
 
   def install
     ENV.cxx11
     ENV.append "CFLAGS", "-Wno-incompatible-pointer-types"
     ENV.append "CFLAGS", "-Wno-int-conversion"
     ENV.append "CFLAGS", "-Wno-implicit-function-declaration"
-    ENV["PKG_CONFIG_PATH"] = "#{libexec}/libvte/lib/pkgconfig:#{ENV["PKG_CONFIG_PATH"]}"
 
-    args  = []
-    args << "--disable-dependency-tracking"
+    args  = std_configure_args
     args << "--disable-silent-rules"
     args << "--with-gui=xlib"
     args << "--with-type-engine=cairo"
     args << "--with-imagelib=gdk-pixbuf"
     args << "--with-scrollbars"
-    args << "--prefix=#{prefix}"
     args << "--datarootdir=#{share}"
     args << "--sysconfdir=#{prefix}/etc"
     args << "--enable-image"

@@ -38,7 +38,7 @@ class MltermLibvteAT393 < Formula
   depends_on "libxt"
   depends_on "pango"
   depends_on "systemd"
-  depends_on "z80oolong/dep/fcitx@4.2.9.8"
+  depends_on "z80oolong/dep/fcitx@5.1.10"
 
   resource("libvte") do
     url "https://github.com/GNOME/vte/archive/refs/tags/0.71.92.tar.gz"
@@ -53,9 +53,17 @@ class MltermLibvteAT393 < Formula
 
   def install
     resource("libvte").stage do
-      args = []
-      args << "--prefix=#{libexec}/libvte"
-      args << "--libdir=#{libexec}/libvte/lib"
+      args = std_meson_args
+      args.map! do |arg|
+        case arg
+        when /^--prefix/
+          "--prefix=#{libexec}/libvte"
+        when /^--libdir/
+          "--libdir=#{libexec}/libvte/lib"
+        else
+          arg
+        end
+      end
       args << "--buildtype=release"
       args << "--wrap-mode=nofallback"
       args << "-Ddebug=true"
@@ -68,24 +76,21 @@ class MltermLibvteAT393 < Formula
     end
 
     ENV.cxx11
-    ENV["PKG_CONFIG_PATH"] = "#{libexec}/libvte/lib/pkgconfig:#{ENV["PKG_CONFIG_PATH"]}"
+    ENV.prepend_path "PKG_CONFIG_PATH", libexec/"libvte/lib/pkgconfig"
 
-    args  = []
-    args << "--disable-dependency-tracking"
+    args  = std_configure_args
     args << "--disable-silent-rules"
     args << "--with-gui=xlib"
     args << "--with-gtk=3.0"
     args << "--with-type-engine=cairo"
     args << "--with-imagelib=gdk-pixbuf"
     args << "--with-scrollbars"
-    args << "--prefix=#{prefix}"
     args << "--datarootdir=#{share}"
     args << "--sysconfdir=#{prefix}/etc"
     args << "--enable-image"
     args << "--enable-fcitx"
 
     system "./configure", *args
-
     system "make"
     system "make", "install"
     system "make", "vte"
@@ -105,7 +110,7 @@ class MltermLibvteAT393 < Formula
 
     if (lib/"pkgconfig").exist?
       ohai "Remove #{lib}/pkgconfig"
-      (lib/"pkgconfig").rm_r
+      (lib/"pkgconfig").unlink
     end
 
     ohai "Symlink #{libvte_lib}/pkgconfig => #{lib}/pkgconfig"

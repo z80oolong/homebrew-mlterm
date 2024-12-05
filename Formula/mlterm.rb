@@ -31,26 +31,23 @@ class Mlterm < Formula
   depends_on "libxt"
   depends_on "pango"
   depends_on "systemd"
-  depends_on "z80oolong/dep/fcitx@4.2.9.8"
+  depends_on "z80oolong/dep/fcitx@5.1.10"
 
   def install
     ENV.cxx11
 
-    args  = []
-    args << "--disable-dependency-tracking"
+    args  = std_configure_args
     args << "--disable-silent-rules"
     args << "--with-gui=xlib"
     args << "--with-type-engine=cairo"
     args << "--with-imagelib=gdk-pixbuf"
     args << "--with-scrollbars"
-    args << "--prefix=#{prefix}"
     args << "--datarootdir=#{share}"
     args << "--sysconfdir=#{prefix}/etc"
     args << "--enable-image"
     args << "--enable-fcitx"
 
     system "./configure", *args
-
     system "make"
     system "make", "install"
   end
