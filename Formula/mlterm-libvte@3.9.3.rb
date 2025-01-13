@@ -2,8 +2,8 @@ class MltermLibvteAT393 < Formula
   desc "Multilingual terminal emulator"
   homepage "https://mlterm.sourceforge.io/"
   url "https://github.com/arakiken/mlterm.git",
-      revision: "de4b0f7216aaf53756d0b94b6fb0c448c9c10a83"
-  version "3.9.3-git20241019"
+      revision: "2a9fdbf6f51dce65e4d656fa6d11a4b1df711c04"
+  version "3.9.3-git20241222"
   license "GPL-2.0-or-later"
 
   keg_only :versioned_formula
@@ -23,7 +23,6 @@ class MltermLibvteAT393 < Formula
   depends_on "glib"
   depends_on "gnutls"
   depends_on "gobject-introspection"
-  depends_on "gtk+"
   depends_on "gtk+3"
   depends_on "harfbuzz"
   depends_on "libice"
@@ -37,46 +36,46 @@ class MltermLibvteAT393 < Formula
   depends_on "libxinerama"
   depends_on "libxt"
   depends_on "pango"
+  depends_on "sdl12-compat"
+  depends_on "sdl2"
   depends_on "systemd"
   depends_on "z80oolong/dep/fcitx@5.1.10"
+  depends_on "z80oolong/dep/ibus@1.5.31"
+  depends_on "z80oolong/dep/scim@1.4.18"
 
   resource("libvte") do
-    url "https://github.com/GNOME/vte/archive/refs/tags/0.71.92.tar.gz"
-    sha256 "ea0f9ef37726aa6e6b0b0cfa6006cfb0b694aeae103f677977bc4d10f256c225"
+    url "https://github.com/GNOME/vte/archive/refs/tags/0.78.2.tar.gz"
+    sha256 "cbeb337d4158abe809200e64ea0d184002bc5cb74e7aa944737bdff6eb0b0a8a"
   end
 
   patch :p1, :DATA
 
+  def libvte_prefix
+    libexec/"libvte"
+  end
+
   def libvte_lib
-    opt_libexec/"libvte/lib"
+    libvte_prefix/"lib"
   end
 
   def install
     resource("libvte").stage do
-      args = std_meson_args
-      args.map! do |arg|
-        case arg
-        when /^--prefix/
-          "--prefix=#{libexec}/libvte"
-        when /^--libdir/
-          "--libdir=#{libexec}/libvte/lib"
-        else
-          arg
-        end
-      end
+      args = std_meson_args.dup
+      args.map! { |arg| arg.match?(/^--prefix/) ? "--prefix=#{libvte_prefix}" : arg }
+      args.map! { |arg| arg.match?(/^--libdir/) ? "--libdir=#{libvte_lib}" : arg }
       args << "--buildtype=release"
       args << "--wrap-mode=nofallback"
       args << "-Ddebug=true"
       args << "-Dgtk3=true"
       args << "-Dgtk4=false"
 
-      system "meson", "setup", "build", *args, "-Ddebug=true"
+      system "meson", "setup", "build", *args
       system "meson", "compile", "-C", "build", "--verbose"
       system "meson", "install", "-C", "build"
     end
 
     ENV.cxx11
-    ENV.prepend_path "PKG_CONFIG_PATH", libexec/"libvte/lib/pkgconfig"
+    ENV.prepend_path "PKG_CONFIG_PATH", libvte_lib/"pkgconfig"
 
     args  = std_configure_args
     args << "--disable-silent-rules"
@@ -89,6 +88,8 @@ class MltermLibvteAT393 < Formula
     args << "--sysconfdir=#{prefix}/etc"
     args << "--enable-image"
     args << "--enable-fcitx"
+    args << "--enable-scim"
+    args << "--enable-ibus"
 
     system "./configure", *args
     system "make"
@@ -123,17 +124,6 @@ class MltermLibvteAT393 < Formula
 
     ohai "Symlink #{libvte_lib}/gitrepository-1.0 => #{lib}/girepository-1.0"
     lib.install_symlink "#{libvte_lib}/girepository-1.0"
-  end
-
-  def caveats
-    <<~EOS
-      MLTerm is a multilingual terminal emulator. In order to use it, you may need to
-      install additional fonts or font packages.
-
-      To launch MLTerm for fcitx users, run the following command:
-
-        mlterm --im=fcitx
-    EOS
   end
 
   test do

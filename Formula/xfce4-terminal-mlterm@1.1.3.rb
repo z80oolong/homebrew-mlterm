@@ -11,13 +11,11 @@ class Xfce4TerminalMltermAT113 < Formula
   depends_on "automake" => :build
   depends_on "libtool" => :build
   depends_on "pkg-config" => :build
-  depends_on "z80oolong/dep/xfce4-dev-tools@4.19.3" => :build
   depends_on "glib"
   depends_on "gtk+3"
   depends_on "gtk-doc"
   depends_on "intltool"
-  depends_on "z80oolong/dep/libxfce4ui@4.19.6"
-  depends_on "z80oolong/dep/xfconf@4.19.3"
+  depends_on "z80oolong/dep/xfce4-desktop@4.19.6"
   depends_on "z80oolong/mlterm/mlterm-libvte@3.9.3"
 
   def install
@@ -33,8 +31,20 @@ class Xfce4TerminalMltermAT113 < Formula
     system "make"
     system "make", "install"
 
+    gschema_dirs = [share/"glib-2.0/schemas"]
+    gschema_dirs << (HOMEBREW_PREFIX/"share/glib-2.0/schemas")
+    gschema_dirs << "${GSETTINGS_SCHEMA_DIR}"
+
+    xdg_data_dirs = [share]
+    xdg_data_dirs << (HOMEBREW_PREFIX/"share")
+    xdg_data_dirs << "/usr/local/share"
+    xdg_data_dirs << "/usr/share"
+    xdg_data_dirs << "${XDG_DATA_DIRS}"
+
     script  = "#!/bin/sh\n"
-    script << "#{Formula["z80oolong/dep/xfconf@4.19.3"].opt_lib}/xfce4/xfconf/xfconfd 2>&1 &\n"
+    script << "export GSETTINGS_SCHEMA_DIR=\"#{gschema_dirs.join(":")}\"\n"
+    script << "export XDG_DATA_DIRS=\"#{xdg_data_dirs.join(":")}\"\n"
+    script << "#{Formula["z80oolong/dep/xfce4-desktop@4.19.6"].opt_lib}/xfce4/xfconf/xfconfd 2>&1 &\n"
     script << "exec #{libexec}/bin/xfce4-terminal $@\n"
 
     ohai "Create #{bin}/xfce4-terminal script."

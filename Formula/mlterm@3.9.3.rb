@@ -19,6 +19,7 @@ class MltermAT393 < Formula
   depends_on "glib"
   depends_on "gnutls"
   depends_on "gobject-introspection"
+  depends_on "gtk+3"
   depends_on "harfbuzz"
   depends_on "libice"
   depends_on "libpng"
@@ -31,8 +32,12 @@ class MltermAT393 < Formula
   depends_on "libxinerama"
   depends_on "libxt"
   depends_on "pango"
+  depends_on "sdl12-compat"
+  depends_on "sdl2"
   depends_on "systemd"
   depends_on "z80oolong/dep/fcitx@5.1.10"
+  depends_on "z80oolong/dep/ibus@1.5.31"
+  depends_on "z80oolong/dep/scim@1.4.18"
 
   def install
     ENV.cxx11
@@ -50,6 +55,8 @@ class MltermAT393 < Formula
     args << "--sysconfdir=#{prefix}/etc"
     args << "--enable-image"
     args << "--enable-fcitx"
+    args << "--enable-scim"
+    args << "--enable-ibus"
 
     system "./configure", *args
 
@@ -62,9 +69,11 @@ class MltermAT393 < Formula
       MLTerm is a multilingual terminal emulator. In order to use it, you may need to
       install additional fonts or font packages.
 
-      To launch MLTerm for fcitx users, run the following command:
+      To launch MLTerm for fcitx (or SCIM or IBus) users, run the following command:
 
         mlterm --im=fcitx
+        mlterm --im=scim
+        mlterm --im=ibus
     EOS
   end
 

@@ -42,8 +42,8 @@ class LxterminalMlterm < Formula
     args  = std_configure_args
     args << "--enable-gtk3"
     args << "--enable-man"
-    system "./configure", *args
 
+    system "./configure", *args
     system "make"
     system "make", "install"
   end
