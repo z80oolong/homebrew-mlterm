@@ -107,6 +107,16 @@
 
 この Formula によって導入される [xfce4-terminal][XFTM] を使用するには、 ```brew link --force z80oolong/mlterm/xfce4-terminal-mlterm``` コマンドを実行する必要があります。
 
+### z80oolong/vte/gnome-terminal-mlterm
+
+[libvte][LVTE] ベースの [GNOME][GNME] 標準の端末エミュレータであり、[MLterm を用いて実装された libvte 互換ライブラリ][MVTE]によって動作する [gnome-terminal][GTRM] のうち、最新の安定版及び HEAD 版を導入するための Formula です。
+
+用法の詳細については、 **Tap リポジトリ ```z80oolong/vte``` 内のドキュメント ```FormulaList.md``` の ```z80oolong/vte/gnome-terminal``` の Formula についての記述を参照して下さい。**
+
+**また、この Formula は ```z80oolong/vte/gnome-terminal``` との conflict を防ぐため、この Formula によって導入される [gnome-terminal][GTRM] は、 keg only で導入されることに留意して下さい。**
+
+この Formula によって導入される [gnome-terminal][GTRM] を使用するには、 ```brew link --force z80oolong/mlterm/gnome-terminal-mlterm``` コマンドを実行する必要があります。
+
 ### z80oolong/mlterm/mlterm@{version}
 
 (注：上記 ```{version}``` には、 [MLTerm][MTRM] の各バージョン番号が入ります。以下同様。)
@@ -190,6 +200,18 @@
 **この Formula は、 versioned formula であるため、この Formula によって導入される [xfce4-terminal][MTTM] は、 keg only で導入されることに留意して下さい。**
 
 この Formula によって導入される [xfce4-terminal][XFTM] を使用するには、 ```brew link --force z80oolong/mlterm/xfce4-terminal-mlterm@{version}``` コマンドを実行する必要があります。
+
+### z80oolong/mlterm/gnome-terminal-mlterm@{version}
+
+(注：上記 ```{version}``` には、 [xfce4-terminal][XFTM] の各バージョン番号が入ります。以下同様。)
+
+[MLterm を用いて実装された libvte 互換ライブラリ][MVTE] ベースの [GNOME][GNME] 標準の端末エミュレータの安定版 [gnome-terminal {version}][GTRM] を導入するための Formula です。
+
+なお、 Formula によって導入した [gnome-terminal][GTRM] の使用法については、前述の ```z80oolong/mlterm/gnome-terminal``` の Formula についての記述を参照して下さい。
+
+**この Formula は、 versioned formula であるため、この Formula によって導入される [xfce4-terminal][MTTM] は、 keg only で導入されることに留意して下さい。**
+
+この Formula によって導入される [gnome-terminal][GTRM] を使用するには、 ```brew link --force z80oolong/mlterm/gnome-terminal-mlterm@{version}``` コマンドを実行する必要があります。
 
 <!-- 外部リンク一覧 -->
 
