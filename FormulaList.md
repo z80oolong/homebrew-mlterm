@@ -2,7 +2,7 @@
 
 ## 概要
 
-本文書では、 [Linuxbrew][BREW] 向け Tap リポジトリ z80oolong/mlterm に含まれる Formula 一覧を示します。各 Formula の詳細等については ```brew info <formula>``` コマンドも参照して下さい。
+本文書では、 [Homebrew for Linux][BREW] 向け Tap リポジトリ z80oolong/mlterm に含まれる Formula 一覧を示します。各 Formula の詳細等については ```brew info <formula>``` コマンドも参照して下さい。
 
 ## Formula 一覧
 
@@ -10,11 +10,15 @@
 
 この Formula は、多言語対応端末エミュレータ [MLTerm][MTRM] のうち、最新の安定版及び HEAD 版を導入するための Formula です。
 
-なお、この Formula で導入される [MLTerm][MTRM] では、 [mlterm][MTRM] 本体の他に、fcitx のインプットメソッドによる日本語入力に対応するプラグインも同時に導入されます。ここで、 [MLTerm][MTRM] から fcitx を用いて日本語入力を行う場合は、以下のようにして [MLTerm][MTRM] を起動します。
+なお、この Formula で導入される [MLTerm][MTRM] では、 [mlterm][MTRM] 本体の他に、fcitx (fcitx5) のインプットメソッドによる日本語入力に対応するプラグインも同時に導入されます。なお、インプットメソッドによる日本語入力に関しては、 fcitx (fcitx5) によるものの他、 SCIM 及び IBus にも対応しています。
+
+ここで、 [MLTerm][MTRM] から fcitx 及び SCIM, IBus を用いて日本語入力を行う場合は、以下のようにして [MLTerm][MTRM] を起動します。
 
 ```
   ...
-  $ mlterm --im=fcitx
+  $ mlterm --im=fcitx  # (fcitx を用いる場合)
+  $ mlterm --im=scim   # (SCIM  を用いる場合)
+  $ mlterm --im=ibus   # (IBus  を用いる場合)
   ...
 ```
 
