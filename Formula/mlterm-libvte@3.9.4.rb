@@ -1,9 +1,9 @@
-class MltermLibvteAT393 < Formula
+class MltermLibvteAT394 < Formula
   desc "Multilingual terminal emulator"
   homepage "https://mlterm.sourceforge.io/"
-  url "https://github.com/arakiken/mlterm.git",
-      revision: "2a9fdbf6f51dce65e4d656fa6d11a4b1df711c04"
-  version "3.9.3-git20241222"
+  url "https://github.com/arakiken/mlterm/archive/refs/tags/3.9.4.tar.gz"
+  sha256 "171de4c4f3443bc1211cc51df5caa0e082ffcdd33ab3ce261bc0a4cfe85d9b5e"
+  version "3.9.4"
   license "GPL-2.0-or-later"
 
   keg_only :versioned_formula
@@ -39,9 +39,9 @@ class MltermLibvteAT393 < Formula
   depends_on "sdl12-compat"
   depends_on "sdl2"
   depends_on "systemd"
-  depends_on "z80oolong/dep/fcitx@5.1.10"
-  depends_on "z80oolong/dep/ibus@1.5.31"
-  depends_on "z80oolong/dep/scim@1.4.18"
+  depends_on "z80oolong/mlterm/im-fcitx@5.1.10"
+  depends_on "z80oolong/mlterm/im-ibus@1.5.31"
+  depends_on "z80oolong/mlterm/im-scim@1.4.18"
 
   resource("libvte") do
     url "https://github.com/GNOME/vte/archive/refs/tags/0.78.2.tar.gz"

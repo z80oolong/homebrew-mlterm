@@ -24,7 +24,7 @@ class TildaMlterm < Formula
   depends_on "z80oolong/dep/libconfuse@3.3" => :build
   depends_on "gettext"
   depends_on "gtk+3"
-  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.3"
+  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
 
   def install
     ENV["LC_ALL"] = "C"

@@ -11,7 +11,7 @@ class SakuraMltermAT388 < Formula
   depends_on "pod2man" => :build
   depends_on "gettext"
   depends_on "systemd"
-  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.3"
+  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
 
   patch :p1, Formula["z80oolong/vte/sakura@3.8.8"].diff_data
 

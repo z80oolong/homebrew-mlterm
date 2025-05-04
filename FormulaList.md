@@ -33,11 +33,35 @@
 ```
   class FooVteTerm < Formula
     ...
-    #depends_on "z80oolong/vte/vte@2.91"               # → 標準の libvte ライブラリに代えて、 
+    #depends_on "z80oolong/vte/vte@2.91"               # → 標準の libvte ライブラリに代えて、
     depends_on "z80oolong/mlterm/mlterm-libvte@3.9.3"  # → z80oolong/mlterm/mlterm-libvte@3.9.3 に依存させる。
     ...
   end
 ```
+
+### z80oolong/mlterm/im-fcitx@{version}
+
+(注：上記 ```{version}``` には、 fcitx の各バージョン番号が入ります。以下同様。)
+
+[MLTerm][MTRM] において、インプットメソッド fcitx (fcitx5) による日本語入力を可能にする各種ライブラリを導入するための Formula です。この Formula は、 ```z80oolong/mlterm/mlterm, z80oolong/mlterm/mlterm@{version}, z80oolong/mlterm/mlterm-libvte@3.9.4``` がこの Formula に依存します。
+
+**この Formula は、 versioned formula であるため、この Formula によって導入される ```z80oolong/mlterm/im-fcitx@{version}``` は、 keg only で導入されることに留意して下さい。**
+
+### z80oolong/mlterm/im-scim@{version}
+
+(注：上記 ```{version}``` には、 SCIM の各バージョン番号が入ります。以下同様。)
+
+[MLTerm][MTRM] において、インプットメソッド SCIM による日本語入力を可能にする各種ライブラリを導入するための Formula です。この Formula は、 ```z80oolong/mlterm/mlterm, z80oolong/mlterm/mlterm@{version}, z80oolong/mlterm/mlterm-libvte@3.9.4``` がこの Formula に依存します。
+
+**この Formula は、 versioned formula であるため、この Formula によって導入される ```z80oolong/mlterm/im-scim@{version}``` は、 keg only で導入されることに留意して下さい。**
+
+### z80oolong/mlterm/im-ibus@{version}
+
+(注：上記 ```{version}``` には、 IBus の各バージョン番号が入ります。以下同様。)
+
+[MLTerm][MTRM] において、インプットメソッド IBus による日本語入力を可能にする各種ライブラリを導入するための Formula です。この Formula は、 ```z80oolong/mlterm/mlterm, z80oolong/mlterm/mlterm@{version}, z80oolong/mlterm/mlterm-libvte@3.9.4``` がこの Formula に依存します。
+
+**この Formula は、 versioned formula であるため、この Formula によって導入される ```z80oolong/mlterm/im-ibus@{version}``` は、 keg only で導入されることに留意して下さい。**
 
 ### z80oolong/mlterm/sakura-mlterm
 

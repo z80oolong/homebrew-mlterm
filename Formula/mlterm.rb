@@ -1,9 +1,10 @@
 class Mlterm < Formula
   desc "Multilingual terminal emulator"
   homepage "https://mlterm.sourceforge.io/"
-  url "https://github.com/arakiken/mlterm/archive/refs/tags/3.9.3.tar.gz"
-  sha256 "b5b76721391de134bd64afb7de6b4256805cf2fc883a2bf2e5d29602ac1b50d9"
+  url "https://github.com/arakiken/mlterm/archive/refs/tags/3.9.4.tar.gz"
+  sha256 "171de4c4f3443bc1211cc51df5caa0e082ffcdd33ab3ce261bc0a4cfe85d9b5e"
   license "GPL-2.0-or-later"
+  revision 2
   head "https://github.com/arakiken/mlterm.git"
 
   depends_on "gettext" => :build
@@ -34,9 +35,9 @@ class Mlterm < Formula
   depends_on "sdl12-compat"
   depends_on "sdl2"
   depends_on "systemd"
-  depends_on "z80oolong/dep/fcitx@5.1.10"
-  depends_on "z80oolong/dep/ibus@1.5.31"
-  depends_on "z80oolong/dep/scim@1.4.18"
+  depends_on "z80oolong/mlterm/im-fcitx@5.1.10"
+  depends_on "z80oolong/mlterm/im-ibus@1.5.31"
+  depends_on "z80oolong/mlterm/im-scim@1.4.18"
 
   def install
     ENV.cxx11

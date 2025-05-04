@@ -16,7 +16,7 @@ class LxterminalMltermAT040 < Formula
   depends_on "pkg-config" => :build
   depends_on "glib"
   depends_on "gtk+3"
-  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.3"
+  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
 
   patch :p1, Formula["z80oolong/vte/lxterminal@0.4.0"].diff_data
 

@@ -14,7 +14,7 @@ class RoxtermMltermAT3143 < Formula
   depends_on "dbus-glib"
   depends_on "glib"
   depends_on "gtk+3"
-  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.3"
+  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
 
   resource("roxterm-ja-po") do
     url "https://gist.github.com/731fd4e4d0adb4178ce69885bf061523.git",
@@ -36,6 +36,9 @@ class RoxtermMltermAT3143 < Formula
     inreplace "./src/config.h.in" do |s|
       s.gsub!(/^#undef ENABLE_NLS/, "#define ENABLE_NLS 1")
     end
+
+    args  = std_cmake_args
+    args << "CMAKE_BUILD_TYPE=Debug"
 
     system "cmake", "-S", ".", "-B", "build", *args
     system "cmake", "--build", "build"

@@ -1,8 +1,8 @@
-class MltermAT393 < Formula
+class MltermAT394 < Formula
   desc "Multilingual terminal emulator"
   homepage "https://mlterm.sourceforge.io/"
-  url "https://github.com/arakiken/mlterm/archive/refs/tags/3.9.3.tar.gz"
-  sha256 "b5b76721391de134bd64afb7de6b4256805cf2fc883a2bf2e5d29602ac1b50d9"
+  url "https://github.com/arakiken/mlterm/archive/refs/tags/3.9.4.tar.gz"
+  sha256 "171de4c4f3443bc1211cc51df5caa0e082ffcdd33ab3ce261bc0a4cfe85d9b5e"
   license "GPL-2.0-or-later"
   revision 2
 

@@ -21,7 +21,7 @@ class MateTerminalMltermAT1271 < Formula
   depends_on "intltool"
   depends_on "z80oolong/dep/dconf@0"
   depends_on "z80oolong/dep/mate-desktop@1.28.0"
-  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.3"
+  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
 
   patch :p1, Formula["z80oolong/vte/mate-terminal@1.27.1"].diff_data
 
@@ -40,25 +40,8 @@ class MateTerminalMltermAT1271 < Formula
     (pkgshare/"glib-2.0").mkpath
     (pkgshare/"glib-2.0").install share/"glib-2.0/schemas"
 
-    gschema_dirs = [pkgshare/"glib-2.0/schemas"]
-    gschema_dirs << (Formula["z80oolong/dep/mate-desktop@1.28.0"].share/"glib-2.0/schemas")
-    gschema_dirs << (HOMEBREW_PREFIX/"share/glib-2.0/schemas")
-    gschema_dirs << "${GSETTINGS_SCHEMA_DIR}"
-
-    xdg_data_dirs = [share]
-    xdg_data_dirs << Formula["z80oolong/dep/mate-desktop@1.28.0"].share
-    xdg_data_dirs << (HOMEBREW_PREFIX/"share")
-    xdg_data_dirs << "/usr/local/share"
-    xdg_data_dirs << "/usr/share"
-    xdg_data_dirs << "${XDG_DATA_DIRS}"
-
-    script  = "#!/bin/sh\n"
-    script << "export GSETTINGS_SCHEMA_DIR=\"#{gschema_dirs.join(":")}\"\n"
-    script << "export XDG_DATA_DIRS=\"#{xdg_data_dirs.join(":")}\"\n"
-    script << "exec #{libexec}/bin/mate-terminal $@\n"
-
     ohai "Create #{bin}/mate-terminal script."
-    (bin/"mate-terminal").write(script)
+    (bin/"mate-terminal").write(wrapper_script)
     (bin/"mate-terminal").chmod(0755)
   end
 
@@ -66,6 +49,36 @@ class MateTerminalMltermAT1271 < Formula
     system Formula["glib"].opt_bin/"glib-compile-schemas", pkgshare/"glib-2.0/schemas"
     system Formula["glib"].opt_bin/"glib-compile-schemas", HOMEBREW_PREFIX/"share/glib-2.0/schemas"
   end
+
+  def gschema_dirs
+    dirs = [pkgshare/"glib-2.0/schemas"]
+    dirs << (Formula["z80oolong/dep/mate-desktop@1.28.0"].share/"glib-2.0/schemas")
+    dirs << (HOMEBREW_PREFIX/"share/glib-2.0/schemas")
+    dirs << "${GSETTINGS_SCHEMA_DIR}"
+    dirs
+  end
+  private :gschema_dirs
+
+  def xdg_data_dirs
+    dirs = [share]
+    dirs << Formula["z80oolong/dep/mate-desktop@1.28.0"].share
+    dirs << (HOMEBREW_PREFIX/"share")
+    dirs << "/usr/local/share"
+    dirs << "/usr/share"
+    dirs << "${XDG_DATA_DIRS}"
+    dirs
+  end
+  private :xdg_data_dirs
+
+  def wrapper_script
+    <<~EOS
+      #!/bin/sh
+      export GSETTINGS_SCHEMA_DIR="#{gschema_dirs.join(":")}"
+      export XDG_DATA_DIRS="#{xdg_data_dirs.join(":")}"
+      exec #{libexec}/bin/mate-terminal $@
+    EOS
+  end
+  private :wrapper_script
 
   test do
     system bin/"mate-terminal", "--version"

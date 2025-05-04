@@ -13,7 +13,7 @@ class TildaMltermAT200 < Formula
   depends_on "z80oolong/dep/libconfuse@3.3" => :build
   depends_on "gettext"
   depends_on "gtk+3"
-  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.3"
+  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
 
   patch :p1, Formula["z80oolong/vte/tilda@2.0.0"].diff_data
 

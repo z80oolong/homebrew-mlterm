@@ -1,8 +1,8 @@
-class SakuraMltermAT387 < Formula
+class SakuraMltermAT389 < Formula
   desc "GTK/VTE based terminal emulator"
   homepage "https://launchpad.net/sakura"
-  url "https://github.com/dabisu/sakura/archive/refs/tags/SAKURA_3_8_7.tar.gz"
-  sha256 "c50e1a383a1f0e803817642d017b77545c8e496daeea39ab5152b9bb6d4d171e"
+  url "https://github.com/dabisu/sakura/archive/refs/tags/SAKURA_3_8_9.tar.gz"
+  sha256 "46b792098a82ba4affc87a174ae96f32e730396e4f5ba9b699e8071253b085a2"
   license "GPL-2.0"
 
   keg_only :versioned_formula
@@ -11,9 +11,9 @@ class SakuraMltermAT387 < Formula
   depends_on "pod2man" => :build
   depends_on "gettext"
   depends_on "systemd"
-  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.3"
+  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
 
-  patch :p1, Formula["z80oolong/vte/sakura@3.8.7"].diff_data
+  patch :p1, Formula["z80oolong/vte/sakura@3.8.8"].diff_data
 
   def install
     args  = std_cmake_args

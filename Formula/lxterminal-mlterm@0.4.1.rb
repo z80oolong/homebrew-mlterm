@@ -1,8 +1,8 @@
-class LxterminalMltermAT032 < Formula
+class LxterminalMltermAT041 < Formula
   desc "Desktop-independent VTE-based terminal emulator"
   homepage "https://wiki.lxde.org/en/LXTerminal"
-  url "https://github.com/lxde/lxterminal/archive/refs/tags/0.3.2.tar.gz"
-  sha256 "03c6bdc0fcf7a2e2760e780d2499b618471b0960625d73f9b77654cd58c54ec5"
+  url "https://github.com/lxde/lxterminal/archive/refs/tags/0.4.1.tar.gz"
+  sha256 "d5da0646e20ad2be44ef69a9d620be5f1ec43b156dc585ebe203dd7b05c31d88"
 
   keg_only :versioned_formula
 
@@ -16,9 +16,9 @@ class LxterminalMltermAT032 < Formula
   depends_on "pkg-config" => :build
   depends_on "glib"
   depends_on "gtk+3"
-  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.3"
+  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
 
-  patch :p1, Formula["z80oolong/vte/lxterminal@0.3.2"].diff_data
+  patch :p1, Formula["z80oolong/vte/lxterminal@0.4.1"].diff_data
 
   def install
     ENV.prepend_path "PERL5LIB", "#{Formula["perl-xml-parser"].opt_libexec}/lib/perl5"

@@ -3,10 +3,10 @@ class RoxtermMlterm < Formula
   homepage "https://roxterm.sourceforge.io/"
 
   stable do
-    url "https://github.com/realh/roxterm/archive/refs/tags/3.14.3.tar.gz"
-    sha256 "4f801371113ff33d6a53dfa77aef6c3d09d29620fcf27e844c755904f9776e5b"
+    url "https://github.com/realh/roxterm/archive/refs/tags/3.15.3.tar.gz"
+    sha256 "ec3f7f8c6e088a8b73355da8bb70f6641a000ba681b4f49e25f74c97bad0367a"
 
-    patch :p1, Formula["z80oolong/vte/roxterm@3.14.3"].diff_data
+    patch :p1, Formula["z80oolong/vte/roxterm@3.15.3"].diff_data
   end
 
   head do
@@ -25,7 +25,7 @@ class RoxtermMlterm < Formula
   depends_on "dbus-glib"
   depends_on "glib"
   depends_on "gtk+3"
-  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.3"
+  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
 
   resource("roxterm-ja-po") do
     url "https://gist.github.com/731fd4e4d0adb4178ce69885bf061523.git",
@@ -45,6 +45,9 @@ class RoxtermMlterm < Formula
     inreplace "./src/config.h.in" do |s|
       s.gsub!(/^#undef ENABLE_NLS/, "#define ENABLE_NLS 1")
     end
+
+    args  = std_cmake_args
+    args << "CMAKE_BUILD_TYPE=Debug"
 
     system "cmake", "-S", ".", "-B", "build", *args
     system "cmake", "--build", "build"

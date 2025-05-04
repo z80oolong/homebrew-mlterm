@@ -3,10 +3,10 @@ class LxterminalMlterm < Formula
   homepage "https://wiki.lxde.org/en/LXTerminal"
 
   stable do
-    url "https://github.com/lxde/lxterminal/archive/refs/tags/0.4.0.tar.gz"
-    sha256 "1a179138ebca932ece6d70c033bc10f8125550183eb675675ee9b487c4a5a5cf"
+    url "https://github.com/lxde/lxterminal/archive/refs/tags/0.4.1.tar.gz"
+    sha256 "d5da0646e20ad2be44ef69a9d620be5f1ec43b156dc585ebe203dd7b05c31d88"
 
-    patch :p1, Formula["z80oolong/vte/lxterminal@0.4.0"].diff_data
+    patch :p1, Formula["z80oolong/vte/lxterminal@0.4.1"].diff_data
   end
 
   head do
@@ -27,7 +27,7 @@ class LxterminalMlterm < Formula
   depends_on "pkg-config" => :build
   depends_on "glib"
   depends_on "gtk+3"
-  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.3"
+  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
 
   def install
     ENV.prepend_path "PERL5LIB", "#{Formula["perl-xml-parser"].opt_libexec}/lib/perl5"

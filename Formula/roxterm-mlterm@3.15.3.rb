@@ -1,8 +1,8 @@
-class RoxtermMltermAT3132 < Formula
+class RoxtermMltermAT3153 < Formula
   desc "Highly configurable terminal emulator based on VTE"
   homepage "https://roxterm.sourceforge.io/"
-  url "https://github.com/realh/roxterm/archive/refs/tags/3.13.2.tar.gz"
-  sha256 "3d3bea60178e30740c52594b59d5b1758f26ef0ae5a9fa8a41359c4c36c22d4a"
+  url "https://github.com/realh/roxterm/archive/refs/tags/3.15.3.tar.gz"
+  sha256 "ec3f7f8c6e088a8b73355da8bb70f6641a000ba681b4f49e25f74c97bad0367a"
 
   keg_only :versioned_formula
 
@@ -14,7 +14,7 @@ class RoxtermMltermAT3132 < Formula
   depends_on "dbus-glib"
   depends_on "glib"
   depends_on "gtk+3"
-  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.3"
+  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
 
   resource("roxterm-ja-po") do
     url "https://gist.github.com/731fd4e4d0adb4178ce69885bf061523.git",
@@ -22,7 +22,7 @@ class RoxtermMltermAT3132 < Formula
         revision: "72cd4d52211814ac3a8cecd2fc197447c3914c47"
   end
 
-  patch :p1, Formula["z80oolong/vte/roxterm@3.13.2"].diff_data
+  patch :p1, Formula["z80oolong/vte/roxterm@3.15.3"].diff_data
 
   def install
     ENV.append "CFLAGS", "-D_GNU_SOURCE"
@@ -36,6 +36,9 @@ class RoxtermMltermAT3132 < Formula
     inreplace "./src/config.h.in" do |s|
       s.gsub!(/^#undef ENABLE_NLS/, "#define ENABLE_NLS 1")
     end
+
+    args  = std_cmake_args
+    args << "CMAKE_BUILD_TYPE=Debug"
 
     system "cmake", "-S", ".", "-B", "build", *args
     system "cmake", "--build", "build"

@@ -4,10 +4,10 @@ class SakuraMlterm < Formula
   license "GPL-2.0"
 
   stable do
-    url "https://github.com/dabisu/sakura/archive/refs/tags/SAKURA_3_8_8.tar.gz"
-    sha256 "b2b05e9e389dafe7bf41fd2fd4ca38a23afdd2e207bf0734d7f3aa3bb6346d50"
+    url "https://github.com/dabisu/sakura/archive/refs/tags/SAKURA_3_8_9.tar.gz"
+    sha256 "46b792098a82ba4affc87a174ae96f32e730396e4f5ba9b699e8071253b085a2"
 
-    patch :p1, Formula["z80oolong/vte/sakura@3.8.8"].diff_data
+    patch :p1, Formula["z80oolong/vte/sakura@3.8.9"].diff_data
   end
 
   head do
@@ -22,7 +22,7 @@ class SakuraMlterm < Formula
   depends_on "pod2man" => :build
   depends_on "gettext"
   depends_on "systemd"
-  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.3"
+  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
 
   def install
     args  = std_cmake_args
