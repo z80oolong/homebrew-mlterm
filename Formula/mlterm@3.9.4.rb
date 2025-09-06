@@ -36,8 +36,7 @@ class MltermAT394 < Formula
   depends_on "sdl12-compat"
   depends_on "sdl2"
   depends_on "systemd"
-  depends_on "z80oolong/mlterm/im-fcitx@5.1.10"
-  depends_on "z80oolong/mlterm/im-ibus@1.5.31"
+  depends_on "z80oolong/mlterm/im-fcitx@5.1.12"
   depends_on "z80oolong/mlterm/im-scim@1.4.18"
 
   def install
@@ -57,7 +56,6 @@ class MltermAT394 < Formula
     args << "--enable-image"
     args << "--enable-fcitx"
     args << "--enable-scim"
-    args << "--enable-ibus"
 
     system "./configure", *args
 

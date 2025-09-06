@@ -13,7 +13,7 @@ class MltermLibvteAT394 < Formula
   depends_on "libtool" => :build
   depends_on "meson" => :build
   depends_on "ninja" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "vala" => :build
   depends_on "at-spi2-core"
   depends_on "cairo"
@@ -39,13 +39,12 @@ class MltermLibvteAT394 < Formula
   depends_on "sdl12-compat"
   depends_on "sdl2"
   depends_on "systemd"
-  depends_on "z80oolong/mlterm/im-fcitx@5.1.10"
-  depends_on "z80oolong/mlterm/im-ibus@1.5.31"
+  depends_on "z80oolong/mlterm/im-fcitx@5.1.12"
   depends_on "z80oolong/mlterm/im-scim@1.4.18"
 
   resource("libvte") do
-    url "https://github.com/GNOME/vte/archive/refs/tags/0.78.2.tar.gz"
-    sha256 "cbeb337d4158abe809200e64ea0d184002bc5cb74e7aa944737bdff6eb0b0a8a"
+    url "https://github.com/GNOME/vte/archive/refs/tags/0.81.90.tar.gz"
+    sha256 "97f9b2826a67adbd2ef41b23ae3c1b36d935da15f52dc7cf9b31876c78bb5f3b"
   end
 
   patch :p1, :DATA
@@ -89,7 +88,6 @@ class MltermLibvteAT394 < Formula
     args << "--enable-image"
     args << "--enable-fcitx"
     args << "--enable-scim"
-    args << "--enable-ibus"
 
     system "./configure", *args
     system "make"
@@ -122,7 +120,7 @@ class MltermLibvteAT394 < Formula
       (lib/"girepository-1.0").unlink
     end
 
-    ohai "Symlink #{libvte_lib}/gitrepository-1.0 => #{lib}/girepository-1.0"
+    ohai "Symlink #{libvte_lib}/girepository-1.0 => #{lib}/girepository-1.0"
     lib.install_symlink "#{libvte_lib}/girepository-1.0"
   end
 
