@@ -10,11 +10,11 @@ class << ENV
   end
 end
 
-class RoxtermMltermAT3143 < Formula
+class RoxtermMltermAT3166 < Formula
   desc "Highly configurable terminal emulator based on VTE"
   homepage "https://roxterm.sourceforge.io/"
-  url "https://github.com/realh/roxterm/archive/refs/tags/3.14.3.tar.gz"
-  sha256 "4f801371113ff33d6a53dfa77aef6c3d09d29620fcf27e844c755904f9776e5b"
+  url "https://github.com/realh/roxterm/archive/refs/tags/3.16.6.tar.gz"
+  sha256 "153fbb0746c3afa45bede7e3f6aa0e0ab0ce698d3bfe4ac1962f9da0a1a44145"
 
   keg_only :versioned_formula
 
@@ -37,7 +37,7 @@ class RoxtermMltermAT3143 < Formula
         revision: "72cd4d52211814ac3a8cecd2fc197447c3914c47"
   end
 
-  patch :p1, Formula["z80oolong/vte/roxterm@3.14.3"].diff_data
+  patch :p1, Formula["z80oolong/vte/roxterm@3.16.6"].diff_data
 
   def install
     if build.with? "z80oolong/vte/gtk+3@3.24.43"

@@ -1,8 +1,20 @@
-class RoxtermMltermAT3153 < Formula
+class << ENV
+  def replace_rpath(**replace_list)
+    replace_list = replace_list.each_with_object({}) do |(old, new), result|
+      result[Formula[old].opt_lib.to_s] = Formula[new].opt_lib.to_s
+      result[Formula[old].lib.to_s] = Formula[new].lib.to_s
+    end
+    rpaths = self["HOMEBREW_RPATH_PATHS"].split(":")
+    rpaths = rpaths.each_with_object([]) {|rpath, result| result << (replace_list.key?(rpath) ? replace_list[rpath] : rpath) }
+    self["HOMEBREW_RPATH_PATHS"] = rpaths.join(":")
+  end
+end
+
+class RoxtermMltermAT3165 < Formula
   desc "Highly configurable terminal emulator based on VTE"
   homepage "https://roxterm.sourceforge.io/"
-  url "https://github.com/realh/roxterm/archive/refs/tags/3.15.3.tar.gz"
-  sha256 "ec3f7f8c6e088a8b73355da8bb70f6641a000ba681b4f49e25f74c97bad0367a"
+  url "https://github.com/realh/roxterm/archive/refs/tags/3.16.5.tar.gz"
+  sha256 "615b9cb824099d6faa481afa98e9d9da6bba8b009c682a9721a30fac7f3b4bf8"
 
   keg_only :versioned_formula
 
@@ -13,7 +25,10 @@ class RoxtermMltermAT3153 < Formula
   depends_on "pkg-config" => :build
   depends_on "dbus-glib"
   depends_on "glib"
-  depends_on "gtk+3"
+  depends_on "z80oolong/vte/gtk+3@3.24.43" => :optional
+  unless build.with? "z80oolong/vte/gtk+3@3.24.43"
+    depends_on "gtk+3"
+  end
   depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
 
   resource("roxterm-ja-po") do
@@ -22,9 +37,12 @@ class RoxtermMltermAT3153 < Formula
         revision: "72cd4d52211814ac3a8cecd2fc197447c3914c47"
   end
 
-  patch :p1, Formula["z80oolong/vte/roxterm@3.15.3"].diff_data
+  patch :p1, Formula["z80oolong/vte/roxterm@3.16.5"].diff_data
 
   def install
+    if build.with? "z80oolong/vte/gtk+3@3.24.43"
+      ENV.replace_rpath "gtk+3" => "z80oolong/vte/gtk+3@3.24.43"
+    end
     ENV.append "CFLAGS", "-D_GNU_SOURCE"
     ENV.append "CFLAGS", "-DENABLE_NLS=1"
 

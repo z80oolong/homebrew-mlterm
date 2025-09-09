@@ -1,3 +1,15 @@
+class << ENV
+  def replace_rpath(**replace_list)
+    replace_list = replace_list.each_with_object({}) do |(old, new), result|
+      result[Formula[old].opt_lib.to_s] = Formula[new].opt_lib.to_s
+      result[Formula[old].lib.to_s] = Formula[new].lib.to_s
+    end
+    rpaths = self["HOMEBREW_RPATH_PATHS"].split(":")
+    rpaths = rpaths.each_with_object([]) {|rpath, result| result << (replace_list.key?(rpath) ? replace_list[rpath] : rpath) }
+    self["HOMEBREW_RPATH_PATHS"] = rpaths.join(":")
+  end
+end
+
 class MltermLibvteAT394 < Formula
   desc "Multilingual terminal emulator"
   homepage "https://mlterm.sourceforge.io/"
@@ -23,7 +35,10 @@ class MltermLibvteAT394 < Formula
   depends_on "glib"
   depends_on "gnutls"
   depends_on "gobject-introspection"
-  depends_on "gtk+3"
+  depends_on "z80oolong/vte/gtk+3@3.24.43" => :optional
+  unless build.with? "z80oolong/vte/gtk+3@3.24.43"
+    depends_on "gtk+3"
+  end
   depends_on "harfbuzz"
   depends_on "libice"
   depends_on "libpng"
@@ -57,16 +72,33 @@ class MltermLibvteAT394 < Formula
     libvte_prefix/"lib"
   end
 
+  def libvte_etc
+    libvte_prefix/"etc"
+  end
+
   def install
+    if build.with? "z80oolong/vte/gtk+3@3.24.43"
+      ENV.replace_rpath "gtk+3" => "z80oolong/vte/gtk+3@3.24.43"
+    end
+
     resource("libvte").stage do
       args = std_meson_args.dup
       args.map! { |arg| arg.match?(/^--prefix/) ? "--prefix=#{libvte_prefix}" : arg }
       args.map! { |arg| arg.match?(/^--libdir/) ? "--libdir=#{libvte_lib}" : arg }
+      args << "--sysconfdir=#{libvte_etc}"
       args << "--buildtype=release"
       args << "--wrap-mode=nofallback"
-      args << "-Ddebug=true"
+      args << "-Ddebug=false"
+      args << "-Ddocs=false"
+      args << "-Dgir=true"
       args << "-Dgtk3=true"
       args << "-Dgtk4=false"
+
+      ENV["XML_CATALOG_FILES"] = libvte_etc/"xml/catalog"
+
+      inreplace("./src/app/vte.desktop.in") do |s|
+        s.gsub!(/^SingleMainWindow=false/, "X-SingleMainWindow=false")
+      end
 
       system "meson", "setup", "build", *args
       system "meson", "compile", "-C", "build", "--verbose"
