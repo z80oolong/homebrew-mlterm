@@ -32,8 +32,8 @@ class MltermAT394 < Formula
   depends_on "glib"
   depends_on "gnutls"
   depends_on "gobject-introspection"
-  depends_on "z80oolong/vte/gtk+3@3.24.43" => :optional
-  unless build.with? "z80oolong/vte/gtk+3@3.24.43"
+  depends_on "z80oolong/vte/gtk+3@3.24.43" => :recommended
+  if build.without? "z80oolong/vte/gtk+3@3.24.43"
     depends_on "gtk+3"
   end
   depends_on "harfbuzz"
@@ -51,11 +51,13 @@ class MltermAT394 < Formula
   depends_on "sdl12-compat"
   depends_on "sdl2"
   depends_on "systemd"
-  depends_on "z80oolong/mlterm/im-fcitx@5.1.12"
-  depends_on "z80oolong/mlterm/im-scim@1.4.18"
+  depends_on "z80oolong/im/im-fcitx@5.1.12"
+  depends_on "z80oolong/im/im-scim@1.4.18"
 
   def install
-    if build.with? "z80oolong/vte/gtk+3@3.24.43"
+    if build.without? "z80oolong/vte/gtk+3@3.24.43"
+      ENV.replace_rpath "z80oolong/vte/gtk+3@3.24.43" => "gtk+3"
+    else
       ENV.replace_rpath "gtk+3" => "z80oolong/vte/gtk+3@3.24.43"
     end
 
@@ -87,11 +89,10 @@ class MltermAT394 < Formula
       MLTerm is a multilingual terminal emulator. In order to use it, you may need to
       install additional fonts or font packages.
 
-      To launch MLTerm for fcitx (or SCIM or IBus) users, run the following command:
+      To launch MLTerm for fcitx (or SCIM) users, run the following command:
 
         mlterm --im=fcitx
         mlterm --im=scim
-        mlterm --im=ibus
     EOS
   end
 
