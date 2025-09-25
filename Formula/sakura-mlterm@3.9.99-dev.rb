@@ -13,12 +13,16 @@ def ENV.replace_rpath(**replace_list)
   end
 end
 
-class SakuraMltermAT389 < Formula
+class SakuraMltermAT3999Dev < Formula
   desc "GTK/VTE based terminal emulator"
   homepage "https://launchpad.net/sakura"
-  url "https://github.com/dabisu/sakura/archive/refs/tags/SAKURA_3_8_9.tar.gz"
-  sha256 "46b792098a82ba4affc87a174ae96f32e730396e4f5ba9b699e8071253b085a2"
   license "GPL-2.0"
+
+  current_commit = "46f4582a7b9b2e4eb892909b3e29e5067fcbb2f7"
+  url "https://github.com/dabisu/sakura.git",
+    branch:   "master",
+    revision: current_commit
+  version "git-#{current_commit[0..7]}"
 
   keg_only :versioned_formula
 
@@ -29,7 +33,7 @@ class SakuraMltermAT389 < Formula
   depends_on "z80oolong/vte/gtk+3@3.24.43"
   depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
 
-  patch :p1, Formula["z80oolong/vte/sakura@3.8.9"].diff_data
+  patch :p1, Formula["z80oolong/vte/sakura@3.9.99-dev"].diff_data
 
   def install
     ENV.replace_rpath "gtk+3" => "z80oolong/vte/gtk+3@3.24.43"

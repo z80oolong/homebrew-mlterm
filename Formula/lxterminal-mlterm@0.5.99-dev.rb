@@ -13,11 +13,15 @@ def ENV.replace_rpath(**replace_list)
   end
 end
 
-class LxterminalMltermAT041 < Formula
+class LxterminalMltermAT0599Dev < Formula
   desc "Desktop-independent VTE-based terminal emulator"
   homepage "https://wiki.lxde.org/en/LXTerminal"
-  url "https://github.com/lxde/lxterminal/archive/refs/tags/0.4.1.tar.gz"
-  sha256 "d5da0646e20ad2be44ef69a9d620be5f1ec43b156dc585ebe203dd7b05c31d88"
+
+  current_commit = "ac5e36f496b2bf95eae790181e65c9eb54bb9c13"
+  url "https://github.com/lxde/lxterminal.git",
+    branch:   "master",
+    revision: current_commit
+  version "git-#{current_commit[0..7]}"
 
   keg_only :versioned_formula
 
@@ -33,7 +37,7 @@ class LxterminalMltermAT041 < Formula
   depends_on "z80oolong/vte/gtk+3@3.24.43"
   depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
 
-  patch :p1, Formula["z80oolong/vte/lxterminal@0.4.1"].diff_data
+  patch :p1, Formula["z80oolong/vte/lxterminal@0.5.99-dev"].diff_data
 
   def install
     ENV.replace_rpath "gtk+3" => "z80oolong/vte/gtk+3@3.24.43"

@@ -13,30 +13,14 @@ def ENV.replace_rpath(**replace_list)
   end
 end
 
-class TildaMlterm < Formula
+class TildaMltermAT150 < Formula
   desc "Gtk-based drop down terminal for Linux and Unix"
   homepage "https://github.com/lanoxx/tilda"
+  url "https://github.com/lanoxx/tilda/archive/refs/tags/tilda-1.5.0.tar.gz"
+  sha256 "f664c17daca2a2900f49de9eb65746ced03c867b02144149ef21260cbcd61039"
   license "GPL-2.0"
 
-  stable do
-    url "https://github.com/lanoxx/tilda/archive/refs/tags/tilda-2.0.0.tar.gz"
-    sha256 "ff9364244c58507cd4073ac22e580a4cded048d416c682496c1b1788ee8a30df"
-
-    patch :p1, Formula["z80oolong/vte/tilda@2.0.0"].diff_data
-  end
-
-  head do
-    url "https://github.com/lanoxx/tilda.git"
-
-    patch :p1, Formula["z80oolong/vte/tilda@2.9.99-dev"].diff_data
-  end
-
-  keg_only "this formula conflicts with 'z80oolong/vte/tilda'"
-
-  resource("libconfuse") do
-    url "https://github.com/libconfuse/libconfuse/releases/download/v3.3/confuse-3.3.tar.xz"
-    sha256 "1dd50a0320e135a55025b23fcdbb3f0a81913b6d0b0a9df8cc2fdf3b3dc67010"
-  end
+  keg_only :versioned_formula
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
@@ -44,6 +28,13 @@ class TildaMlterm < Formula
   depends_on "gettext"
   depends_on "z80oolong/vte/gtk+3@3.24.43"
   depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
+
+  resource("libconfuse") do
+    url "https://github.com/libconfuse/libconfuse/releases/download/v3.3/confuse-3.3.tar.xz"
+    sha256 "1dd50a0320e135a55025b23fcdbb3f0a81913b6d0b0a9df8cc2fdf3b3dc67010"
+  end
+
+  patch :p1, Formula["z80oolong/vte/tilda@1.5.0"].diff_data
 
   def install
     ENV["LC_ALL"] = "C"

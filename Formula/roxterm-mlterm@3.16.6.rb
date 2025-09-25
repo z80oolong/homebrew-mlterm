@@ -1,12 +1,15 @@
-class << ENV
-  def replace_rpath(**replace_list)
-    replace_list = replace_list.each_with_object({}) do |(old, new), result|
-      result[Formula[old].opt_lib.to_s] = Formula[new].opt_lib.to_s
-      result[Formula[old].lib.to_s] = Formula[new].lib.to_s
-    end
-    rpaths = self["HOMEBREW_RPATH_PATHS"].split(":")
-    rpaths = rpaths.each_with_object([]) {|rpath, result| result << (replace_list.key?(rpath) ? replace_list[rpath] : rpath) }
-    self["HOMEBREW_RPATH_PATHS"] = rpaths.join(":")
+def ENV.replace_rpath(**replace_list)
+  replace_list = replace_list.each_with_object({}) do |(old, new), result|
+    old_f = Formula[old]
+    new_f = Formula[new]
+    result[old_f.opt_lib.to_s] = new_f.opt_lib.to_s
+    result[old_f.lib.to_s] = new_f.lib.to_s
+  end
+
+  if (rpaths = fetch("HOMEBREW_RPATH_PATHS", false))
+    self["HOMEBREW_RPATH_PATHS"] = (rpaths.split(":").map do |rpath|
+      replace_list.fetch(rpath, rpath)
+    end).join(":")
   end
 end
 
@@ -15,6 +18,7 @@ class RoxtermMltermAT3166 < Formula
   homepage "https://roxterm.sourceforge.io/"
   url "https://github.com/realh/roxterm/archive/refs/tags/3.16.6.tar.gz"
   sha256 "153fbb0746c3afa45bede7e3f6aa0e0ab0ce698d3bfe4ac1962f9da0a1a44145"
+  license "LGPL-3.0"
 
   keg_only :versioned_formula
 
@@ -25,10 +29,7 @@ class RoxtermMltermAT3166 < Formula
   depends_on "pkg-config" => :build
   depends_on "dbus-glib"
   depends_on "glib"
-  depends_on "z80oolong/vte/gtk+3@3.24.43" => :optional
-  unless build.with? "z80oolong/vte/gtk+3@3.24.43"
-    depends_on "gtk+3"
-  end
+  depends_on "z80oolong/vte/gtk+3@3.24.43"
   depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
 
   resource("roxterm-ja-po") do
@@ -40,9 +41,7 @@ class RoxtermMltermAT3166 < Formula
   patch :p1, Formula["z80oolong/vte/roxterm@3.16.6"].diff_data
 
   def install
-    if build.with? "z80oolong/vte/gtk+3@3.24.43"
-      ENV.replace_rpath "gtk+3" => "z80oolong/vte/gtk+3@3.24.43"
-    end
+    ENV.replace_rpath "gtk+3" => "z80oolong/vte/gtk+3@3.24.43"
     ENV.append "CFLAGS", "-D_GNU_SOURCE"
     ENV.append "CFLAGS", "-DENABLE_NLS=1"
 

@@ -13,29 +13,22 @@ def ENV.replace_rpath(**replace_list)
   end
 end
 
-class RoxtermMlterm < Formula
+class RoxtermMltermAT31899Dev < Formula
   desc "Highly configurable terminal emulator based on VTE"
   homepage "https://roxterm.sourceforge.io/"
+
+  current_commit = "c5a983c570323a6e8d1f7c5767de67013a2f610e"
+  url "https://github.com/realh/roxterm.git",
+    branch:   "master",
+    revision: current_commit
+  version "git-#{current_commit[0..7]}"
   license "LGPL-3.0"
 
-  stable do
-    url "https://github.com/realh/roxterm/archive/refs/tags/3.17.2.tar.gz"
-    sha256 "3da0ac499773002ccf0df9fd57918b3856cd5c5257f874715725ff3ef1266657"
-
-    patch :p1, Formula["z80oolong/vte/roxterm@3.17.2"].diff_data
-  end
-
-  head do
-    url "https://github.com/realh/roxterm.git"
-
-    patch :p1, Formula["z80oolong/vte/roxterm@3.18.99-dev"].diff_data
-  end
-
-  keg_only "this formula conflicts with 'z80oolong/vte/roxterm'"
+  keg_only :versioned_formula
 
   depends_on "cmake" => :build
   depends_on "gettext" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "dbus-glib"
   depends_on "glib"
   depends_on "z80oolong/vte/gtk+3@3.24.43"
@@ -46,6 +39,8 @@ class RoxtermMlterm < Formula
         branch:   "main",
         revision: "72cd4d52211814ac3a8cecd2fc197447c3914c47"
   end
+
+  patch :p1, Formula["z80oolong/vte/roxterm@3.18.99-dev"].diff_data
 
   def install
     ENV.replace_rpath "gtk+3" => "z80oolong/vte/gtk+3@3.24.43"
