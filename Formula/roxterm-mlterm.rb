@@ -28,10 +28,10 @@ class RoxtermMlterm < Formula
   head do
     url "https://github.com/realh/roxterm.git"
 
-    patch :p1, Formula["z80oolong/vte/roxterm@3.18.99-dev"].diff_data
+    patch :p1, Formula["z80oolong/vte/roxterm@9999-dev"].diff_data
   end
 
-  keg_only "this formula conflicts with 'z80oolong/vte/roxterm'"
+  keg_only "this formula conflicts with 'homebrew/vte/roxterm'"
 
   depends_on "cmake" => :build
   depends_on "gettext" => :build

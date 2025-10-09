@@ -27,10 +27,10 @@ class LxterminalMlterm < Formula
   head do
     url "https://github.com/lxde/lxterminal.git"
 
-    patch :p1, Formula["z80oolong/vte/lxterminal@0.5.99-dev"].diff_data
+    patch :p1, Formula["z80oolong/vte/lxterminal@9999-dev"].diff_data
   end
 
-  keg_only "this formula conflicts with 'z80oolong/vte/lxterminal'"
+  keg_only "this formula conflicts with 'homebrew/vte/lxterminal'"
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
@@ -54,12 +54,11 @@ class LxterminalMlterm < Formula
         "#{Formula["docbook-xsl"].opt_prefix}/docbook-xsl-ns/manpages/docbook.xsl"
     end
 
-    system "sh", "./autogen.sh"
-
     args  = std_configure_args
     args << "--enable-gtk3"
     args << "--enable-man"
 
+    system "sh", "./autogen.sh"
     system "./configure", *args
     system "make"
     system "make", "install"

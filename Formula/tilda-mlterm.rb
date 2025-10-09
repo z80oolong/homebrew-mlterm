@@ -5,7 +5,6 @@ def ENV.replace_rpath(**replace_list)
     result[old_f.opt_lib.to_s] = new_f.opt_lib.to_s
     result[old_f.lib.to_s] = new_f.lib.to_s
   end
-
   if (rpaths = fetch("HOMEBREW_RPATH_PATHS", false))
     self["HOMEBREW_RPATH_PATHS"] = (rpaths.split(":").map do |rpath|
       replace_list.fetch(rpath, rpath)
@@ -28,15 +27,10 @@ class TildaMlterm < Formula
   head do
     url "https://github.com/lanoxx/tilda.git"
 
-    patch :p1, Formula["z80oolong/vte/tilda@2.9.99-dev"].diff_data
+    patch :p1, Formula["z80oolong/vte/tilda@9999-dev"].diff_data
   end
 
-  keg_only "this formula conflicts with 'z80oolong/vte/tilda'"
-
-  resource("libconfuse") do
-    url "https://github.com/libconfuse/libconfuse/releases/download/v3.3/confuse-3.3.tar.xz"
-    sha256 "1dd50a0320e135a55025b23fcdbb3f0a81913b6d0b0a9df8cc2fdf3b3dc67010"
-  end
+  keg_only "this formula conflicts with 'homebrew/vte/tilda'"
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
@@ -44,6 +38,11 @@ class TildaMlterm < Formula
   depends_on "gettext"
   depends_on "z80oolong/vte/gtk+3@3.24.43"
   depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
+
+  resource("libconfuse") do
+    url "https://github.com/libconfuse/libconfuse/releases/download/v3.3/confuse-3.3.tar.xz"
+    sha256 "1dd50a0320e135a55025b23fcdbb3f0a81913b6d0b0a9df8cc2fdf3b3dc67010"
+  end
 
   def install
     ENV["LC_ALL"] = "C"
@@ -62,8 +61,8 @@ class TildaMlterm < Formula
       system "make", "install"
     end
 
-    system "./autogen.sh"
-    system "./configure", "--disable-silent-rules", *std_configure_args
+    system "sh", "./autogen.sh"
+    system "./configure", "--disable-silent-rules", *std_configure_args.dup
     system "make"
     system "make", "install"
   end

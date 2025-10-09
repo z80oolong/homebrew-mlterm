@@ -28,10 +28,10 @@ class SakuraMlterm < Formula
   head do
     url "https://github.com/dabisu/sakura.git"
 
-    patch :p1, Formula["z80oolong/vte/sakura@3.9.99-dev"].diff_data
+    patch :p1, Formula["z80oolong/vte/sakura@9999-dev"].diff_data
   end
 
-  keg_only "this formula conflicts with 'z80oolong/vte/sakura'"
+  keg_only "this formula conflicts with 'homebrew/vte/sakura'"
 
   depends_on "cmake" => :build
   depends_on "pod2man" => :build

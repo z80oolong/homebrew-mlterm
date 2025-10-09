@@ -13,15 +13,15 @@ def ENV.replace_rpath(**replace_list)
   end
 end
 
-class RoxtermMltermAT31899Dev < Formula
+class RoxtermMltermAT9999Dev < Formula
   desc "Highly configurable terminal emulator based on VTE"
   homepage "https://roxterm.sourceforge.io/"
 
-  current_commit = "c5a983c570323a6e8d1f7c5767de67013a2f610e"
+  @@current_commit = "c5a983c570323a6e8d1f7c5767de67013a2f610e"
   url "https://github.com/realh/roxterm.git",
     branch:   "master",
-    revision: current_commit
-  version "git-#{current_commit[0..7]}"
+    revision: @@current_commit
+  version "git-#{@@current_commit[0..7]}"
   license "LGPL-3.0"
 
   keg_only :versioned_formula
@@ -40,7 +40,7 @@ class RoxtermMltermAT31899Dev < Formula
         revision: "72cd4d52211814ac3a8cecd2fc197447c3914c47"
   end
 
-  patch :p1, Formula["z80oolong/vte/roxterm@3.18.99-dev"].diff_data
+  patch :p1, Formula["z80oolong/vte/roxterm@9999-dev"].diff_data
 
   def install
     ENV.replace_rpath "gtk+3" => "z80oolong/vte/gtk+3@3.24.43"
@@ -65,6 +65,13 @@ class RoxtermMltermAT31899Dev < Formula
       system Formula["gettext"].opt_bin/"msgfmt", "-o", share/"locale/ja/LC_MESSAGES/roxterm.mo", "./ja.po"
       system Formula["gettext"].opt_bin/"msgfmt", "-o", share/"locale/en_US/LC_MESSAGES/roxterm.mo", "./en_US.po"
     end
+  end
+
+  def caveats
+    <<~EOS
+      #{full_name} is a Formula for installing the development version of
+      `roxterm` based on the HEAD version (commit #{@@current_commit[0..7]}) from its Github repository.
+    EOS
   end
 
   test do

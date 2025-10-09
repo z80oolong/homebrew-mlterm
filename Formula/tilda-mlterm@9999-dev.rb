@@ -13,11 +13,17 @@ def ENV.replace_rpath(**replace_list)
   end
 end
 
-class TildaMltermAT2999Dev < Formula
+class TildaMltermAT9999Dev < Formula
   desc "Gtk-based drop down terminal for Linux and Unix"
   homepage "https://github.com/lanoxx/tilda"
-  url "https://github.com/lanoxx/tilda/archive/refs/tags/tilda-2.0.0.tar.gz"
-  sha256 "ff9364244c58507cd4073ac22e580a4cded048d416c682496c1b1788ee8a30df"
+
+  @@current_commit = "51bfe3c7cb755499fa22d00134d68b86a9fdaafd"
+  url "https://github.com/lanoxx/tilda.git",
+    branch:   "master",
+    revision: @@current_commit
+  version "git-#{@@current_commit[0..7]}"
+  license "LGPL-3.0"
+
   license "GPL-2.0"
 
   keg_only :versioned_formula
@@ -34,7 +40,7 @@ class TildaMltermAT2999Dev < Formula
     sha256 "1dd50a0320e135a55025b23fcdbb3f0a81913b6d0b0a9df8cc2fdf3b3dc67010"
   end
 
-  patch :p1, Formula["z80oolong/vte/tilda@2.9.99-dev"].diff_data
+  patch :p1, Formula["z80oolong/vte/tilda@9999-dev"].diff_data
 
   def install
     ENV["LC_ALL"] = "C"
@@ -53,10 +59,17 @@ class TildaMltermAT2999Dev < Formula
       system "make", "install"
     end
 
-    system "./autogen.sh"
+    system "sh", "./autogen.sh"
     system "./configure", "--disable-silent-rules", *std_configure_args
     system "make"
     system "make", "install"
+  end
+
+  def caveats
+    <<~EOS
+      #{full_name} is a Formula for installing the development version of
+      `tilda` based on the HEAD version (commit #{@@current_commit[0..7]}) from its Github repository.
+    EOS
   end
 
   test do

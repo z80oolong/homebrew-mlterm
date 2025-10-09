@@ -13,15 +13,15 @@ def ENV.replace_rpath(**replace_list)
   end
 end
 
-class LxterminalMltermAT0599Dev < Formula
+class LxterminalMltermAT9999Dev < Formula
   desc "Desktop-independent VTE-based terminal emulator"
   homepage "https://wiki.lxde.org/en/LXTerminal"
 
-  current_commit = "ac5e36f496b2bf95eae790181e65c9eb54bb9c13"
+  @@current_commit = "ac5e36f496b2bf95eae790181e65c9eb54bb9c13"
   url "https://github.com/lxde/lxterminal.git",
     branch:   "master",
-    revision: current_commit
-  version "git-#{current_commit[0..7]}"
+    revision: @@current_commit
+  version "git-#{@@current_commit[0..7]}"
 
   keg_only :versioned_formula
 
@@ -37,7 +37,7 @@ class LxterminalMltermAT0599Dev < Formula
   depends_on "z80oolong/vte/gtk+3@3.24.43"
   depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
 
-  patch :p1, Formula["z80oolong/vte/lxterminal@0.5.99-dev"].diff_data
+  patch :p1, Formula["z80oolong/vte/lxterminal@9999-dev"].diff_data
 
   def install
     ENV.replace_rpath "gtk+3" => "z80oolong/vte/gtk+3@3.24.43"
@@ -49,15 +49,21 @@ class LxterminalMltermAT0599Dev < Formula
         "#{Formula["docbook-xsl"].opt_prefix}/docbook-xsl-ns/manpages/docbook.xsl"
     end
 
-    system "sh", "./autogen.sh"
-
     args  = std_configure_args
     args << "--enable-gtk3"
     args << "--enable-man"
 
+    system "sh", "./autogen.sh"
     system "./configure", *args
     system "make"
     system "make", "install"
+  end
+
+  def caveats
+    <<~EOS
+      #{full_name} is a Formula for installing the development version of
+      `lxterminal` based on the HEAD version (commit #{@@current_commit[0..7]}) from its Github repository.
+    EOS
   end
 
   test do
