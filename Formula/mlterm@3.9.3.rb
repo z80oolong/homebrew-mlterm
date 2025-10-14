@@ -25,7 +25,7 @@ class MltermAT393 < Formula
 
   depends_on "gettext" => :build
   depends_on "libtool" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "vala" => :build
   depends_on "at-spi2-core"
   depends_on "cairo"

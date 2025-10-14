@@ -28,7 +28,7 @@ class LxterminalMltermAT041 < Formula
   depends_on "libxml2" => :build
   depends_on "libxslt" => :build
   depends_on "perl-xml-parser" => :build
-  depends_on "pkg-config" => :build
+  depends_on "pkgconf" => :build
   depends_on "glib"
   depends_on "z80oolong/vte/gtk+3@3.24.43"
   depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
