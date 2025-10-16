@@ -1,25 +1,10 @@
-def ENV.replace_rpath(**replace_list)
-  replace_list = replace_list.each_with_object({}) do |(old, new), result|
-    old_f = Formula[old]
-    new_f = Formula[new]
-    result[old_f.opt_lib.to_s] = new_f.opt_lib.to_s
-    result[old_f.lib.to_s] = new_f.lib.to_s
-  end
-
-  if (rpaths = fetch("HOMEBREW_RPATH_PATHS", false))
-    self["HOMEBREW_RPATH_PATHS"] = (rpaths.split(":").map do |rpath|
-      replace_list.fetch(rpath, rpath)
-    end).join(":")
-  end
-end
-
 class MltermAT394 < Formula
   desc "Multilingual terminal emulator"
   homepage "https://mlterm.sourceforge.io/"
   url "https://github.com/arakiken/mlterm/archive/refs/tags/3.9.4.tar.gz"
   sha256 "171de4c4f3443bc1211cc51df5caa0e082ffcdd33ab3ce261bc0a4cfe85d9b5e"
   license "GPL-2.0-or-later"
-  revision 2
+  revision 3
 
   keg_only :versioned_formula
 
@@ -35,7 +20,7 @@ class MltermAT394 < Formula
   depends_on "glib"
   depends_on "gnutls"
   depends_on "gobject-introspection"
-  depends_on "z80oolong/vte/gtk+3@3.24.43"
+  depends_on "gtk+3"
   depends_on "harfbuzz"
   depends_on "libice"
   depends_on "libpng"
@@ -52,10 +37,9 @@ class MltermAT394 < Formula
   depends_on "sdl2"
   depends_on "systemd"
   depends_on "z80oolong/im/im-fcitx@5.1.12"
-  depends_on "z80oolong/im/im-scim@1.4.18"
+  depends_on "z80oolong/im/im-scim@1.4.18" => :optional
 
   def install
-    ENV.replace_rpath "gtk+3" => "z80oolong/vte/gtk+3@3.24.43"
     ENV.cxx11
     ENV.append "CFLAGS", "-Wno-incompatible-pointer-types"
     ENV.append "CFLAGS", "-Wno-int-conversion"
@@ -71,10 +55,11 @@ class MltermAT394 < Formula
     args << "--sysconfdir=#{prefix}/etc"
     args << "--enable-image"
     args << "--enable-fcitx"
-    args << "--enable-scim"
+    if build.with?("z80oolong/im/im-scim@1.4.18") then
+      args << "--enable-scim"
+    end
 
     system "./configure", *args
-
     system "make"
     system "make", "install"
   end

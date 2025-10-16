@@ -68,7 +68,7 @@ class TildaMltermAT9999Dev < Formula
   def caveats
     <<~EOS
       #{full_name} is a Formula for installing the development version of
-      `tilda` based on the HEAD version (commit #{@@current_commit[0..7]}) from its Github repository.
+      `tilda` based on the HEAD version (commit #{@@current_commit[0..7]}) from its git repository.
     EOS
   end
 

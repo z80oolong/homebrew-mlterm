@@ -1,22 +1,8 @@
-def ENV.replace_rpath(**replace_list)
-  replace_list = replace_list.each_with_object({}) do |(old, new), result|
-    old_f = Formula[old]
-    new_f = Formula[new]
-    result[old_f.opt_lib.to_s] = new_f.opt_lib.to_s
-    result[old_f.lib.to_s] = new_f.lib.to_s
-  end
-
-  if (rpaths = fetch("HOMEBREW_RPATH_PATHS", false))
-    self["HOMEBREW_RPATH_PATHS"] = (rpaths.split(":").map do |rpath|
-      replace_list.fetch(rpath, rpath)
-    end).join(":")
-  end
-end
-
 class RoxtermMlterm < Formula
   desc "Highly configurable terminal emulator based on VTE"
   homepage "https://roxterm.sourceforge.io/"
   license "LGPL-3.0"
+  revision 1
 
   stable do
     url "https://github.com/realh/roxterm/archive/refs/tags/3.17.2.tar.gz"
@@ -38,7 +24,7 @@ class RoxtermMlterm < Formula
   depends_on "pkgconf" => :build
   depends_on "dbus-glib"
   depends_on "glib"
-  depends_on "z80oolong/vte/gtk+3@3.24.43"
+  depends_on "gtk+3"
   depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
 
   resource("roxterm-ja-po") do
@@ -48,7 +34,6 @@ class RoxtermMlterm < Formula
   end
 
   def install
-    ENV.replace_rpath "gtk+3" => "z80oolong/vte/gtk+3@3.24.43"
     ENV.append "CFLAGS", "-D_GNU_SOURCE"
     ENV.append "CFLAGS", "-DENABLE_NLS=1"
 

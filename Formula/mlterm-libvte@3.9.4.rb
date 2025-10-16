@@ -1,24 +1,10 @@
-def ENV.replace_rpath(**replace_list)
-  replace_list = replace_list.each_with_object({}) do |(old, new), result|
-    old_f = Formula[old]
-    new_f = Formula[new]
-    result[old_f.opt_lib.to_s] = new_f.opt_lib.to_s
-    result[old_f.lib.to_s] = new_f.lib.to_s
-  end
-
-  if (rpaths = fetch("HOMEBREW_RPATH_PATHS", false))
-    self["HOMEBREW_RPATH_PATHS"] = (rpaths.split(":").map do |rpath|
-      replace_list.fetch(rpath, rpath)
-    end).join(":")
-  end
-end
-
 class MltermLibvteAT394 < Formula
   desc "Multilingual terminal emulator"
   homepage "https://mlterm.sourceforge.io/"
-  url "https://github.com/arakiken/mlterm/archive/refs/tags/3.9.4.tar.gz"
-  sha256 "171de4c4f3443bc1211cc51df5caa0e082ffcdd33ab3ce261bc0a4cfe85d9b5e"
+  url "https://github.com/GNOME/vte/archive/refs/tags/0.81.90.tar.gz"
+  sha256 "97f9b2826a67adbd2ef41b23ae3c1b36d935da15f52dc7cf9b31876c78bb5f3b"
   version "3.9.4"
+  revision 3
   license "GPL-2.0-or-later"
 
   keg_only :versioned_formula
@@ -37,8 +23,8 @@ class MltermLibvteAT394 < Formula
   depends_on "gdk-pixbuf"
   depends_on "glib"
   depends_on "gnutls"
+  depends_on "gtk+3"
   depends_on "gobject-introspection"
-  depends_on "z80oolong/vte/gtk+3@3.24.43"
   depends_on "harfbuzz"
   depends_on "libice"
   depends_on "libpng"
@@ -55,107 +41,103 @@ class MltermLibvteAT394 < Formula
   depends_on "sdl2"
   depends_on "systemd"
   depends_on "z80oolong/im/im-fcitx@5.1.12"
-  depends_on "z80oolong/im/im-scim@1.4.18"
+  depends_on "z80oolong/im/im-scim@1.4.18" => :optional
 
-  resource("libvte") do
-    url "https://github.com/GNOME/vte/archive/refs/tags/0.81.90.tar.gz"
-    sha256 "97f9b2826a67adbd2ef41b23ae3c1b36d935da15f52dc7cf9b31876c78bb5f3b"
+  resource("mlterm") do
+    url "https://github.com/arakiken/mlterm/archive/refs/tags/3.9.4.tar.gz"
+    sha256 "171de4c4f3443bc1211cc51df5caa0e082ffcdd33ab3ce261bc0a4cfe85d9b5e"
+
+    patch :p1, :DATA
   end
 
-  patch :p1, :DATA
-
-  def libvte_prefix
-    libexec/"libvte"
+  def mlterm_prefix
+    libexec/"mlterm"
   end
 
-  def libvte_lib
-    libvte_prefix/"lib"
-  end
-
-  def libvte_etc
-    libvte_prefix/"etc"
+  def mlterm_lib
+    mlterm_prefix/"lib"
   end
 
   def install
-    ENV.replace_rpath "gtk+3" => "z80oolong/vte/gtk+3@3.24.43"
+    args = std_meson_args
+    args << "--sysconfdir=#{prefix}/etc"
+    args << "--buildtype=release"
+    args << "--wrap-mode=nofallback"
+    args << "-Ddebug=false"
+    args << "-Ddocs=false"
+    args << "-Dgir=true"
+    args << "-Dgtk3=true"
+    args << "-Dgtk4=false"
 
-    resource("libvte").stage do
-      args = std_meson_args.dup
-      args.map! { |arg| arg.match?(/^--prefix/) ? "--prefix=#{libvte_prefix}" : arg }
-      args.map! { |arg| arg.match?(/^--libdir/) ? "--libdir=#{libvte_lib}" : arg }
-      args << "--sysconfdir=#{libvte_etc}"
-      args << "--buildtype=release"
-      args << "--wrap-mode=nofallback"
-      args << "-Ddebug=false"
-      args << "-Ddocs=false"
-      args << "-Dgir=true"
-      args << "-Dgtk3=true"
-      args << "-Dgtk4=false"
+    ENV["XML_CATALOG_FILES"] = prefix/"etc/xml/catalog"
 
-      ENV["XML_CATALOG_FILES"] = libvte_etc/"xml/catalog"
-
-      inreplace("./src/app/vte.desktop.in") do |s|
-        s.gsub!(/^SingleMainWindow=false/, "X-SingleMainWindow=false")
-      end
-
-      system "meson", "setup", "build", *args
-      system "meson", "compile", "-C", "build", "--verbose"
-      system "meson", "install", "-C", "build"
+    inreplace("./src/app/vte.desktop.in") do |s|
+      s.gsub!(/^SingleMainWindow=false/, "X-SingleMainWindow=false")
     end
 
-    ENV.cxx11
-    ENV.prepend_path "PKG_CONFIG_PATH", libvte_lib/"pkgconfig"
+    system "meson", "setup", "build", *args
+    system "meson", "compile", "-C", "build", "--verbose"
+    system "meson", "install", "-C", "build"
 
-    args  = std_configure_args
-    args << "--disable-silent-rules"
-    args << "--with-gui=xlib"
-    args << "--with-gtk=3.0"
-    args << "--with-type-engine=cairo"
-    args << "--with-imagelib=gdk-pixbuf"
-    args << "--with-scrollbars"
-    args << "--datarootdir=#{share}"
-    args << "--sysconfdir=#{prefix}/etc"
-    args << "--enable-image"
-    args << "--enable-fcitx"
-    args << "--enable-scim"
+    resource("mlterm").stage do
+      ENV.cxx11
+      ENV.prepend_path "PKG_CONFIG_PATH", lib/"pkgconfig"
 
-    system "./configure", *args
-    system "make"
-    system "make", "install"
-    system "make", "vte"
-    system "make", "install-vte"
+      args  = std_configure_args
+      args.map! { |arg| arg.match?(/^--prefix/) ? "--prefix=#{mlterm_prefix}" : arg }
+      args.map! { |arg| arg.match?(/^--libdir/) ? "--libdir=#{mlterm_lib}" : arg }
+      args << "--disable-silent-rules"
+      args << "--with-gui=xlib"
+      args << "--with-gtk=3.0"
+      args << "--with-type-engine=cairo"
+      args << "--with-imagelib=gdk-pixbuf"
+      args << "--with-scrollbars"
+      args << "--datarootdir=#{mlterm_prefix}/share"
+      args << "--sysconfdir=#{mlterm_prefix}/etc"
+      args << "--enable-image"
+      args << "--enable-fcitx"
+      if build.with? "z80oolong/im/im-scim@1.4.18"
+        args << "--enable-scim"
+      end
+
+      system "./configure", *args
+      system "make"
+      system "make", "install"
+      system "make", "vte"
+      system "make", "install-vte"
+    end
   end
 
   def post_install
-    libvte_lib.glob("libvte-2.91*{.a,.so}*") do |libfile|
+    lib.glob("libvte-2.91*{.a,.so}*") do |libfile|
       ohai "Remove #{libfile}"
       libfile.unlink
     end
 
-    lib.glob("libvte-2.91*{.a,.so}*") do |libfile|
-      ohai "Symlink #{libfile} => #{libvte_lib}/#{libfile.basename}"
-      libvte_lib.install_symlink libfile
+    mlterm_lib.glob("libvte-2.91*{.a,.so}*") do |libfile|
+      ohai "Symlink #{libfile} => #{mlterm_lib}/#{libfile.basename}"
+      lib.install_symlink libfile
     end
-
-    if (lib/"pkgconfig").exist?
-      ohai "Remove #{lib}/pkgconfig"
-      (lib/"pkgconfig").unlink
-    end
-
-    ohai "Symlink #{libvte_lib}/pkgconfig => #{lib}/pkgconfig"
-    lib.install_symlink "#{libvte_lib}/pkgconfig"
-
-    if (lib/"girepository-1.0").exist?
-      ohai "Remove #{lib}/girepository-1.0"
-      (lib/"girepository-1.0").unlink
-    end
-
-    ohai "Symlink #{libvte_lib}/girepository-1.0 => #{lib}/girepository-1.0"
-    lib.install_symlink "#{libvte_lib}/girepository-1.0"
   end
 
   test do
-    system "#{bin}/mlterm", "--version"
+    ENV.clang if OS.mac? && (DevelopmentTools.clang_build_version <= 1500)
+
+    (testpath/"test.c").write <<~C
+      #include <vte/vte.h>
+
+      int main(int argc, char *argv[]) {
+        guint v = vte_get_major_version();
+        return 0;
+      }
+    C
+    flags = shell_output("pkg-config --cflags --libs vte-2.91").chomp.split
+    system ENV.cc, "test.c", "-o", "test", *flags
+    system "./test"
+
+    flags = shell_output("pkg-config --cflags --libs vte-2.91-gtk4").chomp.split
+    system ENV.cc, "test.c", "-o", "test", *flags
+    system "./test"
   end
 end
 
