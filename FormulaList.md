@@ -2,244 +2,171 @@
 
 ## 概要
 
-本文書では、 [Homebrew for Linux][BREW] 向け Tap リポジトリ z80oolong/mlterm に含まれる Formula 一覧を示します。各 Formula の詳細等については ```brew info <formula>``` コマンドも参照して下さい。
+本書では、[Homebrew for Linux][BREW] 向け Tap リポジトリ ```z80oolong/mlterm``` に含まれる Formula を紹介します。詳細は```brew info <formula>```で確認してください。
 
 ## Formula 一覧
 
 ### z80oolong/mlterm/mlterm
 
-この Formula は、多言語対応端末エミュレータ [MLTerm][MTRM] のうち、最新の安定版及び HEAD 版を導入するための Formula です。
+多言語対応端末エミュレータ [MLTerm][MTRM] の最新安定版および HEAD 版を導入する Formula です。
 
-なお、この Formula で導入される [MLTerm][MTRM] では、 [mlterm][MTRM] 本体の他に、fcitx (fcitx5) のインプットメソッドによる日本語入力に対応するプラグインも同時に導入されます。なお、インプットメソッドによる日本語入力に関しては、 fcitx (fcitx5) によるものの他、 SCIM 及び IBus にも対応しています。
+導入される [MLTerm][MTRM] には、fcitx5 による日本語入力対応プラグインが含まれます。
 
-ここで、 [MLTerm][MTRM] から fcitx 及び SCIM, IBus を用いて日本語入力を行う場合は、以下のようにして [MLTerm][MTRM] を起動します。
+**オプション ```--with-im-scim@1.4.18``` を指定すると、SCIM による日本語入力にも対応しますが、動作未確認です。**
+
+日本語入力を行うには、以下のように起動します：
 
 ```
+mlterm --im=fcitx  # fcitx を使用
+mlterm --im=scim   # SCIM を使用
+```
+
+### z80oolong/mlterm/mlterm-libvte@3.9.4
+
+[MLTerm][MTRM] が実装した [libvte 互換ライブラリ][MVTE] を導入する Formula です。このライブラリは、[GNOME 純正の libvte][LVTE] とほぼ同等の機能を有します。
+
+**オプション ```--with-im-scim@1.4.18``` を指定すると、SCIM による日本語入力にも対応しますが、動作未確認です。**
+
+端末エミュレータが ```z80oolong/vte/libvte@2.91``` の代わりに ```z80oolong/mlterm/mlterm-libvte@3.9.3``` に依存するよう Formula を記述すると、[MLTerm][MTRM] の機能を利用した端末エミュレータが導入されます：
+
+```
+class FooVteTerm < Formula
   ...
-  $ mlterm --im=fcitx  # (fcitx を用いる場合)
-  $ mlterm --im=scim   # (SCIM  を用いる場合)
-  $ mlterm --im=ibus   # (IBus  を用いる場合)
+  # depends_on "z80oolong/vte/libvte@2.91"              # 標準の libvte
+  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.3"   # MLTerm の libvte 互換ライブラリ
   ...
+end
 ```
-
-### z80oolong/mlterm/mlterm-libvte@3.9.3
-
-この Formula は、多言語対応端末エミュレータ [MLTerm][MTRM] によって実装された [libvte 互換ライブラリ][MVTE]を導入するための Formula です。
-
-この Formula によって導入される互換ライブラリは、 [GNOME 純正の libvte ライブラリ][LVTE]とほぼ同等の機能を有します。
-
-即ち、 [標準の libvte ライブラリ][LVTE] に代えて [MLTerm][MTRM] によって実装された [libvte 互換ライブラリ][MVTE]を用いて実装された端末エミュレータを導入するための Formula を記述する際には、以下のようにして当該端末エミュレータが依存する Formula である ```z80oolong/vte/libvte@2.91``` に代えて、 ```z80oolong/mlterm/mlterm-libvte@3.9.3``` に依存するように Formula を記述すると、 [MLterm を用いて実装された libvte 互換ライブラリ][MVTE]による端末エミュレータが導入されるので、当該端末エミュレータが [MLTerm][MTRM] の機能を用いて動作するようになります。
-
-```
-  class FooVteTerm < Formula
-    ...
-    #depends_on "z80oolong/vte/vte@2.91"               # → 標準の libvte ライブラリに代えて、
-    depends_on "z80oolong/mlterm/mlterm-libvte@3.9.3"  # → z80oolong/mlterm/mlterm-libvte@3.9.3 に依存させる。
-    ...
-  end
-```
-
-### z80oolong/mlterm/im-fcitx@{version}
-
-(注：上記 ```{version}``` には、 fcitx の各バージョン番号が入ります。以下同様。)
-
-[MLTerm][MTRM] において、インプットメソッド fcitx (fcitx5) による日本語入力を可能にする各種ライブラリを導入するための Formula です。この Formula は、 ```z80oolong/mlterm/mlterm, z80oolong/mlterm/mlterm@{version}, z80oolong/mlterm/mlterm-libvte@3.9.4``` がこの Formula に依存します。
-
-**この Formula は、 versioned formula であるため、この Formula によって導入される ```z80oolong/mlterm/im-fcitx@{version}``` は、 keg only で導入されることに留意して下さい。**
-
-### z80oolong/mlterm/im-scim@{version}
-
-(注：上記 ```{version}``` には、 SCIM の各バージョン番号が入ります。以下同様。)
-
-[MLTerm][MTRM] において、インプットメソッド SCIM による日本語入力を可能にする各種ライブラリを導入するための Formula です。この Formula は、 ```z80oolong/mlterm/mlterm, z80oolong/mlterm/mlterm@{version}, z80oolong/mlterm/mlterm-libvte@3.9.4``` がこの Formula に依存します。
-
-**この Formula は、 versioned formula であるため、この Formula によって導入される ```z80oolong/mlterm/im-scim@{version}``` は、 keg only で導入されることに留意して下さい。**
-
-### z80oolong/mlterm/im-ibus@{version}
-
-(注：上記 ```{version}``` には、 IBus の各バージョン番号が入ります。以下同様。)
-
-[MLTerm][MTRM] において、インプットメソッド IBus による日本語入力を可能にする各種ライブラリを導入するための Formula です。この Formula は、 ```z80oolong/mlterm/mlterm, z80oolong/mlterm/mlterm@{version}, z80oolong/mlterm/mlterm-libvte@3.9.4``` がこの Formula に依存します。
-
-**この Formula は、 versioned formula であるため、この Formula によって導入される ```z80oolong/mlterm/im-ibus@{version}``` は、 keg only で導入されることに留意して下さい。**
 
 ### z80oolong/mlterm/sakura-mlterm
 
-[GTK][DGTK] と [libvte][LVTE] ベースの端末エミュレータであり、[MLterm を用いて実装された libvte 互換ライブラリ][MVTE]によって動作する [sakura][SAKU] のうち、最新の安定版及び HEAD 版を導入するための Formula です。
+[GTK][DGTK] および [libvte][LVTE] ベースの端末エミュレータ [sakura][SAKU] を、[MLTerm の libvte 互換ライブラリ][MVTE] で動作させる最新安定版および HEAD 版を導入する Formula です。
 
-使用法の詳細については、 **Tap リポジトリ ```z80oolong/vte``` 内のドキュメント ```FormulaList.md``` の ```z80oolong/vte/sakura``` の Formula についての記述を参照して下さい。**
+使用方法は ```z80oolong/vte``` の ```FormulaList.md``` 内 ```z80oolong/vte/sakura``` を参照してください。
 
-**なお、 [sakura][SAKU] における各種設定に関しては、 [libvte 互換ライブラリ][MVTE]によって動作する [MLTerm][MTRM] によって行った各種設定が [sakura][SAKU] の各種設定に優先されることに留意する必要があります。**
+**[MLTerm][MTRM] の設定が [sakura][SAKU] の設定に優先されます。**
 
-**また、この Formula は ```z80oolong/vte/sakura``` との conflict を防ぐため、この Formula によって導入される [sakura][SAKU] は、 keg only で導入されることに留意して下さい。**
-
-この Formula によって導入される [sakura][SAKU] を使用するには、 ```brew link --force z80oolong/mlterm/sakura-mlterm``` コマンドを実行する必要があります。
+**```z80oolong/vte/sakura``` との競合を避けるため、keg-only でインストールされます。使用するには ```brew link --force z80oolong/mlterm/sakura-mlterm``` を実行してください。**
 
 ### z80oolong/mlterm/roxterm-mlterm
 
-[libvte][LVTE] ベースであり、場所をとらないタブ式端末エミュレータであり、[MLterm を用いて実装された libvte 互換ライブラリ][MVTE]によって動作する [roxterm][ROXT] のうち、最新の安定版及び HEAD 版を導入するための Formula です。
+[libvte][LVTE] ベースのタブ式端末エミュレータ [roxterm][ROXT] を、[MLTerm の libvte 互換ライブラリ][MVTE] で動作させる最新安定版および HEAD 版を導入する Formula です。
 
-使用法の詳細については、 **Tap リポジトリ ```z80oolong/vte``` 内のドキュメント ```FormulaList.md``` の ```z80oolong/vte/roxterm``` の Formula についての記述を参照して下さい。**
+使用方法は ```z80oolong/vte``` の ```FormulaList.md``` 内 ```z80oolong/vte/roxterm``` を参照してください。
 
-**なお、 [roxterm][ROXT] における各種設定に関しては、 [libvte 互換ライブラリ][MVTE]によって動作する [MLTerm][MTRM] によって行った各種設定が [roxterm][ROXT] の各種設定に優先されることに留意する必要があります。**
+**[MLTerm][MTRM] の設定が [roxterm][ROXT] の設定に優先されます。**
 
-**また、この Formula は ```z80oolong/vte/roxterm``` との conflict を防ぐため、この Formula によって導入される [roxterm][ROXT] は、 keg only で導入されることに留意して下さい。**
+**```z80oolong/vte/roxterm``` との競合を避けるため、keg-only でインストールされます。使用するには ```brew link --force z80oolong/mlterm/roxterm-mlterm``` を実行してください。**
 
-この Formula によって導入される [roxterm][ROXT] を使用するには、 ```brew link --force z80oolong/mlterm/roxterm-mlterm``` コマンドを実行する必要があります。
+### z80oolong/mlterm/tilda-mlterm
 
-### z80oolong/vte/tilda-mlterm
+[libvte][LVTE] ベースのドロップダウン端末エミュレータ [tilda][TILD] を、[MLTerm の libvte 互換ライブラリ][MVTE] で動作させる最新安定版および HEAD 版を導入する Formula です。
 
-[libvte][LVTE] ベースであり、設定可能なドロップダウン端末エミュレータであり、[MLterm を用いて実装された libvte 互換ライブラリ][MVTE]によって動作する [tilda][TILD] のうち、最新の安定版及び HEAD 版を導入するための Formula です。
+使用方法は ```z80oolong/vte``` の ```FormulaList.md``` 内 ```z80oolong/vte/tilda``` を参照してください。
 
-使用法の詳細については、 **Tap リポジトリ ```z80oolong/vte``` 内のドキュメント ```FormulaList.md``` の ```z80oolong/vte/tilda``` の Formula についての記述を参照して下さい。**
+**[MLTerm][MTRM] の設定が [tilda][TILD] の設定に優先されます。**
 
-**なお、 [roxterm][ROXT] における各種設定に関しては、 [libvte 互換ライブラリ][MVTE]によって動作する [MLTerm][MTRM] によって行った各種設定が [tilda][TILD] の各種設定に優先されることに留意する必要があります。**
-
-**また、この Formula は ```z80oolong/vte/tilda``` との conflict を防ぐため、この Formula によって導入される [tilda][TILD] は、 keg only で導入されることに留意して下さい。**
-
-この Formula によって導入される [tilda][TILD] を使用するには、 ```brew link --force z80oolong/mlterm/tilda-mlterm``` コマンドを実行する必要があります。
+**```z80oolong/vte/tilda``` との競合を避けるため、keg-only でインストールされます。使用するには ```brew link --force z80oolong/mlterm/tilda-mlterm``` を実行してください。**
 
 ### z80oolong/mlterm/lxterminal-mlterm
 
-[libvte][LVTE] ベースの [LXDE][LXDE] 用端末エミュレータであり、[MLterm を用いて実装された libvte 互換ライブラリ][MVTE]によって動作する [lxterminal][LXTM] のうち、最新の安定版及び HEAD 版を導入するための Formula です。
+[libvte][LVTE] ベースの [LXDE][LXDE] 用端末エミュレータ [lxterminal][LXTM] を、[MLTerm の libvte 互換ライブラリ][MVTE] で動作させる最新安定版および HEAD 版を導入する Formula です。
 
-使用法の詳細については、 **Tap リポジトリ ```z80oolong/vte``` 内のドキュメント ```FormulaList.md``` の ```z80oolong/vte/lxterminal``` の Formula についての記述を参照して下さい。**
+使用方法は ```z80oolong/vte``` の ```FormulaList.md``` 内 ```z80oolong/vte/lxterminal``` を参照してください。
 
-**なお、 [lxterminal][LXTM] における各種設定に関しては、 [libvte 互換ライブラリ][MVTE]によって動作する [MLTerm][MTRM] によって行った各種設定が [lxterminal][LXTM] の各種設定に優先されることに留意する必要があります。**
+**[MLTerm][MTRM] の設定が [lxterminal][LXTM] の設定に優先されます。**
 
-**また、この Formula は ```z80oolong/vte/roxterm``` との conflict を防ぐため、この Formula によって導入される [lxterminal][LXTM] は、 keg only で導入されることに留意して下さい。**
-
-この Formula によって導入される [lxterminal][LXTM] を使用するには、 ```brew link --force z80oolong/mlterm/lxterminal-mlterm``` コマンドを実行する必要があります。
-
-### z80oolong/mlterm/mate-terminal-mlterm
-
-[libvte][LVTE] ベースの [MATE][MATE] 用端末エミュレータであり、[MLterm を用いて実装された libvte 互換ライブラリ][MVTE]によって動作する [mate-terminal][MTTM] のうち、最新の安定版及び HEAD 版を導入するための Formula です。
-
-使用法の詳細については、 **Tap リポジトリ ```z80oolong/vte``` 内のドキュメント ```FormulaList.md``` の ```z80oolong/vte/mate-terminal``` の Formula についての記述を参照して下さい。**
-
-**なお、 [mate-terminal][MTTM] における各種設定に関しては、 [libvte 互換ライブラリ][MVTE]によって動作する [MLTerm][MTRM] によって行った各種設定が [mate-terminal][MTTM] の各種設定に優先されることに留意する必要があります。**
-
-**また、この Formula は ```z80oolong/vte/mate-terminal``` との conflict を防ぐため、この Formula によって導入される [mate-terminal][MTTM] は、 keg only で導入されることに留意して下さい。**
-
-この Formula によって導入される [mate-terminal][MTTM] を使用するには、 ```brew link --force z80oolong/mlterm/mate-terminal-mlterm``` コマンドを実行する必要があります。
-
-### z80oolong/mlterm/xfce4-terminal-mlterm
-
-[libvte][LVTE] ベースの [xfce4][MATE] 用端末エミュレータであり、[MLterm を用いて実装された libvte 互換ライブラリ][MVTE]によって動作する [xfce4-terminal][XFTM] のうち、最新の安定版及び HEAD 版を導入するための Formula です。
-
-使用法の詳細については、 **Tap リポジトリ ```z80oolong/vte``` 内のドキュメント ```FormulaList.md``` の ```z80oolong/vte/xfce4-terminal``` の Formula についての記述を参照して下さい。**
-
-**なお、 [xfce4-terminal][XFTM] における各種設定に関しては、 [libvte 互換ライブラリ][MVTE]によって動作する [MLTerm][MTRM] によって行った各種設定が [xfce4-terminal][XFTM] の各種設定に優先されることに留意する必要があります。**
-
-**また、この Formula は ```z80oolong/vte/xfce4-terminal``` との conflict を防ぐため、この Formula によって導入される [xfce4-terminal][XFTM] は、 keg only で導入されることに留意して下さい。**
-
-この Formula によって導入される [xfce4-terminal][XFTM] を使用するには、 ```brew link --force z80oolong/mlterm/xfce4-terminal-mlterm``` コマンドを実行する必要があります。
-
-### z80oolong/vte/gnome-terminal-mlterm
-
-[libvte][LVTE] ベースの [GNOME][GNME] 標準の端末エミュレータであり、[MLterm を用いて実装された libvte 互換ライブラリ][MVTE]によって動作する [gnome-terminal][GTRM] のうち、最新の安定版及び HEAD 版を導入するための Formula です。
-
-用法の詳細については、 **Tap リポジトリ ```z80oolong/vte``` 内のドキュメント ```FormulaList.md``` の ```z80oolong/vte/gnome-terminal``` の Formula についての記述を参照して下さい。**
-
-**また、この Formula は ```z80oolong/vte/gnome-terminal``` との conflict を防ぐため、この Formula によって導入される [gnome-terminal][GTRM] は、 keg only で導入されることに留意して下さい。**
-
-この Formula によって導入される [gnome-terminal][GTRM] を使用するには、 ```brew link --force z80oolong/mlterm/gnome-terminal-mlterm``` コマンドを実行する必要があります。
+**```z80oolong/vte/lxterminal``` との競合を避けるため、keg-only でインストールされます。使用するには ```brew link --force z80oolong/mlterm/lxterminal-mlterm``` を実行してください。**
 
 ### z80oolong/mlterm/mlterm@{version}
 
-(注：上記 ```{version}``` には、 [MLTerm][MTRM] の各バージョン番号が入ります。以下同様。)
+（注: ```{version}``` は [MLTerm][MTRM] のバージョン番号を表します。以下同様。）
 
-この Formula は、多言語対応端末エミュレータ [MLTerm][MTRM] の安定版 [mlterm {version}][MTRM] を導入します。
+[MLTerm][MTRM] の安定版を導入する Formula です。
 
-この Formula で導入した [MLTerm][MTRM] の使用法については、前述の ```z80oolong/mlterm/mlterm``` の Formula についての記述を参照して下さい。
+使用方法は ```z80oolong/mlterm/mlterm``` を参照してください。
 
-**この Formula は、 versioned formula であるため、この Formula によって導入される [MLTerm][MTRM] は、 keg only で導入されることに留意して下さい。**
-
-この Formula によって導入される [MLTerm][MTRM] を使用するには、 ```brew link --force z80oolong/mlterm/mlterm@{version}``` コマンドを実行する必要があります。
+**本 Formula は versioned formula のため、keg-only でインストールされます。使用するには ```brew link --force z80oolong/mlterm/mlterm@{version}``` を実行してください。**
 
 ### z80oolong/mlterm/sakura-mlterm@{version}
 
-(注：上記 ```{version}``` には、 [sakura][SAKU] の各バージョン番号が入ります。以下同様。)
+（注: ```{version}``` は [sakura][SAKU] のバージョン番号を表します。）
 
-この Formula は、 [MLterm を用いて実装された libvte 互換ライブラリ][MVTE] ベースの端末エミュレータである [sakura][SAKU] の安定版 [sakura {version}][SAKU] を導入します。
+[MLTerm の libvte 互換ライブラリ][MVTE] ベースの [sakura][SAKU] の安定版を導入する Formula です。
 
-この Formula で導入した [sakura][SAKU] の使用法については、前述の ```z80oolong/vte/sakura``` の Formula についての記述を参照して下さい。
+使用方法は ```z80oolong/vte/sakura``` を参照してください。
 
-**この Formula は、 versioned formula であるため、この Formula によって導入される [sakura][SAKU] は、 keg only で導入されることに留意して下さい。**
+**本 Formula は versioned formula のため、keg-only でインストールされます。使用するには ```brew link --force z80oolong/mlterm/sakura-mlterm@{version}``` を実行してください。**
 
-この Formula によって導入される [sakura][SAKU] を使用するには、 ```brew link --force z80oolong/mlterm/sakura-mlterm@{version}``` コマンドを実行する必要があります。
+### z80oolong/mlterm/sakura-mlterm@9999-dev
+
+```z80oolong/vte/sakura@9999-dev``` に同梱された EAA 問題を修正する差分ファイルを、対応する [MLTerm の libvte 互換ライブラリ][MVTE] ベースの [sakura][SAKU] の HEAD 版のコミットに適用したものを導入する Formula です。**導入される具体的な commit ID は ```brew info z80oolong/mlterm/sakura-mlterm@9999-dev``` で確認してください。**
+
+使用方法は ```z80oolong/vte/sakura``` を参照してください。
+
+**本 Formula は versioned formula のため、keg-only でインストールされます。使用するには ```brew link --force z80oolong/mlterm/sakura-mlterm@9999-dev``` を実行してください。**
+
+**```z80oolong/mlterm/sakura-mlterm``` の HEAD 版でパッチ適用に問題が生じた場合の暫定用です。通常は ```z80oolong/mlterm/sakura-mlterm``` を使用してください。**
 
 ### z80oolong/mlterm/roxterm-mlterm@{version}
 
-(注：上記 ```{version}``` には、 [roxterm][ROXT] の各バージョン番号が入ります。以下同様。)
+（注: ```{version}``` は [roxterm][ROXT] のバージョン番号を表します。）
 
-この Formula は、 [MLterm を用いて実装された libvte 互換ライブラリ][MVTE] ベースの端末エミュレータである [roxterm][ROXT] の安定版 [roxterm {version}][ROXT] を導入します。
+[MLTerm の libvte 互換ライブラリ][MVTE] ベースの [roxterm][ROXT] の安定版を導入する Formula です。
 
-この Formula で導入した [roxterm][ROXT] の使用法については、前述の ```z80oolong/vte/roxterm``` の Formula についての記述を参照して下さい。
+使用方法は ```z80oolong/vte/roxterm``` を参照してください。
 
-**この Formula は、 versioned formula であるため、この Formula によって導入される [roxterm][ROXT] は、 keg only で導入されることに留意して下さい。**
+**本 Formula は versioned formula のため、keg-only でインストールされます。使用するには ```brew link --force z80oolong/mlterm/roxterm-mlterm@{version}``` を実行してください。**
 
-この Formula によって導入される [roxterm][ROXT] を使用するには、 ```brew link --force z80oolong/mlterm/roxterm-mlterm@{version}``` コマンドを実行する必要があります。
+### z80oolong/mlterm/roxterm-mlterm@9999-dev
 
-### z80oolong/vte/tilda-mlterm@{version}
+```z80oolong/vte/roxterm@9999-dev``` に同梱された EAA 問題の修正および日本語化差分ファイルを、対応する [MLTerm の libvte 互換ライブラリ][MVTE] ベースの [roxterm][ROXT] の HEAD 版のコミットに適用したものを導入する Formula です。**導入される具体的な commit ID は ```brew info z80oolong/mlterm/roxterm-mlterm@9999-dev``` で確認してください。**
 
-(注：上記 ```{version}``` には、 [tilda][TILD] の各バージョン番号が入ります。以下同様。)
+使用方法は ```z80oolong/vte/roxterm``` を参照してください。
 
-この Formula は、 [MLterm を用いて実装された libvte 互換ライブラリ][MVTE] ベースの端末エミュレータである [tilda][TILD] の安定版 [tilda {version}][TILD] を導入します。
+**本 Formula は versioned formula のため、keg-only でインストールされます。使用するには ```brew link --force z80oolong/mlterm/roxterm-mlterm@9999-dev``` を実行してください。**
 
-この Formula で導入した [roxterm][ROXT] の使用法については、前述の ```z80oolong/vte/tilda``` の Formula についての記述を参照して下さい。
+**```z80oolong/mlterm/roxterm-mlterm``` の HEAD 版でパッチ適用に問題が生じた場合の暫定用です。通常は ```z80oolong/mlterm/roxterm-mlterm``` を使用してください。**
 
-**また、この Formula は versioned formula であるため、この Formula によって導入される [tilda][TILD] は、 keg only で導入されることに留意して下さい。**
+### z80oolong/mlterm/tilda-mlterm@{version}
 
-この Formula によって導入される [tilda][TILD] を使用するには、 ```brew link --force z80oolong/mlterm/tilda-mlterm@{version}``` コマンドを実行する必要があります。
+（注: ```{version}``` は [tilda][TILD] のバージョン番号を表します。）
+
+[MLTerm の libvte 互換ライブラリ][MVTE] ベースの [tilda][TILD] の安定版を導入する Formula です。
+
+使用方法は ```z80oolong/vte/tilda``` を参照してください。
+
+**本 Formula は versioned formula のため、keg-only でインストールされます。使用するには ```brew link --force z80oolong/mlterm/tilda-mlterm@{version}``` を実行してください。**
+
+### z80oolong/mlterm/tilda-mlterm@9999-dev
+
+```z80oolong/vte/tilda@9999-dev``` に同梱された EAA 問題を修正する差分ファイルを、対応する [MLTerm の libvte 互換ライブラリ][MVTE] ベースの [tilda][TILD] の HEAD 版のコミットに適用したものを導入する Formula です。**導入される具体的な commit ID は ```brew info z80oolong/mlterm/tilda-mlterm@9999-dev``` で確認してください。**
+
+使用方法は ```z80oolong/vte/tilda``` を参照してください。
+
+**本 Formula は versioned formula のため、keg-only でインストールされます。使用するには ```brew link --force z80oolong/mlterm/tilda-mlterm@9999-dev``` を実行してください。**
+
+**```z80oolong/mlterm/tilda-mlterm``` の HEAD 版でパッチ適用に問題が生じた場合の暫定用です。通常は ```z80oolong/mlterm/tilda-mlterm``` を使用してください。**
 
 ### z80oolong/mlterm/lxterminal-mlterm@{version}
 
-(注：上記 ```{version}``` には、 [lxterminal][LXTM] の各バージョン番号が入ります。以下同様。)
+（注: ```{version}``` は [lxterminal][LXTM] のバージョン番号を表します。）
 
-この Formula は、 [MLterm を用いて実装された libvte 互換ライブラリ][MVTE] ベースの端末エミュレータの安定版 [lxterminal {version}][LXTM] を導入します。
+[MLTerm の libvte 互換ライブラリ][MVTE] ベースの [lxterminal][LXTM] の安定版を導入する Formula です。
 
-なお、この Formula で導入した [lxterminal][LXTM] の使用法については、前述の ```z80oolong/vte/lxterminal``` の Formula についての記述を参照して下さい。
+使用方法は ```z80oolong/vte/lxterminal``` を参照してください。
 
-**この Formula は、 versioned formula であるため、この Formula によって導入される [lxterminal][LXTM] は、 keg only で導入されることに留意して下さい。**
+**本 Formula は versioned formula のため、keg-only でインストールされます。使用するには ```brew link --force z80oolong/mlterm/lxterminal-mlterm@{version}``` を実行してください。**
 
-この Formula によって導入される [lxterminal][LXTM] を使用するには、 ```brew link --force z80oolong/mlterm/lxterminal-mlterm@{version}``` コマンドを実行する必要があります。
+### z80oolong/mlterm/lxterminal-mlterm@9999-dev
 
-### z80oolong/mlterm/mate-terminal-mlterm@{version}
+```z80oolong/vte/lxterminal@9999-dev``` に同梱された EAA 問題を修正する差分ファイルを、対応する [MLTerm の libvte 互換ライブラリ][MVTE] ベースの [lxterminal][LXTM] の HEAD 版のコミットに適用したものを導入する Formula です。**導入される具体的な commit ID は ```brew info z80oolong/mlterm/tilda-mlterm@9999-dev``` で確認してください。**
 
-(注：上記 ```{version}``` には、 [mate-terminal][MTTM] の各バージョン番号が入ります。以下同様。)
+使用方法は ```z80oolong/vte/lxterminal``` を参照してください。
 
-この Formula は、 [MLterm を用いて実装された libvte 互換ライブラリ][MVTE] ベースの端末エミュレータの安定版 [mate-terminal {version}][MTTM] を導入するための Formula です。
+**本 Formula は versioned formula のため、keg-only でインストールされます。使用するには ```brew link --force z80oolong/mlterm/lxterminal-mlterm@9999-dev``` を実行してください。**
 
-なお、この Formula で導入した [mate-terminal][MTTM] の使用法については、前述の ```z80oolong/vte/mate-terminal``` の Formula についての記述を参照して下さい。
-
-**この Formula は、 versioned formula であるため、この Formula によって導入される [mate-terminal][MTTM] は、 keg only で導入されることに留意して下さい。**
-
-この Formula によって導入される [mate-terminal][MTTM] を使用するには、 ```brew link --force z80oolong/mlterm/mate-terminal-mlterm@{version}``` コマンドを実行する必要があります。
-
-### z80oolong/mlterm/xfce4-terminal-mlterm@{version}
-
-(注：上記 ```{version}``` には、 [xfce4-terminal][XFTM] の各バージョン番号が入ります。以下同様。)
-
-この Formula は、 [MLterm を用いて実装された libvte 互換ライブラリ][MVTE] ベースの端末エミュレータの安定版 [xfce4-terminal {version}][MTTM] を導入するための Formula です。
-
-なお、この Formula で導入した [xfce4-terminal][XFTM] の使用法については、前述の ```z80oolong/vte/mate-terminal``` の Formula についての記述を参照して下さい。
-
-**この Formula は、 versioned formula であるため、この Formula によって導入される [xfce4-terminal][MTTM] は、 keg only で導入されることに留意して下さい。**
-
-この Formula によって導入される [xfce4-terminal][XFTM] を使用するには、 ```brew link --force z80oolong/mlterm/xfce4-terminal-mlterm@{version}``` コマンドを実行する必要があります。
-
-### z80oolong/mlterm/gnome-terminal-mlterm@{version}
-
-(注：上記 ```{version}``` には、 [xfce4-terminal][XFTM] の各バージョン番号が入ります。以下同様。)
-
-[MLterm を用いて実装された libvte 互換ライブラリ][MVTE] ベースの [GNOME][GNME] 標準の端末エミュレータの安定版 [gnome-terminal {version}][GTRM] を導入するための Formula です。
-
-なお、 Formula によって導入した [gnome-terminal][GTRM] の使用法については、前述の ```z80oolong/mlterm/gnome-terminal``` の Formula についての記述を参照して下さい。
-
-**この Formula は、 versioned formula であるため、この Formula によって導入される [xfce4-terminal][MTTM] は、 keg only で導入されることに留意して下さい。**
-
-この Formula によって導入される [gnome-terminal][GTRM] を使用するには、 ```brew link --force z80oolong/mlterm/gnome-terminal-mlterm@{version}``` コマンドを実行する必要があります。
+**```z80oolong/mlterm/lxterminal-mlterm``` の HEAD 版でパッチ適用に問題が生じた場合の暫定用です。通常は ```z80oolong/mlterm/lxterminal-mlterm``` を使用してください。**
 
 <!-- 外部リンク一覧 -->
 

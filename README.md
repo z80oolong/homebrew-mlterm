@@ -1,56 +1,56 @@
-# z80oolong/mlterm -- MLTerm 及び MLTerm の libvte 互換ライブラリを用いた端末エミュレータを導入するための Formula 群
+# z80oolong/mlterm -- MLTerm および MLTerm の libvte 互換ライブラリを用いた端末エミュレータの Formula 群
 
 ## 概要
 
-[Homebrew for Linux][BREW] とは、Linux の各ディストリビューションにおけるソースコードの取得及びビルドに基づいたパッケージ管理システムです。 [Homebrew for Linux][BREW] の使用により、ソースコードからのビルドに基づいたソフトウェアの導入を単純かつ容易に行うことが出来ます。
+[Homebrew for Linux][BREW] は、Linux ディストリビューション向けのソースコードベースのパッケージ管理システムで、ソフトウェアのビルドと導入を簡素化します。
 
-また、 [MLTerm][MTRM] とは、高速な多言語対応端末エミュレータであり、可変幅フォント及び多言語フォントのレンダリングと日本語入力システムからの直接入力と [SIXEL 機能][SIXL]に対応しているのが特徴です。
+[MLTerm][MTRM] は、高速な多言語対応端末エミュレータで、可変幅フォント、多言語フォントのレンダリング、日本語入力システムからの直接入力、[SIXEL 機能][SIXL] に対応しています。
 
-この [Homebrew for Linux][BREW] 向け Tap リポジトリは、多言語対応端末エミュレータ [MLTerm][MTRM] を導入するための Formula 群を含む Tap リポジトリです。
+本 Tap リポジトリ ```z80oolong/mlterm``` は、[MLTerm][MTRM] および [MLTerm の libvte 互換ライブラリ][MVTE] を用いた [libvte][LVTE] 対応端末エミュレータを導入する Formula 群を提供します。
 
-なお、本 Tap リポジトリには、 [MLTerm][MTRM] によって実装された [libvte 互換ライブラリ][MVTE]及び、[純正の libvte ライブラリ][LVTE]に代えて、[MLTerm で実装された libvte 互換ライブラリ][MVTE]を用いてビルドされた [libvte][LVTE] 対応端末エミュレータを導入するための Formula も併せて同梱しています。
+[MLTerm の libvte 互換ライブラリ][MVTE] を [libvte][LVTE] 対応端末エミュレータに適用する詳細は、[Araki Ken 氏][ARAK] の Qiita 投稿「[libvte互換ライブラリについて][MVTE]」を参照してください。
 
-ここで、 [MLTerm で実装された libvte 互換ライブラリ][MVTE]を [libvte][LVTE] 対応端末エミュレータに適用する手法等についての詳細については、以下の Web ページをご覧下さい。
+対応する Formula の詳細は、本リポジトリに同梱の ```FormulaList.md``` を参照してください。
 
-- [Araki Ken 氏][ARAK]による "[libvte互換ライブラリについて][MVTE]" の投稿
+## 使用方法
 
-なお、本リポジトリで導入される [MLTerm][MTRM] と [MLTerm で実装された libvte 互換ライブラリ][MVTE]及び [MLTerm で実装された libvte 互換ライブラリ][MVTE]を用いてビルドされた [libvte][LVTE] 対応端末エミュレータに関しては、本リポジトリに同梱する  ```FormulaList.md``` を参照してください。
+[Homebrew for Linux][BREW] を以下の参考資料に基づいてインストールします：
 
-## 使用法
+- [thermes 氏][THER] の Qiita 投稿「[Linuxbrew のススメ][THBR]」
+- [Homebrew for Linux 公式ページ][BREW]
 
-まず最初に、以下に示す Qiita の投稿及び Web ページの記述に基づいて、手元の端末に [Homebrew for Linux][BREW] を構築し、以下のように  ```brew tap``` コマンドを用いて本リポジトリを導入します。
-
-- [thermes 氏][THER]による "[Linuxbrew のススメ][THBR]" の投稿
-- [Homebrew for Linux の公式ページ][BREW]
-
-そして、本リポジトリに含まれる Formula を以下のようにインストールします。
+本リポジトリの Formula を以下のようにインストールします：
 
 ```
- $ brew tap z80oolong/mlterm
- $ brew install <formula>
+  brew tap z80oolong/mlterm
+  brew install <formula>
 ```
 
-なお、一時的な手法ですが、以下のようにして URL を直接指定してインストールすることも出来ます。
+または、一時的に以下の方法で直接インストールも可能です：
 
 ```
- $ brew install https://raw.githubusercontent.com/z80oolong/homebrew-mlterm/master/Formula/<formula>.rb
+  brew install https://raw.githubusercontent.com/z80oolong/homebrew-mlterm/master/Formula/<formula>.rb
 ```
 
-なお、本リポジトリに含まれる Formula の一覧及びその詳細については、本リポジトリに同梱する ```FormulaList.md``` を参照して下さい。
+Formula の一覧と詳細は、本リポジトリに同梱の ```FormulaList.md``` を参照してください。
 
-## その他詳細について
+## 詳細情報
 
-その他、本リポジトリ及び [Homebrew for Linux][BREW] の使用についての詳細は ```brew help``` コマンド及び  ```man brew``` コマンドの内容、若しくは [Homebrew for Linux の公式ページ][BREW]を御覧下さい。
+本リポジトリおよび [Homebrew for Linux][BREW] の詳細は、```brew help``` または ```man brew``` コマンド、または [Homebrew for Linux 公式ページ][BREW] を参照してください。
 
 ## 謝辞
 
-まず最初に、多言語対応端末エミュレータ [MLTerm][MTRM] の作者である [Araki Ken 氏][ARAK]に心より感謝致します。
+多言語対応端末エミュレータ [MLTerm][MTRM] の作者である [Araki Ken 氏][ARAK] に深く感謝します。
 
-次に、 [MLTerm で実装された libvte 互換ライブラリ][MVTE]を [libvte][LVTE] 対応端末エミュレータに適用する手法等に関しては、 [Araki Ken 氏][ARAK]による "[libvte互換ライブラリについて][MVTE]" の投稿を参考に致しました。
+[MLTerm の libvte 互換ライブラリ][MVTE] を [libvte][LVTE] 対応端末エミュレータに適用する手法は、[Araki Ken 氏][ARAK] の Qiita 投稿「[libvte互換ライブラリについて][MVTE]」を参考にしました。
 
-また、 [Homebrew for Linux][BREW] の導入に関しては、 [Homebrew for Linux の公式ページ][BREW] の他、 [thermes 氏][THER]による "[Homebrew for Linux のススメ][THBR]" 及び [Homebrew for Linux][BREW] 関連の各種資料を参考にしました。 [Homebrew for Linux の開発コミュニティ][BREW]及び[thermes 氏][THER]を始めとする各氏に心より感謝致します。
+[Homebrew for Linux][BREW] の導入については、[Homebrew for Linux 公式ページ][BREW] および [thermes 氏][THER] の Qiita 投稿「[Linuxbrew のススメ][THBR]」を参考にしました。[Homebrew for Linux 開発コミュニティ][BREW] および [thermes 氏][THER] に感謝します。
 
-そして最後に、 [MLTerm][MTRM] に関わる全ての皆様及び、 [Homebrew for Linux][BREW] に関わる全ての皆様に心より感謝致します。
+[MLTerm][MTRM] および [Homebrew for Linux][BREW] に関わるすべての皆様に深く感謝します。
+
+## 使用条件
+
+本リポジトリは、[Homebrew for Linux][BREW] の Tap リポジトリとして、[Homebrew for Linux 開発コミュニティ][BREW] および [Z.OOL.][ZOOL] が著作権を有し、[BSD 2-Clause License][BSD2] に基づいて配布されます。詳細は本リポジトリの ```LICENSE``` を参照してください。
 
 <!-- 外部リンク一覧 -->
 
@@ -62,3 +62,5 @@
 [THER]:https://qiita.com/thermes
 [THBR]:https://qiita.com/thermes/items/926b478ff6e3758ecfea
 [ARAK]:https://github.com/arakiken
+[BSD2]:https://opensource.org/licenses/BSD-2-Clause
+[ZOOL]:http://zool.jpn.org/
