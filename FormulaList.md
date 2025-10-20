@@ -17,8 +17,8 @@
 日本語入力を行うには、以下のように起動します：
 
 ```
-mlterm --im=fcitx  # fcitx を使用
-mlterm --im=scim   # SCIM を使用
+  mlterm --im=fcitx  # fcitx を使用
+  mlterm --im=scim   # SCIM を使用
 ```
 
 ### z80oolong/mlterm/mlterm-libvte@3.9.4
@@ -27,13 +27,13 @@ mlterm --im=scim   # SCIM を使用
 
 **オプション ```--with-im-scim@1.4.18``` を指定すると、SCIM による日本語入力にも対応しますが、動作未確認です。**
 
-端末エミュレータが ```z80oolong/vte/libvte@2.91``` の代わりに ```z80oolong/mlterm/mlterm-libvte@3.9.3``` に依存するよう Formula を記述すると、[MLTerm][MTRM] の機能を利用した端末エミュレータが導入されます：
+端末エミュレータが ```z80oolong/vte/libvte@2.91``` の代わりに ```z80oolong/mlterm/mlterm-libvte@3.9.4``` に依存するよう Formula を記述すると、[MLTerm][MTRM] の機能を利用した端末エミュレータが導入されます：
 
 ```
 class FooVteTerm < Formula
   ...
   # depends_on "z80oolong/vte/libvte@2.91"              # 標準の libvte
-  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.3"   # MLTerm の libvte 互換ライブラリ
+  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"     # MLTerm の libvte 互換ライブラリ
   ...
 end
 ```
