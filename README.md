@@ -8,7 +8,7 @@
 
 本 Tap リポジトリ ```z80oolong/mlterm``` は、[MLTerm][MTRM] および [MLTerm の libvte 互換ライブラリ][MVTE] を用いた [libvte][LVTE] 対応端末エミュレータを導入する Formula 群を提供します。
 
-[MLTerm の libvte 互換ライブラリ][MVTE] を [libvte][LVTE] 対応端末エミュレータに適用する詳細は、[Araki Ken 氏][ARAK] の Qiita 投稿「[libvte互換ライブラリについて][MVTE]」を参照してください。
+[MLTerm の libvte 互換ライブラリ][MVTE] を [libvte][LVTE] 対応端末エミュレータに適用する詳細は、[Araki Ken 氏][ARAK] の Qiita 投稿 "[libvte互換ライブラリについて][MVTE]" を参照してください。
 
 対応する Formula の詳細は、本リポジトリに同梱の ```FormulaList.md``` を参照してください。
 
@@ -16,20 +16,20 @@
 
 [Homebrew for Linux][BREW] を以下の参考資料に基づいてインストールします：
 
-- [thermes 氏][THER] の Qiita 投稿「[Linuxbrew のススメ][THBR]」
+- [thermes 氏][THER] の Qiita 投稿 "[Linuxbrew のススメ][THBR]"
 - [Homebrew for Linux 公式ページ][BREW]
 
-本リポジトリの Formula を以下のようにインストールします：
+そして、本リポジトリの Formula を以下のようにインストールします：
 
 ```
-  brew tap z80oolong/mlterm
-  brew install <formula>
+brew tap z80oolong/mlterm
+brew install <formula>
 ```
 
 または、一時的に以下の方法で直接インストールも可能です：
 
 ```
-  brew install https://raw.githubusercontent.com/z80oolong/homebrew-mlterm/master/Formula/<formula>.rb
+brew install https://raw.githubusercontent.com/z80oolong/homebrew-mlterm/master/Formula/<formula>.rb
 ```
 
 Formula の一覧と詳細は、本リポジトリに同梱の ```FormulaList.md``` を参照してください。
@@ -42,9 +42,9 @@ Formula の一覧と詳細は、本リポジトリに同梱の ```FormulaList.md
 
 多言語対応端末エミュレータ [MLTerm][MTRM] の作者である [Araki Ken 氏][ARAK] に深く感謝します。
 
-[MLTerm の libvte 互換ライブラリ][MVTE] を [libvte][LVTE] 対応端末エミュレータに適用する手法は、[Araki Ken 氏][ARAK] の Qiita 投稿「[libvte互換ライブラリについて][MVTE]」を参考にしました。
+[MLTerm の libvte 互換ライブラリ][MVTE] を [libvte][LVTE] 対応端末エミュレータに適用する手法は、[Araki Ken 氏][ARAK] の Qiita 投稿 "[libvte互換ライブラリについて][MVTE]" を参考にしました。
 
-[Homebrew for Linux][BREW] の導入については、[Homebrew for Linux 公式ページ][BREW] および [thermes 氏][THER] の Qiita 投稿「[Linuxbrew のススメ][THBR]」を参考にしました。[Homebrew for Linux 開発コミュニティ][BREW] および [thermes 氏][THER] に感謝します。
+[Homebrew for Linux][BREW] の導入については、[Homebrew for Linux 公式ページ][BREW] および [thermes 氏][THER] の Qiita 投稿 "[Linuxbrew のススメ][THBR]" を参考にしました。[Homebrew for Linux 開発コミュニティ][BREW] および [thermes 氏][THER] に感謝します。
 
 [MLTerm][MTRM] および [Homebrew for Linux][BREW] に関わるすべての皆様に深く感謝します。
 
