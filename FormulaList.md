@@ -20,8 +20,8 @@
 日本語入力を行う場合、以下のように ```mlterm``` を起動します。
 
 ```
-$ mlterm --im=fcitx  # fcitx5 を使用
-$ mlterm --im=scim   # SCIM を使用
+  $ mlterm --im=fcitx  # fcitx5 を使用
+  $ mlterm --im=scim   # SCIM を使用
 ```
 
 ### z80oolong/mlterm/mlterm-libvte@3.9.4
@@ -34,12 +34,12 @@ $ mlterm --im=scim   # SCIM を使用
 端末エミュレータをインストールする Formula において、依存関係を ```z80oolong/vte/libvte@2.91``` の代わりに ```z80oolong/mlterm/mlterm-libvte@3.9.4``` に変更することで、[MLTerm][MTRM] の機能を利用した [libvte][LVTE] 対応端末エミュレータをインストールできます。以下に例を示します。
 
 ```
-class FooVteTerm < Formula
-  # ...
-  # depends_on "z80oolong/vte/libvte@2.91"              # 標準の libvte
-  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"     # MLTerm の libvte 互換ライブラリ
-  # ...
-end
+  class FooVteTerm < Formula
+    # ...
+    # depends_on "z80oolong/vte/libvte@2.91"              # 標準の libvte
+    depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"     # MLTerm の libvte 互換ライブラリ
+    # ...
+  end
 ```
 
 - **注意**:
@@ -47,7 +47,7 @@ end
 
 ### z80oolong/mlterm/sakura-mlterm
 
-[MLTerm の libvte 互換ライブラリ][MVTE] ベースの端末エミュレータ [sakura][SAKU] の最新安定版および HEAD 版をインストールする Formula です。
+[MLTerm の libvte 互換ライブラリ][MVTE] ベースの端末エミュレータ [sakura][SAKU] の最新安定版および HEAD 版をインストールする Formula です。 [HEAD 版の最新コミットの sakura][SAKU] をインストールする場合は、```--HEAD``` オプションを指定してください。
 
 この Formula でインストールされた [sakura][SAKU] では、**Unicode の [East Asian Ambiguous Character][EAWA]（例: "◎" や "★" 等の記号文字や罫線文字）が日本語環境で適切な文字幅で表示されない問題（[EAWA] 問題）が修正されます。**
 
@@ -60,14 +60,14 @@ end
 [EAWA] を全角文字幅で表示する場合、以下のように ```sakura``` を起動します。
 
 ```
-$ export VTE_CJK_WIDTH=1  # 環境変数を設定
-$ sakura
-# または
-$ env VTE_CJK_WIDTH=1 sakura
+  $ export VTE_CJK_WIDTH=1  # 環境変数を設定
+  $ sakura
+  # (または)
+  $ env VTE_CJK_WIDTH=1 sakura
 ```
 
 - **注意**:
-    - **この Formula は ```z80oolong/vte/sakura``` との競合を避けるため、keg-only でインストールされます。** 使用するには ```brew link --force z80oolong/mlterm/sakura-mlterm``` を実行してください。
+    - **この Formula は ```z80oolong/vte/sakura``` との競合を避けるため、keg-only でインストールされます。** この Formula によってインストールされた [sakura][SAKU] を使用するには ```brew link --force z80oolong/mlterm/sakura-mlterm``` を実行してください。
     - **[sakura][SAKU] の各種設定においては、[MLTerm][MTRM] での設定が [sakura][SAKU] での設定に上書きされます。**
 
 ### z80oolong/mlterm/sakura-mlterm@{version}
@@ -77,7 +77,7 @@ $ env VTE_CJK_WIDTH=1 sakura
 これは、[EAWA] 問題を修正した [MLTerm の libvte 互換ライブラリ][MVTE] ベースの端末エミュレータ [sakura][SAKU] の安定版をインストールする Formula です。使用法は ```z80oolong/mlterm/sakura-mlterm``` の記述をご覧ください。
 
 - **注意**:
-    - **この Formula は versioned formula のため、keg-only でインストールされます。** 使用するには ```brew link --force z80oolong/mlterm/sakura-mlterm@{version}``` を実行してください。
+    - **この Formula は versioned formula のため、keg-only でインストールされます。** この Formula によってインストールされた [sakura][SAKU] を使用するには ```brew link --force z80oolong/mlterm/sakura-mlterm@{version}``` を実行してください。
     - **[sakura][SAKU] の各種設定においては、[MLTerm][MTRM] での設定が [sakura][SAKU] での設定に上書きされます。**
 
 ### z80oolong/mlterm/sakura-mlterm@9999-dev
@@ -89,13 +89,13 @@ $ env VTE_CJK_WIDTH=1 sakura
 具体的なコミットについては、```brew info z80oolong/mlterm/sakura-mlterm@9999-dev``` で確認できます。使用法は ```z80oolong/mlterm/sakura-mlterm``` の記述をご覧ください。
 
 - **注意**:
-    - **この Formula は versioned formula のため、keg-only でインストールされます。** 使用するには ```brew link --force z80oolong/mlterm/sakura-mlterm@9999-dev``` を実行してください。
+    - **この Formula は versioned formula のため、keg-only でインストールされます。** この Formula によってインストールされた [sakura][SAKU] を使用するには ```brew link --force z80oolong/mlterm/sakura-mlterm@9999-dev``` を実行してください。
     - **この Formula は、```z80oolong/mlterm/sakura-mlterm``` の HEAD 版で差分ファイル適用に不具合が発生する場合に暫定的に使用するものです。** 通常は ```z80oolong/mlterm/sakura-mlterm``` をご使用ください。
     - **[sakura][SAKU] の各種設定においては、[MLTerm][MTRM] での設定が [sakura][SAKU] での設定に上書きされます。**
 
 ### z80oolong/mlterm/roxterm-mlterm
 
-[MLTerm の libvte 互換ライブラリ][MVTE] ベースのタブ式端末エミュレータ [roxterm][ROXT] の最新安定版および HEAD 版をインストールする Formula です。
+[MLTerm の libvte 互換ライブラリ][MVTE] ベースのタブ式端末エミュレータ [roxterm][ROXT] の最新安定版および HEAD 版をインストールする Formula です。 [HEAD 版の最新コミットの roxterm][ROXT] をインストールする場合は、```--HEAD``` オプションを指定してください。
 
 この Formula でインストールされた [roxterm][ROXT] では、**[EAWA] 問題が修正され、メニューや設定画面の一部を除き、機械翻訳による簡易な日本語化が行われます。**
 
@@ -106,7 +106,7 @@ $ env VTE_CJK_WIDTH=1 sakura
     - **それ以外の値（または未設定）の場合**: [EAWA] を半角文字幅で表示します。
 
 - **注意**:
-    - **この Formula は ```z80oolong/vte/roxterm``` との競合を避けるため、keg-only でインストールされます。** 使用するには ```brew link --force z80oolong/mlterm/roxterm-mlterm``` を実行してください。
+    - **この Formula は ```z80oolong/vte/roxterm``` との競合を避けるため、keg-only でインストールされます。** この Formula によってインストールされた [roxterm][ROXT] を使用するには ```brew link --force z80oolong/mlterm/roxterm-mlterm``` を実行してください。
     - **[roxterm][ROXT] の各種設定においては、[MLTerm][MTRM] での設定が [roxterm][ROXT] での設定に上書きされます。**
 
 ### z80oolong/mlterm/roxterm-mlterm@{version}
@@ -116,7 +116,7 @@ $ env VTE_CJK_WIDTH=1 sakura
 これは、[EAWA] 問題の修正及び機械翻訳による簡易な日本語化を行った [MLTerm の libvte 互換ライブラリ][MVTE] ベースのタブ式端末エミュレータ [roxterm][ROXT] の安定版をインストールする Formula です。使用法は ```z80oolong/mlterm/roxterm-mlterm``` の記述をご覧ください。
 
 - **注意**:
-    - **この Formula は versioned formula のため、keg-only でインストールされます。** 使用するには ```brew link --force z80oolong/mlterm/roxterm-mlterm@{version}``` を実行してください。
+    - **この Formula は versioned formula のため、keg-only でインストールされます。** この Formula によってインストールされた [roxterm][ROXT] を使用するには ```brew link --force z80oolong/mlterm/roxterm-mlterm@{version}``` を実行してください。
     - **[roxterm][ROXT] の各種設定においては、[MLTerm][MTRM] での設定が [roxterm][ROXT] での設定に上書きされます。**
 
 ### z80oolong/mlterm/roxterm-mlterm@9999-dev
@@ -128,13 +128,13 @@ $ env VTE_CJK_WIDTH=1 sakura
 具体的なコミットについては、```brew info z80oolong/mlterm/roxterm-mlterm@9999-dev``` で確認できます。使用法は ```z80oolong/mlterm/roxterm-mlterm``` の記述をご覧ください。
 
 - **注意**:
-    - **この Formula は versioned formula のため、keg-only でインストールされます。** 使用するには ```brew link --force z80oolong/mlterm/roxterm-mlterm@9999-dev``` を実行してください。
+    - **この Formula は versioned formula のため、keg-only でインストールされます。** この Formula によってインストールされた [roxterm][ROXT] を使用するには ```brew link --force z80oolong/mlterm/roxterm-mlterm@9999-dev``` を実行してください。
     - **この Formula は、```z80oolong/mlterm/roxterm-mlterm``` の HEAD 版で差分ファイル適用に不具合が発生する場合に暫定的に使用するものです。** 通常は ```z80oolong/mlterm/roxterm-mlterm``` をご使用ください。
     - **[roxterm][ROXT] の各種設定においては、[MLTerm][MTRM] での設定が [roxterm][ROXT] での設定に上書きされます。**
 
 ### z80oolong/mlterm/tilda-mlterm
 
-[MLTerm の libvte 互換ライブラリ][MVTE] ベースのドロップダウン端末エミュレータ [tilda][TILD] の最新安定版および HEAD 版をインストールする Formula です。
+[MLTerm の libvte 互換ライブラリ][MVTE] ベースのドロップダウン端末エミュレータ [tilda][TILD] の最新安定版および HEAD 版をインストールする Formula です。 [HEAD 版の最新コミットの tilda][TILD] をインストールする場合は、```--HEAD``` オプションを指定してください。
 
 この Formula でインストールされた [tilda][TILD] では、**[EAWA] 問題が修正され、メニューや設定画面の一部を除き、機械翻訳による簡易な日本語化が行われます。**
 
@@ -145,7 +145,7 @@ $ env VTE_CJK_WIDTH=1 sakura
     - **それ以外の値（または未設定）の場合**: [EAWA] を半角文字幅で表示します。
 
 - **注意**:
-    - **この Formula は ```z80oolong/vte/tilda``` との競合を避けるため、keg-only でインストールされます。** 使用するには ```brew link --force z80oolong/mlterm/tilda-mlterm``` を実行してください。
+    - **この Formula は ```z80oolong/vte/tilda``` との競合を避けるため、keg-only でインストールされます。** この Formula によってインストールされた [tilda][TILD] を使用するには ```brew link --force z80oolong/mlterm/tilda-mlterm``` を実行してください。
     - **[tilda][TILD] の各種設定においては、[MLTerm][MTRM] での設定が [tilda][TILD] での設定に上書きされます。**
 
 ### z80oolong/mlterm/tilda-mlterm@{version}
@@ -155,7 +155,7 @@ $ env VTE_CJK_WIDTH=1 sakura
 これは、[EAWA] 問題の修正及び機械翻訳による簡易な日本語化を行った [MLTerm の libvte 互換ライブラリ][MVTE] ベースのドロップダウン端末エミュレータ [tilda][TILD] の安定版をインストールする Formula です。使用法は ```z80oolong/mlterm/tilda-mlterm``` の記述をご覧ください。
 
 - **注意**:
-    - **この Formula は versioned formula のため、keg-only でインストールされます。** 使用するには ```brew link --force z80oolong/mlterm/tilda-mlterm@{version}``` を実行してください。
+    - **この Formula は versioned formula のため、keg-only でインストールされます。** この Formula によってインストールされた [tilda][TILD] を使用するには ```brew link --force z80oolong/mlterm/tilda-mlterm@{version}``` を実行してください。
     - **[tilda][TILD] の各種設定においては、[MLTerm][MTRM] での設定が [tilda][TILD] での設定に上書きされます。**
 
 ### z80oolong/mlterm/tilda-mlterm@9999-dev
@@ -167,13 +167,13 @@ $ env VTE_CJK_WIDTH=1 sakura
 具体的なコミットについては、```brew info z80oolong/mlterm/tilda-mlterm@9999-dev``` で確認できます。使用法は ```z80oolong/mlterm/tilda-mlterm``` の記述をご覧ください。
 
 - **注意**:
-    - **この Formula は versioned formula のため、keg-only でインストールされます。** 使用するには ```brew link --force z80oolong/mlterm/tilda-mlterm@9999-dev``` を実行してください。
+    - **この Formula は versioned formula のため、keg-only でインストールされます。** この Formula によってインストールされた [tilda][TILD] を使用するには ```brew link --force z80oolong/mlterm/tilda-mlterm@9999-dev``` を実行してください。
     - **この Formula は、```z80oolong/mlterm/tilda-mlterm``` の HEAD 版で差分ファイル適用に不具合が発生する場合に暫定的に使用するものです。** 通常は ```z80oolong/mlterm/tilda-mlterm``` をご使用ください。
     - **[tilda][TILD] の各種設定においては、[MLTerm][MTRM] での設定が [tilda][TILD] での設定に上書きされます。**
 
 ### z80oolong/mlterm/lxterminal-mlterm
 
-[MLTerm の libvte 互換ライブラリ][MVTE] ベースの [LXDE][LXDE] 用端末エミュレータ [lxterminal][LXTM] の最新安定版および HEAD 版をインストールする Formula です。
+[MLTerm の libvte 互換ライブラリ][MVTE] ベースの [LXDE][LXDE] 用端末エミュレータ [lxterminal][LXTM] の最新安定版および HEAD 版をインストールする Formula です。  [HEAD 版の最新コミットの lxterminal][LXTM] をインストールする場合は、```--HEAD``` オプションを指定してください。
 
 この Formula でインストールされた [lxterminal][LXTM] では、**[EAWA] 問題が修正されます。**
 
@@ -184,7 +184,7 @@ $ env VTE_CJK_WIDTH=1 sakura
     - **それ以外の値（または未設定）の場合**: [EAWA] を半角文字幅で表示します。
 
 - **注意**:
-    - **この Formula は ```z80oolong/vte/lxterminal``` との競合を避けるため、keg-only でインストールされます。** 使用するには ```brew link --force z80oolong/mlterm/lxterminal-mlterm``` を実行してください。
+    - **この Formula は ```z80oolong/vte/lxterminal``` との競合を避けるため、keg-only でインストールされます。** この Formula によってインストールされた [lxterminal][LXTM] を使用するには ```brew link --force z80oolong/mlterm/lxterminal-mlterm``` を実行してください。
     - **[lxterminal][LXTM] の各種設定においては、[MLTerm][MTRM] での設定が [lxterminal][LXTM] での設定に上書きされます。**
 
 ### z80oolong/mlterm/lxterminal-mlterm@{version}
@@ -194,7 +194,7 @@ $ env VTE_CJK_WIDTH=1 sakura
 これは、[EAWA] 問題を修正した [MLTerm の libvte 互換ライブラリ][MVTE] ベースの [LXDE][LXDE] 用端末エミュレータ [lxterminal][LXTM] の安定版をインストールする Formula です。使用法は ```z80oolong/mlterm/lxterminal-mlterm``` の記述をご覧ください。
 
 - **注意**:
-    - **この Formula は versioned formula のため、keg-only でインストールされます。** 使用するには ```brew link --force z80oolong/mlterm/lxterminal-mlterm@{version}``` を実行してください。
+    - **この Formula は versioned formula のため、keg-only でインストールされます。** この Formula によってインストールされた [lxterminal][LXTM] を使用するには ```brew link --force z80oolong/mlterm/lxterminal-mlterm@{version}``` を実行してください。
     - **[lxterminal][LXTM] の各種設定においては、[MLTerm][MTRM] での設定が [lxterminal][LXTM] での設定に上書きされます。**
 
 ### z80oolong/mlterm/lxterminal-mlterm@9999-dev
@@ -206,7 +206,7 @@ $ env VTE_CJK_WIDTH=1 sakura
 具体的なコミットについては、```brew info z80oolong/mlterm/lxterminal-mlterm@9999-dev``` で確認できます。使用法は ```z80oolong/mlterm/lxterminal-mlterm``` の記述をご覧ください。
 
 - **注意**:
-    - **この Formula は versioned formula のため、keg-only でインストールされます。** 使用するには ```brew link --force z80oolong/mlterm/lxterminal-mlterm@9999-dev``` を実行してください。
+    - **この Formula は versioned formula のため、keg-only でインストールされます。** この Formula によってインストールされた [lxterminal][LXTM] を使用するには ```brew link --force z80oolong/mlterm/lxterminal-mlterm@9999-dev``` を実行してください。
     - **この Formula は、```z80oolong/mlterm/lxterminal-mlterm``` の HEAD 版で差分ファイル適用に不具合が発生する場合に暫定的に使用するものです。** 通常は ```z80oolong/mlterm/lxterminal-mlterm``` をご使用ください。
     - **[lxterminal][LXTM] の各種設定においては、[MLTerm][MTRM] での設定が [lxterminal][LXTM] での設定に上書きされます。**
 
@@ -221,4 +221,4 @@ $ env VTE_CJK_WIDTH=1 sakura
 [LXTM]: https://github.com/lxde/lxterminal  
 [SAKU]: https://github.com/dabisu/sakura  
 [ROXT]: https://github.com/realh/roxterm  
-[TILD]: https://github.com/lanoxx/tilda/  
+[TILD]: https://github.com/lanoxx/tilda/

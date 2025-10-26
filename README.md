@@ -22,14 +22,14 @@
 そして、本リポジトリの Formula を以下のようにインストールします：
 
 ```
-brew tap z80oolong/mlterm
-brew install <formula>
+  brew tap z80oolong/mlterm
+  brew install <formula>
 ```
 
 または、一時的に以下の方法で直接インストールも可能です：
 
 ```
-brew install https://raw.githubusercontent.com/z80oolong/homebrew-mlterm/master/Formula/<formula>.rb
+  brew install https://raw.githubusercontent.com/z80oolong/homebrew-mlterm/master/Formula/<formula>.rb
 ```
 
 Formula の一覧と詳細は、本リポジトリに同梱の ```FormulaList.md``` を参照してください。
