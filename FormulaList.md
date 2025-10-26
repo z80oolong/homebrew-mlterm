@@ -106,7 +106,8 @@
     - **それ以外の値（または未設定）の場合**: [EAWA] を半角文字幅で表示します。
 
 - **注意**:
-    - **この Formula は ```z80oolong/vte/roxterm``` との競合を避けるため、keg-only でインストールされます。** この Formula によってインストールされた [roxterm][ROXT] を使用するには ```brew link --force z80oolong/mlterm/roxterm-mlterm``` を実行してください。
+    - **この Formula は ```z80oolong/vte/roxterm``` との競合を避けるため、keg-only でインストールされます。**
+    - **この Formula によってインストールされた [roxterm][ROXT] を使用するには ```brew link --force z80oolong/mlterm/roxterm-mlterm``` を実行してください。**
     - **[roxterm][ROXT] の各種設定においては、[MLTerm][MTRM] での設定が [roxterm][ROXT] での設定に上書きされます。**
 
 ### z80oolong/mlterm/roxterm-mlterm@{version}
@@ -116,7 +117,8 @@
 これは、[EAWA] 問題の修正及び機械翻訳による簡易な日本語化を行った [MLTerm の libvte 互換ライブラリ][MVTE] ベースのタブ式端末エミュレータ [roxterm][ROXT] の安定版をインストールする Formula です。使用法は ```z80oolong/mlterm/roxterm-mlterm``` の記述をご覧ください。
 
 - **注意**:
-    - **この Formula は versioned formula のため、keg-only でインストールされます。** この Formula によってインストールされた [roxterm][ROXT] を使用するには ```brew link --force z80oolong/mlterm/roxterm-mlterm@{version}``` を実行してください。
+    - **この Formula は versioned formula のため、keg-only でインストールされます。**
+    - **この Formula によってインストールされた [roxterm][ROXT] を使用するには ```brew link --force z80oolong/mlterm/roxterm-mlterm@{version}``` を実行してください。**
     - **[roxterm][ROXT] の各種設定においては、[MLTerm][MTRM] での設定が [roxterm][ROXT] での設定に上書きされます。**
 
 ### z80oolong/mlterm/roxterm-mlterm@9999-dev
@@ -128,7 +130,8 @@
 具体的なコミットについては、```brew info z80oolong/mlterm/roxterm-mlterm@9999-dev``` で確認できます。使用法は ```z80oolong/mlterm/roxterm-mlterm``` の記述をご覧ください。
 
 - **注意**:
-    - **この Formula は versioned formula のため、keg-only でインストールされます。** この Formula によってインストールされた [roxterm][ROXT] を使用するには ```brew link --force z80oolong/mlterm/roxterm-mlterm@9999-dev``` を実行してください。
+    - **この Formula は versioned formula のため、keg-only でインストールされます。**
+    - **この Formula によってインストールされた [roxterm][ROXT] を使用するには ```brew link --force z80oolong/mlterm/roxterm-mlterm@9999-dev``` を実行してください。**
     - **この Formula は、```z80oolong/mlterm/roxterm-mlterm``` の HEAD 版で差分ファイル適用に不具合が発生する場合に暫定的に使用するものです。** 通常は ```z80oolong/mlterm/roxterm-mlterm``` をご使用ください。
     - **[roxterm][ROXT] の各種設定においては、[MLTerm][MTRM] での設定が [roxterm][ROXT] での設定に上書きされます。**
 
@@ -145,7 +148,8 @@
     - **それ以外の値（または未設定）の場合**: [EAWA] を半角文字幅で表示します。
 
 - **注意**:
-    - **この Formula は ```z80oolong/vte/tilda``` との競合を避けるため、keg-only でインストールされます。** この Formula によってインストールされた [tilda][TILD] を使用するには ```brew link --force z80oolong/mlterm/tilda-mlterm``` を実行してください。
+    - **この Formula は ```z80oolong/vte/tilda``` との競合を避けるため、keg-only でインストールされます。**
+    - **この Formula によってインストールされた [tilda][TILD] を使用するには ```brew link --force z80oolong/mlterm/tilda-mlterm``` を実行してください。**
     - **[tilda][TILD] の各種設定においては、[MLTerm][MTRM] での設定が [tilda][TILD] での設定に上書きされます。**
 
 ### z80oolong/mlterm/tilda-mlterm@{version}
@@ -155,7 +159,8 @@
 これは、[EAWA] 問題の修正及び機械翻訳による簡易な日本語化を行った [MLTerm の libvte 互換ライブラリ][MVTE] ベースのドロップダウン端末エミュレータ [tilda][TILD] の安定版をインストールする Formula です。使用法は ```z80oolong/mlterm/tilda-mlterm``` の記述をご覧ください。
 
 - **注意**:
-    - **この Formula は versioned formula のため、keg-only でインストールされます。** この Formula によってインストールされた [tilda][TILD] を使用するには ```brew link --force z80oolong/mlterm/tilda-mlterm@{version}``` を実行してください。
+    - **この Formula は versioned formula のため、keg-only でインストールされます。**
+    - **この Formula によってインストールされた [tilda][TILD] を使用するには ```brew link --force z80oolong/mlterm/tilda-mlterm@{version}``` を実行してください。**
     - **[tilda][TILD] の各種設定においては、[MLTerm][MTRM] での設定が [tilda][TILD] での設定に上書きされます。**
 
 ### z80oolong/mlterm/tilda-mlterm@9999-dev
@@ -167,7 +172,8 @@
 具体的なコミットについては、```brew info z80oolong/mlterm/tilda-mlterm@9999-dev``` で確認できます。使用法は ```z80oolong/mlterm/tilda-mlterm``` の記述をご覧ください。
 
 - **注意**:
-    - **この Formula は versioned formula のため、keg-only でインストールされます。** この Formula によってインストールされた [tilda][TILD] を使用するには ```brew link --force z80oolong/mlterm/tilda-mlterm@9999-dev``` を実行してください。
+    - **この Formula は versioned formula のため、keg-only でインストールされます。**
+    - **この Formula によってインストールされた [tilda][TILD] を使用するには ```brew link --force z80oolong/mlterm/tilda-mlterm@9999-dev``` を実行してください。**
     - **この Formula は、```z80oolong/mlterm/tilda-mlterm``` の HEAD 版で差分ファイル適用に不具合が発生する場合に暫定的に使用するものです。** 通常は ```z80oolong/mlterm/tilda-mlterm``` をご使用ください。
     - **[tilda][TILD] の各種設定においては、[MLTerm][MTRM] での設定が [tilda][TILD] での設定に上書きされます。**
 
@@ -184,7 +190,8 @@
     - **それ以外の値（または未設定）の場合**: [EAWA] を半角文字幅で表示します。
 
 - **注意**:
-    - **この Formula は ```z80oolong/vte/lxterminal``` との競合を避けるため、keg-only でインストールされます。** この Formula によってインストールされた [lxterminal][LXTM] を使用するには ```brew link --force z80oolong/mlterm/lxterminal-mlterm``` を実行してください。
+    - **この Formula は ```z80oolong/vte/lxterminal``` との競合を避けるため、keg-only でインストールされます。**
+    - **この Formula によってインストールされた [lxterminal][LXTM] を使用するには ```brew link --force z80oolong/mlterm/lxterminal-mlterm``` を実行してください。**
     - **[lxterminal][LXTM] の各種設定においては、[MLTerm][MTRM] での設定が [lxterminal][LXTM] での設定に上書きされます。**
 
 ### z80oolong/mlterm/lxterminal-mlterm@{version}
@@ -194,7 +201,8 @@
 これは、[EAWA] 問題を修正した [MLTerm の libvte 互換ライブラリ][MVTE] ベースの [LXDE][LXDE] 用端末エミュレータ [lxterminal][LXTM] の安定版をインストールする Formula です。使用法は ```z80oolong/mlterm/lxterminal-mlterm``` の記述をご覧ください。
 
 - **注意**:
-    - **この Formula は versioned formula のため、keg-only でインストールされます。** この Formula によってインストールされた [lxterminal][LXTM] を使用するには ```brew link --force z80oolong/mlterm/lxterminal-mlterm@{version}``` を実行してください。
+    - **この Formula は versioned formula のため、keg-only でインストールされます。**
+    - **この Formula によってインストールされた [lxterminal][LXTM] を使用するには ```brew link --force z80oolong/mlterm/lxterminal-mlterm@{version}``` を実行してください。**
     - **[lxterminal][LXTM] の各種設定においては、[MLTerm][MTRM] での設定が [lxterminal][LXTM] での設定に上書きされます。**
 
 ### z80oolong/mlterm/lxterminal-mlterm@9999-dev
@@ -206,7 +214,8 @@
 具体的なコミットについては、```brew info z80oolong/mlterm/lxterminal-mlterm@9999-dev``` で確認できます。使用法は ```z80oolong/mlterm/lxterminal-mlterm``` の記述をご覧ください。
 
 - **注意**:
-    - **この Formula は versioned formula のため、keg-only でインストールされます。** この Formula によってインストールされた [lxterminal][LXTM] を使用するには ```brew link --force z80oolong/mlterm/lxterminal-mlterm@9999-dev``` を実行してください。
+    - **この Formula は versioned formula のため、keg-only でインストールされます。**
+    - **この Formula によってインストールされた [lxterminal][LXTM] を使用するには ```brew link --force z80oolong/mlterm/lxterminal-mlterm@9999-dev``` を実行してください。**
     - **この Formula は、```z80oolong/mlterm/lxterminal-mlterm``` の HEAD 版で差分ファイル適用に不具合が発生する場合に暫定的に使用するものです。** 通常は ```z80oolong/mlterm/lxterminal-mlterm``` をご使用ください。
     - **[lxterminal][LXTM] の各種設定においては、[MLTerm][MTRM] での設定が [lxterminal][LXTM] での設定に上書きされます。**
 
