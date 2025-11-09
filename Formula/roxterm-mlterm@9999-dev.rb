@@ -2,12 +2,12 @@ class RoxtermMltermAT9999Dev < Formula
   desc "Highly configurable terminal emulator based on VTE"
   homepage "https://roxterm.sourceforge.io/"
 
-  @@current_commit = "c5a983c570323a6e8d1f7c5767de67013a2f610e"
+  @@current_commit = "4e266fade9be13aef7b91eea7edb7bf1b7e1e5b8"
   url "https://github.com/realh/roxterm.git",
     branch:   "master",
     revision: @@current_commit
   version "git-#{@@current_commit[0..7]}"
-  revision 1
+  revision 2
   license "LGPL-3.0"
 
   keg_only :versioned_formula
