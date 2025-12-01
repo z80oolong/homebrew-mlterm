@@ -1,8 +1,8 @@
 class SakuraMlterm < Formula
   desc "GTK/VTE based terminal emulator"
   homepage "https://launchpad.net/sakura"
+  license "GPL-2.0-or-later"
   revision 1
-  license "GPL-2.0"
 
   stable do
     url "https://github.com/dabisu/sakura/archive/refs/tags/SAKURA_3_8_9.tar.gz"
@@ -22,8 +22,8 @@ class SakuraMlterm < Formula
   depends_on "cmake" => :build
   depends_on "pod2man" => :build
   depends_on "gettext"
-  depends_on "systemd"
   depends_on "gtk+3"
+  depends_on "systemd"
   depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
 
   def install
@@ -36,6 +36,8 @@ class SakuraMlterm < Formula
   end
 
   test do
-    system bin/"sakura", "--version"
+    ENV["LC_ALL"] = "C"
+    output = shell_output("#{bin}/sakura --version 2>&1 || true").strip
+    assert_equal "sakura version is 3.8.9", output
   end
 end

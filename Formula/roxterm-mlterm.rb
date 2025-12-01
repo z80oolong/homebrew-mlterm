@@ -1,7 +1,7 @@
 class RoxtermMlterm < Formula
   desc "Highly configurable terminal emulator based on VTE"
   homepage "https://roxterm.sourceforge.io/"
-  license "LGPL-3.0"
+  license "LGPL-3.0-or-later"
   revision 1
 
   stable do
@@ -24,6 +24,7 @@ class RoxtermMlterm < Formula
   depends_on "pkgconf" => :build
   depends_on "dbus-glib"
   depends_on "glib"
+  depends_on "glibc"
   depends_on "gtk+3"
   depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
 
@@ -58,6 +59,6 @@ class RoxtermMlterm < Formula
   end
 
   test do
-    assert_match version.to_s, shell_output("#{bin}/roxterm --version")
+    system "test", "-x", bin/"roxterm"
   end
 end

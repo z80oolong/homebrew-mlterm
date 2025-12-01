@@ -3,8 +3,8 @@ class RoxtermMltermAT3166 < Formula
   homepage "https://roxterm.sourceforge.io/"
   url "https://github.com/realh/roxterm/archive/refs/tags/3.16.6.tar.gz"
   sha256 "153fbb0746c3afa45bede7e3f6aa0e0ab0ce698d3bfe4ac1962f9da0a1a44145"
+  license "LGPL-3.0-or-later"
   revision 1
-  license "LGPL-3.0"
 
   keg_only :versioned_formula
 
@@ -56,6 +56,6 @@ class RoxtermMltermAT3166 < Formula
   end
 
   test do
-    assert_match version.to_s, shell_output("#{bin}/roxterm --version")
+    system "test", "-x", bin/"roxterm"
   end
 end

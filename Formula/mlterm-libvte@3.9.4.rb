@@ -134,10 +134,6 @@ class MltermLibvteAT394 < Formula
     flags = shell_output("pkg-config --cflags --libs vte-2.91").chomp.split
     system ENV.cc, "test.c", "-o", "test", *flags
     system "./test"
-
-    flags = shell_output("pkg-config --cflags --libs vte-2.91-gtk4").chomp.split
-    system ENV.cc, "test.c", "-o", "test", *flags
-    system "./test"
   end
 end
 

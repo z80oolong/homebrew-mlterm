@@ -11,8 +11,8 @@ class SakuraMltermAT389 < Formula
   depends_on "cmake" => :build
   depends_on "pod2man" => :build
   depends_on "gettext"
-  depends_on "systemd"
   depends_on "gtk+3"
+  depends_on "systemd"
   depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
 
   patch :p1, Formula["z80oolong/vte/sakura@3.8.9"].diff_data
@@ -27,6 +27,8 @@ class SakuraMltermAT389 < Formula
   end
 
   test do
-    system bin/"sakura", "--version"
+    ENV["LC_ALL"] = "C"
+    output = shell_output("#{bin}/sakura --version 2>&1 || true").strip
+    assert_equal "sakura version is #{version}", output
   end
 end

@@ -77,6 +77,7 @@ class MltermAT394 < Formula
   end
 
   test do
-    system "#{bin}/mlterm", "--version"
+    output = shell_output("#{bin}/mlterm --version").strip
+    assert_match Regexp.new("mlterm #{version}", Regexp::MULTILINE), output
   end
 end

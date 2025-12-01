@@ -3,13 +3,15 @@ class TildaMltermAT150 < Formula
   homepage "https://github.com/lanoxx/tilda"
   url "https://github.com/lanoxx/tilda/archive/refs/tags/tilda-1.5.0.tar.gz"
   sha256 "f664c17daca2a2900f49de9eb65746ced03c867b02144149ef21260cbcd61039"
-  license "GPL-2.0"
+  license "GPL-2.0-or-later"
+  revision 1
 
   keg_only :versioned_formula
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
   depends_on "perl" => :build
+  depends_on "pkgconf" => :build
   depends_on "gettext"
   depends_on "gtk+3"
   depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
@@ -44,6 +46,8 @@ class TildaMltermAT150 < Formula
   end
 
   test do
-    system bin/"tilda", "--version"
+    ENV["LC_ALL"] = "C"
+    output = shell_output("#{bin}/tilda --version")
+    assert_match Regexp.new("Tilda #{version}", Regexp::MULTILINE), output
   end
 end

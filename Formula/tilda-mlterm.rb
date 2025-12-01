@@ -1,7 +1,7 @@
 class TildaMlterm < Formula
   desc "Gtk-based drop down terminal for Linux and Unix"
   homepage "https://github.com/lanoxx/tilda"
-  license "GPL-2.0"
+  license "GPL-2.0-or-later"
 
   stable do
     url "https://github.com/lanoxx/tilda/archive/refs/tags/tilda-2.0.0.tar.gz"
@@ -21,6 +21,7 @@ class TildaMlterm < Formula
   depends_on "autoconf" => :build
   depends_on "automake" => :build
   depends_on "perl" => :build
+  depends_on "pkgconf" => :build
   depends_on "gettext"
   depends_on "gtk+3"
   depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
@@ -53,6 +54,9 @@ class TildaMlterm < Formula
   end
 
   test do
-    system bin/"tilda", "--version"
+    ENV["LC_ALL"] = "C"
+    ver = build.head? ? "1.6-alpha" : version
+    output = shell_output("#{bin}/tilda --version")
+    assert_match Regexp.new("Tilda #{ver}", Regexp::MULTILINE), output
   end
 end

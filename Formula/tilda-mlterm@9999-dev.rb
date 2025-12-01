@@ -2,20 +2,19 @@ class TildaMltermAT9999Dev < Formula
   desc "Gtk-based drop down terminal for Linux and Unix"
   homepage "https://github.com/lanoxx/tilda"
 
-  @@current_commit = "51bfe3c7cb755499fa22d00134d68b86a9fdaafd"
+  CURRENT_COMMIT = "51bfe3c7cb755499fa22d00134d68b86a9fdaafd".freeze
   url "https://github.com/lanoxx/tilda.git",
     branch:   "master",
-    revision: @@current_commit
-  version "git-#{@@current_commit[0..7]}"
-  license "LGPL-3.0"
-
-  license "GPL-2.0"
+    revision: CURRENT_COMMIT
+  version "git-#{CURRENT_COMMIT[0..7]}"
+  license "LGPL-3.0-or-later"
 
   keg_only :versioned_formula
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
   depends_on "perl" => :build
+  depends_on "pkgconf" => :build
   depends_on "gettext"
   depends_on "gtk+3"
   depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
@@ -52,11 +51,13 @@ class TildaMltermAT9999Dev < Formula
   def caveats
     <<~EOS
       #{full_name} is a Formula for installing the development version of
-      `tilda` based on the HEAD version (commit #{@@current_commit[0..7]}) from its git repository.
+      `tilda` based on the HEAD version (commit #{CURRENT_COMMIT[0..7]}) from its git repository.
     EOS
   end
 
   test do
-    system bin/"tilda", "--version"
+    ENV["LC_ALL"] = "C"
+    output = shell_output("#{bin}/tilda --version")
+    assert_match Regexp.new("Tilda #{version}", Regexp::MULTILINE), output
   end
 end
