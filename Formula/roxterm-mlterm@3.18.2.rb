@@ -1,12 +1,12 @@
-class RoxtermMltermAT3166 < Formula
+class RoxtermMltermAT3182 < Formula
   desc "Highly configurable terminal emulator based on VTE"
   homepage "https://roxterm.sourceforge.io/"
-  url "https://github.com/realh/roxterm/archive/refs/tags/3.16.6.tar.gz"
-  sha256 "153fbb0746c3afa45bede7e3f6aa0e0ab0ce698d3bfe4ac1962f9da0a1a44145"
+  url "https://github.com/realh/roxterm/archive/refs/tags/3.18.2.tar.gz"
+  sha256 "d20a19abe03798bfc6c9404eb7ce4fbecabf2e1ab527b587aab76d06635a92e7"
   license "LGPL-3.0-or-later"
-  revision 1
+  revision 2
 
-  keg_only :versioned_formula
+  keg_only "this is an alternate version of another formula"
 
   depends_on "cmake" => :build
   depends_on "docbook-xsl" => :build
@@ -16,7 +16,7 @@ class RoxtermMltermAT3166 < Formula
   depends_on "dbus-glib"
   depends_on "glib"
   depends_on "gtk+3"
-  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
+  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.5"
 
   resource("roxterm-ja-po") do
     url "https://gist.github.com/731fd4e4d0adb4178ce69885bf061523.git",
@@ -24,19 +24,22 @@ class RoxtermMltermAT3166 < Formula
         revision: "72cd4d52211814ac3a8cecd2fc197447c3914c47"
   end
 
-  patch :p1, Formula["z80oolong/vte/roxterm@3.16.6"].diff_data
+  patch :p1 do
+    file "Patches/roxterm/roxterm-3.18.2-fix.diff"
+    type :unofficial
+  end
 
   def install
     ENV.append "CFLAGS", "-D_GNU_SOURCE"
     ENV.append "CFLAGS", "-DENABLE_NLS=1"
 
-    inreplace "CMakeLists.txt" do |s|
+    inreplace "./man/CMakeLists.txt" do |s|
       s.gsub! %r{http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl},
         "#{Formula["docbook-xsl"].opt_prefix}/docbook-xsl-ns/manpages/docbook.xsl"
     end
 
     inreplace "./src/config.h.in" do |s|
-      s.gsub!(/^#undef ENABLE_NLS/, "#define ENABLE_NLS 1")
+      s.gsub!(/^#cmakedefine ENABLE_NLS/, "#define ENABLE_NLS 1")
     end
 
     args  = std_cmake_args

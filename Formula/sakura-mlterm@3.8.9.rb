@@ -3,19 +3,22 @@ class SakuraMltermAT389 < Formula
   homepage "https://launchpad.net/sakura"
   url "https://github.com/dabisu/sakura/archive/refs/tags/SAKURA_3_8_9.tar.gz"
   sha256 "46b792098a82ba4affc87a174ae96f32e730396e4f5ba9b699e8071253b085a2"
-  revision 1
-  license "GPL-2.0"
+  license "GPL-2.0-or-later"
+  revision 2
 
-  keg_only :versioned_formula
+  keg_only "this is an alternate version of another formula"
 
   depends_on "cmake" => :build
   depends_on "pod2man" => :build
   depends_on "gettext"
   depends_on "gtk+3"
   depends_on "systemd"
-  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
+  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.5"
 
-  patch :p1, Formula["z80oolong/vte/sakura@3.8.9"].diff_data
+  patch :p1 do
+    file "Patches/sakura/sakura-3.8.9-fix.diff"
+    type :unofficial
+  end
 
   def install
     args  = std_cmake_args

@@ -2,10 +2,10 @@ class MltermLibvteAT394 < Formula
   desc "Multilingual terminal emulator"
   homepage "https://mlterm.sourceforge.io/"
   url "https://github.com/GNOME/vte/archive/refs/tags/0.81.90.tar.gz"
-  sha256 "97f9b2826a67adbd2ef41b23ae3c1b36d935da15f52dc7cf9b31876c78bb5f3b"
   version "3.9.4"
-  revision 3
+  sha256 "97f9b2826a67adbd2ef41b23ae3c1b36d935da15f52dc7cf9b31876c78bb5f3b"
   license "GPL-2.0-or-later"
+  revision 3
 
   keg_only :versioned_formula
 
@@ -22,9 +22,10 @@ class MltermLibvteAT394 < Formula
   depends_on "fribidi"
   depends_on "gdk-pixbuf"
   depends_on "glib"
+  depends_on "glibc"
   depends_on "gnutls"
-  depends_on "gtk+3"
   depends_on "gobject-introspection"
+  depends_on "gtk+3"
   depends_on "harfbuzz"
   depends_on "libice"
   depends_on "libpng"
@@ -83,7 +84,7 @@ class MltermLibvteAT394 < Formula
       ENV.cxx11
       ENV.prepend_path "PKG_CONFIG_PATH", lib/"pkgconfig"
 
-      args  = std_configure_args
+      args = std_configure_args
       args.map! { |arg| arg.match?(/^--prefix/) ? "--prefix=#{mlterm_prefix}" : arg }
       args.map! { |arg| arg.match?(/^--libdir/) ? "--libdir=#{mlterm_lib}" : arg }
       args << "--disable-silent-rules"
@@ -96,9 +97,7 @@ class MltermLibvteAT394 < Formula
       args << "--sysconfdir=#{mlterm_prefix}/etc"
       args << "--enable-image"
       args << "--enable-fcitx"
-      if build.with? "z80oolong/im/im-scim@1.4.18"
-        args << "--enable-scim"
-      end
+      args << "--enable-scim" if build.with? "z80oolong/im/im-scim@1.4.18"
 
       system "./configure", *args
       system "make"
@@ -106,6 +105,25 @@ class MltermLibvteAT394 < Formula
       system "make", "vte"
       system "make", "install-vte"
     end
+
+    # build test binary, Use for `brew test'.
+    (buildpath/"test.c").write <<~C
+      #include <vte/vte.h>
+
+      int main(int argc, char *argv[]) {
+        guint v = vte_get_major_version();
+        puts("mlterm-libvte test succeed.");
+        return 0;
+      }
+    C
+    flags = `#{Formula["pkgconf"].opt_bin}/pkg-config --cflags --libs vte-2.91`
+    flags = flags.chomp.split
+    flags << "-ldl"
+    flags << "-lm"
+
+    system ENV.cc, "test.c", "-o", "test", *flags
+    (libexec/"bin").install "test"
+    rm "#{buildpath}/test.c"
   end
 
   def post_install
@@ -121,19 +139,8 @@ class MltermLibvteAT394 < Formula
   end
 
   test do
-    ENV.clang if OS.mac? && (DevelopmentTools.clang_build_version <= 1500)
-
-    (testpath/"test.c").write <<~C
-      #include <vte/vte.h>
-
-      int main(int argc, char *argv[]) {
-        guint v = vte_get_major_version();
-        return 0;
-      }
-    C
-    flags = shell_output("pkg-config --cflags --libs vte-2.91").chomp.split
-    system ENV.cc, "test.c", "-o", "test", *flags
-    system "./test"
+    output = shell_output("#{libexec}/bin/test").strip
+    assert_equal "mlterm-libvte test succeed.", output
   end
 end
 

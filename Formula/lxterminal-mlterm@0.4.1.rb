@@ -3,9 +3,9 @@ class LxterminalMltermAT041 < Formula
   homepage "https://wiki.lxde.org/en/LXTerminal"
   url "https://github.com/lxde/lxterminal/archive/refs/tags/0.4.1.tar.gz"
   sha256 "d5da0646e20ad2be44ef69a9d620be5f1ec43b156dc585ebe203dd7b05c31d88"
-  revision 1
+  revision 2
 
-  keg_only :versioned_formula
+  keg_only "this is an alternate version of another formula"
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
@@ -18,9 +18,12 @@ class LxterminalMltermAT041 < Formula
   depends_on "pkgconf" => :build
   depends_on "glib"
   depends_on "gtk+3"
-  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
+  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.5"
 
-  patch :p1, Formula["z80oolong/vte/lxterminal@0.4.1"].diff_data
+  patch :p1 do
+    file "Patches/lxterminal/lxterminal-0.4.1-fix.diff"
+    type :unofficial
+  end
 
   def install
     ENV.prepend_path "PERL5LIB", "#{Formula["perl-xml-parser"].opt_libexec}/lib/perl5"

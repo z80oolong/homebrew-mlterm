@@ -4,29 +4,40 @@ class RoxtermMlterm < Formula
   license "LGPL-3.0-or-later"
   revision 1
 
-  stable do
-    url "https://github.com/realh/roxterm/archive/refs/tags/3.17.2.tar.gz"
-    sha256 "3da0ac499773002ccf0df9fd57918b3856cd5c5257f874715725ff3ef1266657"
+  CURRENT_VERSION = "3.18.2".freeze
+  CURRENT_COMMIT  = "00fcf32619ea0b4c1d5afeb5b590a3565d82c4f7".freeze
 
-    patch :p1, Formula["z80oolong/vte/roxterm@3.17.2"].diff_data
+  stable do
+    url "https://github.com/realh/roxterm/archive/refs/tags/#{CURRENT_VERSION}.tar.gz"
+    sha256 "d20a19abe03798bfc6c9404eb7ce4fbecabf2e1ab527b587aab76d06635a92e7"
+
+    patch :p1 do
+      file "Patches/roxterm/roxterm-#{CURRENT_VERSION}-fix.diff"
+      type :unofficial
+    end
   end
 
   head do
     url "https://github.com/realh/roxterm.git"
 
-    patch :p1, Formula["z80oolong/vte/roxterm@9999-dev"].diff_data
+    patch :p1 do
+      file "Patches/roxterm/roxterm-HEAD-#{CURRENT_COMMIT[0..7]}-fix.diff"
+      type :unofficial
+    end
   end
 
-  keg_only "this formula conflicts with 'homebrew/vte/roxterm'"
+  keg_only "this formula conflicts with `z80oolong/vte/roxterm`"
 
   depends_on "cmake" => :build
+  depends_on "docbook-xsl" => :build
   depends_on "gettext" => :build
+  depends_on "libxslt" => :build
   depends_on "pkgconf" => :build
   depends_on "dbus-glib"
   depends_on "glib"
   depends_on "glibc"
   depends_on "gtk+3"
-  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
+  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.5"
 
   resource("roxterm-ja-po") do
     url "https://gist.github.com/731fd4e4d0adb4178ce69885bf061523.git",
@@ -37,6 +48,11 @@ class RoxtermMlterm < Formula
   def install
     ENV.append "CFLAGS", "-D_GNU_SOURCE"
     ENV.append "CFLAGS", "-DENABLE_NLS=1"
+
+    inreplace "./man/CMakeLists.txt" do |s|
+      s.gsub! %r{http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl},
+        "#{Formula["docbook-xsl"].opt_prefix}/docbook-xsl-ns/manpages/docbook.xsl"
+    end
 
     inreplace "./src/config.h.in" do |s|
       s.gsub!(/^#cmakedefine ENABLE_NLS/, "#define ENABLE_NLS 1")

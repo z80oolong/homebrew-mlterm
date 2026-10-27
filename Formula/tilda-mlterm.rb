@@ -2,21 +2,31 @@ class TildaMlterm < Formula
   desc "Gtk-based drop down terminal for Linux and Unix"
   homepage "https://github.com/lanoxx/tilda"
   license "GPL-2.0-or-later"
+  revision 2
+
+  CURRENT_VERSION = "2.0.0".freeze
+  CURRENT_COMMIT  = "b6a2ca205a958f09632599655b97e3d81a58ee2b".freeze
 
   stable do
-    url "https://github.com/lanoxx/tilda/archive/refs/tags/tilda-2.0.0.tar.gz"
+    url "https://github.com/lanoxx/tilda/archive/refs/tags/tilda-#{CURRENT_VERSION}.tar.gz"
     sha256 "ff9364244c58507cd4073ac22e580a4cded048d416c682496c1b1788ee8a30df"
 
-    patch :p1, Formula["z80oolong/vte/tilda@2.0.0"].diff_data
+    patch :p1 do
+      file "Patches/tilda/tilda-#{CURRENT_VERSION}-fix.diff"
+      type :unofficial
+    end
   end
 
   head do
     url "https://github.com/lanoxx/tilda.git"
 
-    patch :p1, Formula["z80oolong/vte/tilda@9999-dev"].diff_data
+    patch :p1 do
+      file "Patches/tilda/tilda-HEAD-#{CURRENT_COMMIT[0..7]}-fix.diff"
+      type :unofficial
+    end
   end
 
-  keg_only "this formula conflicts with 'homebrew/vte/tilda'"
+  keg_only "this formula conflicts with `z80oolong/vte/tilda`"
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
@@ -24,7 +34,7 @@ class TildaMlterm < Formula
   depends_on "pkgconf" => :build
   depends_on "gettext"
   depends_on "gtk+3"
-  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
+  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.5"
 
   resource("libconfuse") do
     url "https://github.com/libconfuse/libconfuse/releases/download/v3.3/confuse-3.3.tar.xz"
@@ -37,7 +47,7 @@ class TildaMlterm < Formula
     ENV.prepend_path "HOMEBREW_RPATH_PATHS", libexec/"libconfuse/lib"
 
     resource("libconfuse").stage do
-      args  = std_configure_args.dup
+      args = std_configure_args.dup
       args.map! { |arg| arg.match?(/^--prefix/) ? "--prefix=#{libexec}/libconfuse" : arg }
       args.map! { |arg| arg.match?(/^--libdir/) ? "--libdir=#{libexec}/libconfuse/lib" : arg }
       args << "--disable-silent-rules"

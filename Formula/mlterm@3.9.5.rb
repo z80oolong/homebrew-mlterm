@@ -1,8 +1,8 @@
-class MltermAT393 < Formula
+class MltermAT395 < Formula
   desc "Multilingual terminal emulator"
   homepage "https://mlterm.sourceforge.io/"
-  url "https://github.com/arakiken/mlterm/archive/refs/tags/3.9.3.tar.gz"
-  sha256 "b5b76721391de134bd64afb7de6b4256805cf2fc883a2bf2e5d29602ac1b50d9"
+  url "https://github.com/arakiken/mlterm/archive/refs/tags/3.9.5.tar.gz"
+  sha256 "7d28678aa90dade72cea4e1e5fffb5e4c343487d60ca36c88dc615134613af39"
   license "GPL-2.0-or-later"
   revision 3
 
@@ -18,6 +18,7 @@ class MltermAT393 < Formula
   depends_on "fribidi"
   depends_on "gdk-pixbuf"
   depends_on "glib"
+  depends_on "glibc"
   depends_on "gnutls"
   depends_on "gobject-introspection"
   depends_on "gtk+3"
@@ -55,9 +56,7 @@ class MltermAT393 < Formula
     args << "--sysconfdir=#{prefix}/etc"
     args << "--enable-image"
     args << "--enable-fcitx"
-    if build.with?("z80oolong/im/im-scim@1.4.18") then
-      args << "--enable-scim"
-    end
+    args << "--enable-scim" if build.with? "z80oolong/im/im-scim@1.4.18"
 
     system "./configure", *args
     system "make"
@@ -77,7 +76,8 @@ class MltermAT393 < Formula
   end
 
   test do
-    output = shell_output("#{bin}/mlterm --version").strip
-    assert_match Regexp.new("mlterm #{version}", Regexp::MULTILINE), output
+    ENV["LC_ALL"] = "C"
+    output = shell_output("#{bin}/mlterm --version || true").strip
+    assert_match Regexp.new("mlterm version #{version}", Regexp::MULTILINE), output
   end
 end

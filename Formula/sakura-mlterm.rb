@@ -2,29 +2,38 @@ class SakuraMlterm < Formula
   desc "GTK/VTE based terminal emulator"
   homepage "https://launchpad.net/sakura"
   license "GPL-2.0-or-later"
-  revision 1
+  revision 2
+
+  CURRENT_VERSION = "3.8.9".freeze
+  CURRENT_COMMIT  = "2db313dc2155f03155d84e09e4dda43e049eb9e9".freeze
 
   stable do
     url "https://github.com/dabisu/sakura/archive/refs/tags/SAKURA_3_8_9.tar.gz"
     sha256 "46b792098a82ba4affc87a174ae96f32e730396e4f5ba9b699e8071253b085a2"
 
-    patch :p1, Formula["z80oolong/vte/sakura@3.8.9"].diff_data
+    patch :p1 do
+      file "Patches/sakura/sakura-#{CURRENT_VERSION}-fix.diff"
+      type :unofficial
+    end
   end
 
   head do
     url "https://github.com/dabisu/sakura.git"
 
-    patch :p1, Formula["z80oolong/vte/sakura@9999-dev"].diff_data
+    patch :p1 do
+      file "Patches/sakura/sakura-HEAD-#{CURRENT_COMMIT[0..7]}-fix.diff"
+      type :unofficial
+    end
   end
 
-  keg_only "this formula conflicts with 'homebrew/vte/sakura'"
+  keg_only "this formula conflicts with `z80oolong/vte/sakura`"
 
   depends_on "cmake" => :build
   depends_on "pod2man" => :build
   depends_on "gettext"
   depends_on "gtk+3"
   depends_on "systemd"
-  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
+  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.5"
 
   def install
     args  = std_cmake_args

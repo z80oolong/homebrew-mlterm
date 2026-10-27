@@ -7,9 +7,9 @@ class LxterminalMltermAT9999Dev < Formula
     branch:   "master",
     revision: CURRENT_COMMIT
   version "git-#{CURRENT_COMMIT[0..7]}"
-  revision 1
+  revision 2
 
-  keg_only :versioned_formula
+  keg_only "this is an alternate version of another formula"
 
   depends_on "autoconf" => :build
   depends_on "automake" => :build
@@ -22,9 +22,12 @@ class LxterminalMltermAT9999Dev < Formula
   depends_on "pkgconf" => :build
   depends_on "glib"
   depends_on "gtk+3"
-  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
+  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.5"
 
-  patch :p1, Formula["z80oolong/vte/lxterminal@9999-dev"].diff_data
+  patch :p1 do
+    file "Patches/lxterminal/lxterminal-HEAD-#{CURRENT_COMMIT[0..7]}-fix.diff"
+    type :unofficial
+  end
 
   def install
     ENV.prepend_path "PERL5LIB", "#{Formula["perl-xml-parser"].opt_libexec}/lib/perl5"

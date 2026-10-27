@@ -4,17 +4,19 @@ class RoxtermMltermAT3172 < Formula
   url "https://github.com/realh/roxterm/archive/refs/tags/3.17.2.tar.gz"
   sha256 "3da0ac499773002ccf0df9fd57918b3856cd5c5257f874715725ff3ef1266657"
   license "LGPL-3.0-or-later"
-  revision 1
+  revision 2
 
-  keg_only :versioned_formula
+  keg_only "this is an alternate version of another formula"
 
   depends_on "cmake" => :build
+  depends_on "docbook-xsl" => :build
   depends_on "gettext" => :build
+  depends_on "libxslt" => :build
   depends_on "pkgconf" => :build
   depends_on "dbus-glib"
   depends_on "glib"
   depends_on "gtk+3"
-  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
+  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.5"
 
   resource("roxterm-ja-po") do
     url "https://gist.github.com/731fd4e4d0adb4178ce69885bf061523.git",
@@ -22,11 +24,19 @@ class RoxtermMltermAT3172 < Formula
         revision: "72cd4d52211814ac3a8cecd2fc197447c3914c47"
   end
 
-  patch :p1, Formula["z80oolong/vte/roxterm@3.17.2"].diff_data
+  patch :p1 do
+    file "Patches/roxterm/roxterm-3.17.2-fix.diff"
+    type :unofficial
+  end
 
   def install
     ENV.append "CFLAGS", "-D_GNU_SOURCE"
     ENV.append "CFLAGS", "-DENABLE_NLS=1"
+
+    inreplace "./man/CMakeLists.txt" do |s|
+      s.gsub! %r{http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl},
+        "#{Formula["docbook-xsl"].opt_prefix}/docbook-xsl-ns/manpages/docbook.xsl"
+    end
 
     inreplace "./src/config.h.in" do |s|
       s.gsub!(/^#cmakedefine ENABLE_NLS/, "#define ENABLE_NLS 1")

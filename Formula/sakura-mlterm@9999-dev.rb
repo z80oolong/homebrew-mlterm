@@ -2,7 +2,7 @@ class SakuraMltermAT9999Dev < Formula
   desc "GTK/VTE based terminal emulator"
   homepage "https://launchpad.net/sakura"
 
-  CURRENT_COMMIT = "46f4582a7b9b2e4eb892909b3e29e5067fcbb2f7".freeze
+  CURRENT_COMMIT = "2db313dc2155f03155d84e09e4dda43e049eb9e9".freeze
   url "https://github.com/dabisu/sakura.git",
     branch:   "master",
     revision: CURRENT_COMMIT
@@ -10,16 +10,19 @@ class SakuraMltermAT9999Dev < Formula
   license "GPL-2.0-or-later"
   revision 1
 
-  keg_only :versioned_formula
+  keg_only "this is an alternate version of another formula"
 
   depends_on "cmake" => :build
   depends_on "pod2man" => :build
   depends_on "gettext"
-  depends_on "systemd"
   depends_on "gtk+3"
-  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.4"
+  depends_on "systemd"
+  depends_on "z80oolong/mlterm/mlterm-libvte@3.9.5"
 
-  patch :p1, Formula["z80oolong/vte/sakura@9999-dev"].diff_data
+  patch :p1 do
+    file "Patches/sakura/sakura-HEAD-#{CURRENT_COMMIT[0..7]}-fix.diff"
+    type :unofficial
+  end
 
   def install
     args  = std_cmake_args
@@ -38,6 +41,8 @@ class SakuraMltermAT9999Dev < Formula
   end
 
   test do
-    system bin/"sakura", "--version"
+    ENV["LC_ALL"] = "C"
+    output = shell_output("#{bin}/sakura --version 2>&1 || true").strip
+    assert_equal "sakura version is 3.8.9", output
   end
 end

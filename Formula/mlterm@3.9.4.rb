@@ -18,6 +18,7 @@ class MltermAT394 < Formula
   depends_on "fribidi"
   depends_on "gdk-pixbuf"
   depends_on "glib"
+  depends_on "glibc"
   depends_on "gnutls"
   depends_on "gobject-introspection"
   depends_on "gtk+3"
@@ -55,9 +56,7 @@ class MltermAT394 < Formula
     args << "--sysconfdir=#{prefix}/etc"
     args << "--enable-image"
     args << "--enable-fcitx"
-    if build.with?("z80oolong/im/im-scim@1.4.18") then
-      args << "--enable-scim"
-    end
+    args << "--enable-scim" if build.with? "z80oolong/im/im-scim@1.4.18"
 
     system "./configure", *args
     system "make"
@@ -77,7 +76,8 @@ class MltermAT394 < Formula
   end
 
   test do
-    output = shell_output("#{bin}/mlterm --version").strip
-    assert_match Regexp.new("mlterm #{version}", Regexp::MULTILINE), output
+    ENV["LC_ALL"] = "C"
+    output = shell_output("#{bin}/mlterm --version || true").strip
+    assert_match Regexp.new("mlterm version #{version}", Regexp::MULTILINE), output
   end
 end
