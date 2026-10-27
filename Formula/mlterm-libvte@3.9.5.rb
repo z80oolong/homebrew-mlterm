@@ -135,7 +135,7 @@ class MltermLibvteAT395 < Formula
         return 0;
       }
     C
-    flags = `#{Formula["pkgconf"].opt_bin}/pkg-config --cflags --libs vte-2.91`
+    flags = `#{formula_opt_bin("pkgconf")}/pkg-config --cflags --libs vte-2.91`
     flags = flags.chomp.split
     flags << "-ldl"
     flags << "-lm"
