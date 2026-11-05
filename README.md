@@ -1,5 +1,24 @@
 # z80oolong/mlterm -- MLTerm および MLTerm の libvte 互換ライブラリを用いた端末エミュレータの Formula 群
 
+## 告知 (2026-06-30)
+
+Homebrew がバージョン 6.0.0 に更新されたことに伴い、セキュリティ対策が強化されました。**これにより、サードパーティの Tap リポジトリを導入する際には、明示的に信頼を設定する必要があります。**
+
+本 Tap リポジトリをご利用の際は、以下の手順に従ってください。
+
+```
+  $ brew tap z80oolong/mlterm
+  $ brew trust z80oolong/mlterm
+```
+
+その後、通常通り Formula のインストールを行えます。
+
+```
+  $ brew install <formula>
+```
+
+詳細は `brew trust --help` コマンドまたは Homebrew 公式ドキュメントを参照してください。
+
 ## 概要
 
 [Homebrew for Linux][BREW] は、Linux ディストリビューション向けのソースコードベースのパッケージ管理システムで、ソフトウェアのビルドと導入を簡素化します。
@@ -22,14 +41,15 @@
 そして、本リポジトリの Formula を以下のようにインストールします：
 
 ```
-  brew tap z80oolong/mlterm
-  brew install <formula>
+  $ brew tap z80oolong/mlterm
+  $ brew trust z80oolong/mlterm
+  $ brew install <formula>
 ```
 
 または、一時的に以下の方法で直接インストールも可能です：
 
 ```
-  brew install https://raw.githubusercontent.com/z80oolong/homebrew-mlterm/master/Formula/<formula>.rb
+  $ brew install https://raw.githubusercontent.com/z80oolong/homebrew-mlterm/master/Formula/<formula>.rb
 ```
 
 Formula の一覧と詳細は、本リポジトリに同梱の ```FormulaList.md``` を参照してください。
